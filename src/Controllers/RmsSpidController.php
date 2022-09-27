@@ -2,17 +2,18 @@
 
 namespace DeveloperUnijaya\RmsSpid\Controllers;
 
-use DeveloperUnijaya\RmsSpid\RmsSpid;
-use Illuminate\Http\Request;
+// use DeveloperUnijaya\RmsSpid\Models\User;
+use App\Models\User;
 use DeveloperUnijaya\RmsSpid\Models\UserSpidToken;
-use DeveloperUnijaya\RmsSpid\Models\User;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
+
 class RmsSpidController
 {
     public function testSpid()
     {
-        echo "LOL";
+        echo "eRMS-SPID";
     }
 
     public function ssoAuth(Request $request)
@@ -20,7 +21,7 @@ class RmsSpidController
         $validate = Validator::make($request->all(), [
             'user_id' => ['required'],
             'user_spid_id' => ['required'],
-            'redirect_token' => ['required']
+            'redirect_token' => ['required'],
         ]);
 
         if ($validate->fails()) {
@@ -50,7 +51,7 @@ class RmsSpidController
             }
 
             return redirect('/home');
-        }else {
+        } else {
             dd("UNAUTHORIZED");
         }
     }
