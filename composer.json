@@ -1,0 +1,11 @@
+{
+    "name": "developer-unijaya/rms-spid",
+    "description": "eRMS-SPID Packages",
+    "authors": [
+        {
+            "name": "Syafiq Unijaya",
+            "email": "syafiqazwan.unijaya@gmail.com"
+        }
+    ],
+    "require": {}
+}
