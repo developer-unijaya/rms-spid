@@ -6,8 +6,5 @@ namespace DeveloperUnijaya\RmsSpid;
 
 class RmsSpid
 {
-    public function justDoIt()
-    {
-        return "Hok aloh";
-    }
+    
 }
