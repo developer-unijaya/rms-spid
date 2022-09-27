@@ -2,7 +2,7 @@
 
 namespace DeveloperUnijaya\RmsSpid\Models;
 
-use Illuminate\Database\Eloquent\Model;
+use Illuminate\Foundation\Auth\User as Authenticatable;
 
 /**
  * @property integer $id
@@ -12,7 +12,7 @@ use Illuminate\Database\Eloquent\Model;
  * @property string $created_at
  * @property string $updated_at
  */
-class User extends Model
+class User extends Authenticatable
 {
     /**
      * The table associated with the model.
@@ -20,4 +20,14 @@ class User extends Model
      * @var string
      */
     protected $table = 'users';
+
+    /**
+     * The attributes that should be hidden for serialization.
+     *
+     * @var array<int, string>
+     */
+    protected $hidden = [
+        'password',
+        'remember_token',
+    ];
 }
