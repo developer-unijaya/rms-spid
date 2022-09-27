@@ -1,11 +1,21 @@
 {
     "name": "developer-unijaya/rms-spid",
     "description": "eRMS-SPID Packages",
+    "autoload": {
+        "psr-4": {
+            "App\\": "app/",
+            "Database\\Factories\\": "database/factories/",
+            "Database\\Seeders\\": "database/seeders/",
+            "DeveloperUnijaya\\RMSSpid\\": "packages/developer-unijaya/rms-spid/src/"
+        }
+    },
     "authors": [
         {
             "name": "Syafiq Unijaya",
             "email": "syafiqazwan.unijaya@gmail.com"
         }
     ],
-    "require": {}
+    "require": {
+        "guzzlehttp/guzzle": "^7.0.1"
+    }
 }
