@@ -1,6 +1,6 @@
 <?php
 
-use DeveloperUnijaya\RMSSpid\Controllers\InspirationController;
+use DeveloperUnijaya\RMSSpid\Controllers\RMSSpidController;
 use Illuminate\Support\Facades\Route;
 
-Route::get('inspire', InspirationController::class);
+Route::get('inspire', RMSSpidController::class);
