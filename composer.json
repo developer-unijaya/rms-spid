@@ -5,9 +5,7 @@
     "autoload": {
         "psr-4": {
             "App\\": "app/",
-            "Database\\Factories\\": "database/factories/",
-            "Database\\Seeders\\": "database/seeders/",
-            "DeveloperUnijaya\\RMSSpid\\": "packages/developer-unijaya/rms-spid/src/"
+            "DeveloperUnijaya\\RmsSpid\\": "packages/developer-unijaya/rms-spid/src/"
         }
     },
     "authors": [
