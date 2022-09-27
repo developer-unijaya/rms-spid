@@ -5,7 +5,7 @@ namespace DeveloperUnijaya\RmsSpid\Providers;
 use DeveloperUnijaya\RmsSpid\RmsSpid;
 use Illuminate\Support\ServiceProvider;
 
-class RmsSpidProvider extends ServiceProvider
+class RMSSpidProvider extends ServiceProvider
 {
 
     /**

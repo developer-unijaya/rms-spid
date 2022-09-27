@@ -3,7 +3,7 @@ namespace DeveloperUnijaya\RmsSpid\Controllers;
 
 use DeveloperUnijaya\RmsSpid\RmsSpid;
 
-class RmsSpidController
+class RMSSpidController
 {
     // public function __invoke(RmsSpid $RmsSpid)
     // {

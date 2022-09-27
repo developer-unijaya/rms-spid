@@ -22,7 +22,7 @@
     "extra": {
         "laravel": {
             "providers": [
-                "DeveloperUnijaya\\Providers\\RmsSpidProvider"
+                "DeveloperUnijaya\\Providers\\RMSSpidProvider"
             ]
         }
     },

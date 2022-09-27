@@ -4,7 +4,7 @@ namespace DeveloperUnijaya\RmsSpid;
 
 // use Illuminate\Support\Facades\Http;
 
-class RmsSpid
+class RMSSpid
 {
     public function justDoIt()
     {
