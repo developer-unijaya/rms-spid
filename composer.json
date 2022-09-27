@@ -19,5 +19,12 @@
     "require": {
         "php": ">=7.0"
     },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "DeveloperUnijaya\\Providers\\RmsSpidProvider"
+            ]
+        }
+    },
     "minimum-stability": "dev"
 }
