@@ -5,10 +5,15 @@ use DeveloperUnijaya\RmsSpid\RmsSpid;
 
 class RmsSpidController
 {
-    public function __invoke(RmsSpid $RmsSpid)
-    {
-        $quote = $RmsSpid->justDoIt();
+    // public function __invoke(RmsSpid $RmsSpid)
+    // {
+    //     $quote = $RmsSpid->justDoIt();
 
-        return $quote;
+    //     return $quote;
+    // }
+
+    public function testSpid()
+    {
+        echo "LOL";
     }
 }
