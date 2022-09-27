@@ -1,13 +1,13 @@
 <?php
-namespace DeveloperUnijaya\RMSSpid\Controllers;
+namespace DeveloperUnijaya\RmsSpid\Controllers;
 
-use DeveloperUnijaya\RMSSpid\RMSSpid;
+use DeveloperUnijaya\RmsSpid\RmsSpid;
 
-class RMSSpidController
+class RmsSpidController
 {
-    public function __invoke(RMSSpid $RMSSpid)
+    public function __invoke(RmsSpid $RmsSpid)
     {
-        $quote = $RMSSpid->justDoIt();
+        $quote = $RmsSpid->justDoIt();
 
         return $quote;
     }

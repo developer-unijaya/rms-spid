@@ -1,10 +1,10 @@
 <?php
 
-namespace DeveloperUnijaya\RMSSpid;
+namespace DeveloperUnijaya\RmsSpid;
 
 use Illuminate\Support\Facades\Http;
 
-class RMSSpid
+class RmsSpid
 {
     public function justDoIt()
     {

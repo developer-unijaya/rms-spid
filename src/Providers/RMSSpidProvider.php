@@ -1,10 +1,10 @@
 <?php
 
-namespace DeveloperUnijaya\RMSSpid\Providers;
+namespace DeveloperUnijaya\RmsSpid\Providers;
 
 use Illuminate\Support\ServiceProvider;
 
-class RMSSpidProvider extends ServiceProvider
+class RmsSpidProvider extends ServiceProvider
 {
     /**
      * Bootstrap services.
@@ -13,6 +13,6 @@ class RMSSpidProvider extends ServiceProvider
      */
     public function boot()
     {
-        $this->loadRoutesFrom(__DIR__.'/../routes/web.php');
+        $this->loadRoutesFrom(__DIR__ . '/../routes/web.php');
     }
 }
