@@ -8,6 +8,8 @@ Route::prefix('api')->group(function () {
 
     Route::prefix('spid')->group(function () {
 
+        Route::post('test', [RmsSpidAuthController::class, 'test'])->name('spid.test');
+
         Route::prefix('auth')->group(function () {
 
             Route::post('login', [RmsSpidAuthController::class, 'login'])->name('spid.auth.login');
@@ -16,7 +18,6 @@ Route::prefix('api')->group(function () {
                 Route::post('me', [RmsSpidAuthController::class, 'me'])->middleware('auth:sanctum')->name('spid.auth.me');
                 Route::post('logout', [RmsSpidAuthController::class, 'logout'])->middleware('auth:sanctum')->name('spid.auth.logout');
             });
-
         });
 
         Route::prefix('user')->middleware('auth:sanctum')->group(function () {
@@ -26,6 +27,5 @@ Route::prefix('api')->group(function () {
             // To be used by Sub-system
             Route::post('redirect', [RmsSpidUserController::class, 'redirect'])->name('spid.user.redirect');
         });
-
     });
 });

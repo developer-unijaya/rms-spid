@@ -10,6 +10,11 @@ use Illuminate\Support\Facades\Validator;
 
 class RmsSpidAuthController
 {
+    public function test(Request $request)
+    {
+        return "eRMS-SPID API TEST";
+    }
+
     public function login(Request $request)
     {
         try {
