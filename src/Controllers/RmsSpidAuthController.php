@@ -43,9 +43,12 @@ class RmsSpidAuthController
 
                     $user = User::where('email', $request->username)->first();
 
+                    $data['user'] = $user;
+                    $data['auth_token'] = $user->createToken("auth_token")->plainTextToken;
+                    
                     $response->status = 200;
                     $response->msg = "Authenticated";
-                    $response->data = $user;
+                    $response->data = $data;
 
                 } else {
                     $response->status = 401;
