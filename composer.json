@@ -14,9 +14,7 @@
         }
     ],
     "require": {
-        "php" : "^7.3|^8.0|^8.1",
-        "illuminate/auth": "^7.0|^8.0|^9.0",
-        "illuminate/http": "^7.0|^8.0|^9.0"
+        "php" : "^7.3|^8.0|^8.1"
     },
     "extra": {
         "laravel": {
