@@ -20,6 +20,8 @@ class RmsSpidAuthController
 
     public function login(Request $request)
     {
+        $response = new SpidResponse;
+
         try {
 
             $validateUser = Validator::make($request->all(), [
@@ -37,33 +39,32 @@ class RmsSpidAuthController
 
             $credentials = ['email' => $request->username, 'password' => $request->password];
 
-            if (!Auth::attempt($credentials)) {
-                return response()->json([
-                    'status' => false,
-                    'message' => 'Email & Password does not match with our record.',
-                ], 401);
+            if (Auth::attempt($credentials)) {
+
+                $user = User::where('email', $request->username)->first();
+
+                $response->status = 200;
+                $response->msg = "Authenticated";
+                $response->data = $user;
+
+            } else {
+                $response->status = 401;
+                $response->msg = "Credentials does not match with our record";
             }
-
-            $user = User::where('email', $request->username)->first();
-
-            return response()->json([
-                'status' => true,
-                'message' => 'success',
-                'token' => $user->createToken("auth_token")->plainTextToken,
-            ], 200);
 
         } catch (\Throwable$th) {
 
-            return response()->json([
-                'status' => false,
-                'message' => $th->getMessage(),
-            ], 500);
+            $response->status = 500;
+            $response->msg = $th->getMessage();
         }
+
+        return response()->json($response);
     }
 
     public function me(Request $request)
     {
         $response = new SpidResponse;
+        $response->status = 200;
         $response->data = $request->user();
 
         return response()->json($response);
@@ -73,9 +74,10 @@ class RmsSpidAuthController
     {
         $request->user()->tokens()->delete();
 
-        return response()->json([
-            'status' => true,
-            'message' => 'logged out',
-        ], 200);
+        $response = new SpidResponse;
+        $response->status = 200;
+        $response->msg = "Logged out";
+
+        return response()->json($response);
     }
 }
