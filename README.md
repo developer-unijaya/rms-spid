@@ -13,7 +13,7 @@ Instructions:
     <li> <pre> php artisan migrate </pre> </li>
 </ol>
 
-Add Exception:
+Add Exception: in app\Http\Middleware\VerifyCsrfToken.php
 <pre>
 namespace App\Http\Middleware;
 use Illuminate\Foundation\Http\Middleware\VerifyCsrfToken as Middleware;
