@@ -55,14 +55,15 @@ class RmsSpidController
 
         } else {
             dd("UNAUTHORIZED");
+            // return redirect()->back();
         }
     }
 
     public function ssoLogin(Request $request)
     {
         $userSpidToken = UserSpidToken::where('spid_id', $request->user_spid_id)->where('redirect_token', $request->redirect_token)->first();
-        $userSpidToken->redirect_token = null;
-        $userSpidToken->save();
+        // $userSpidToken->redirect_token = null;
+        // $userSpidToken->save();
 
         Auth::guard('web')->loginUsingId($userSpidToken->user_id);
 
