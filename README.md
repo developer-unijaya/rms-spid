@@ -12,3 +12,16 @@ Instructions:
     <li> To install, run : <pre> composer require developer-unijaya/rms-spid </pre> </li>
     <li> <pre> php artisan migrate </pre> </li>
 </ol>
+
+Add Exception:
+<pre>
+namespace App\Http\Middleware;
+use Illuminate\Foundation\Http\Middleware\VerifyCsrfToken as Middleware;
+
+class VerifyCsrfToken extends Middleware
+{
+    protected $except = [
+        'spid/*'
+    ];
+}
+</pre>
