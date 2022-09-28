@@ -15,6 +15,8 @@ class RmsSpidProvider extends ServiceProvider
      */
     public function register()
     {
+        $this->mergeConfigFrom(__DIR__ . '/../config/config.php', 'spid');
+
         $this->app->singleton(RmsSpid::class, function ($app) {
             return new RmsSpid();
         });
@@ -31,5 +33,13 @@ class RmsSpidProvider extends ServiceProvider
         $this->loadRoutesFrom(__DIR__ . '/../routes/api.php');
 
         $this->loadMigrationsFrom(__DIR__ . '/../database/migrations');
+
+        if ($this->app->runningInConsole()) {
+
+            $this->publishes([
+                __DIR__ . '/../config/config.php' => config_path('spid.php'),
+            ], 'config');
+
+        }
     }
 }

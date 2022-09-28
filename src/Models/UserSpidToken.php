@@ -16,8 +16,13 @@ class UserSpidToken extends Model
 {
     /**
      * The table associated with the model.
-     * 
+     *
      * @var string
      */
     protected $table = 'user_spid_token';
+
+    public function user()
+    {
+        return $this->belongsTo(config('auth.providers.users.model'));
+    }
 }
