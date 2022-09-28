@@ -44,15 +44,23 @@ class RmsSpidController
                     Auth::logout();
                 }
 
-                Auth::guard('web')->login($user);
+                // Auth::guard('web')->login($user);
+                return redirect('spid/sso/login/' . $user->id);
 
             } else {
                 return redirect()->back();
             }
 
-            return redirect('/home');
         } else {
             dd("UNAUTHORIZED");
         }
+    }
+
+    public function ssoLogin(Request $request)
+    {
+        $userSpidToken = UserSpidToken::where('spid_id', $request->user_spid_id)->where('redirect_token', $request->redirect_token)->first();
+        Auth::guard('web')->loginUsingId($userSpidToken->user_id);
+
+        return redirect()->route('home');
     }
 }
