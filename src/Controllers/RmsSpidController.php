@@ -47,7 +47,7 @@ class RmsSpidController
 
                 // Login to Sub system
                 // Auth::guard('web')->login($user);
-                return redirect('spid/sso/login/' . $request->user_spid_id . '/' . $request->redirect_token);
+                return redirect()->route('spid.sso.login', ['user_spid_id' => $request->user_spid_id, 'redirect_token' => $request->redirect_token]);
 
             } else {
                 return redirect()->back();
@@ -61,8 +61,8 @@ class RmsSpidController
     public function ssoLogin(Request $request)
     {
         $userSpidToken = UserSpidToken::where('spid_id', $request->user_spid_id)->where('redirect_token', $request->redirect_token)->first();
-        // $userSpidToken->redirect_token = null;
-        // $userSpidToken->save();
+        $userSpidToken->redirect_token = null;
+        $userSpidToken->save();
 
         Auth::guard('web')->loginUsingId($userSpidToken->user_id);
 
