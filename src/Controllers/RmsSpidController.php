@@ -19,7 +19,6 @@ class RmsSpidController
     public function ssoAuth(Request $request)
     {
         // Validation/Log or anything here. Before Logged In
-
         $validate = Validator::make($request->all(), [
             'user_spid_id' => ['required'],
             'redirect_token' => ['required'],
@@ -45,8 +44,9 @@ class RmsSpidController
                     Auth::logout();
                 }
 
+                Auth::guard('web')->loginUsingId($userSpidToken->user_id);
+                
                 // Login to Sub system
-                // Auth::guard('web')->login($user);
                 return redirect()->route('spid.sso.login', ['user_spid_id' => $request->user_spid_id, 'redirect_token' => $request->redirect_token]);
 
             } else {
@@ -67,6 +67,6 @@ class RmsSpidController
 
         Auth::guard('web')->loginUsingId($userSpidToken->user_id);
 
-        return redirect()->route('home');
+        return redirect()->intended('home');
     }
 }

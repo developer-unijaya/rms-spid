@@ -8,7 +8,7 @@ Route::prefix('api')->group(function () {
 
     Route::prefix('spid')->group(function () {
 
-        Route::post('test', [RmsSpidAuthController::class, 'test'])->name('spid.test');
+        Route::post('test', [RmsSpidAuthController::class, 'test'])->name('api.spid.test');
 
         Route::prefix('auth')->group(function () {
 

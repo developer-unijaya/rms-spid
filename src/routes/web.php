@@ -3,7 +3,7 @@
 use DeveloperUnijaya\RmsSpid\Controllers\RmsSpidController;
 use Illuminate\Support\Facades\Route;
 
-Route::get('test-spid', [RmsSpidController::class, 'testSpid']);
+Route::get('spid-test', [RmsSpidController::class, 'testSpid'])->name('spid.test');
 
 Route::prefix('spid')->group(function () {
     Route::post('sso/auth', [RmsSpidController::class, 'ssoAuth'])->name('spid.sso.auth');
