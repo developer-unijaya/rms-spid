@@ -9,21 +9,21 @@ Route::prefix('spid')->group(function () {
 
     Route::prefix('auth')->group(function () {
 
-        Route::post('login', [RmsSpidAuthController::class, 'login'])->name('v1.auth.login');
+        Route::post('login', [RmsSpidAuthController::class, 'login'])->name('spid.auth.login');
 
         Route::middleware('auth:sanctum')->group(function () {
-            Route::post('me', [RmsSpidAuthController::class, 'me'])->middleware('auth:sanctum')->name('v1.auth.me');
-            Route::post('logout', [RmsSpidAuthController::class, 'logout'])->middleware('auth:sanctum')->name('v1.auth.logout');
+            Route::post('me', [RmsSpidAuthController::class, 'me'])->middleware('auth:sanctum')->name('spid.auth.me');
+            Route::post('logout', [RmsSpidAuthController::class, 'logout'])->middleware('auth:sanctum')->name('spid.auth.logout');
         });
 
     });
 
     Route::prefix('user')->middleware('auth:sanctum')->group(function () {
-        Route::post('register', [RmsSpidUserController::class, 'register'])->name('v1.user.register');
-        Route::post('profile', [RmsSpidUserController::class, 'profile'])->name('v1.user.profile');
+        Route::post('register', [RmsSpidUserController::class, 'register'])->name('spid.user.register');
+        Route::post('profile', [RmsSpidUserController::class, 'profile'])->name('spid.user.profile');
 
         // To be used by Sub-system
-        Route::post('redirect', [RmsSpidUserController::class, 'redirect'])->name('v1.user.redirect');
+        Route::post('redirect', [RmsSpidUserController::class, 'redirect'])->name('spid.user.redirect');
     });
 
 });
