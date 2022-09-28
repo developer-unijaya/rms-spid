@@ -21,7 +21,6 @@ class RmsSpidController
         // Validation/Log or anything here. Before Logged In
 
         $validate = Validator::make($request->all(), [
-            'user_id' => ['required'],
             'user_spid_id' => ['required'],
             'redirect_token' => ['required'],
         ]);
@@ -34,7 +33,7 @@ class RmsSpidController
             ], 401);
         }
 
-        $userSpidToken = UserSpidToken::where('user_id', $request->user_id)->where('spid_id', $request->user_spid_id)->where('redirect_token', $request->redirect_token)->first();
+        $userSpidToken = UserSpidToken::where('spid_id', $request->user_spid_id)->where('redirect_token', $request->redirect_token)->first();
 
         if ($userSpidToken) {
 
@@ -62,8 +61,8 @@ class RmsSpidController
     public function ssoLogin(Request $request)
     {
         $userSpidToken = UserSpidToken::where('spid_id', $request->user_spid_id)->where('redirect_token', $request->redirect_token)->first();
-        $userSpidToken->redirect_token = null;
-        $userSpidToken->save();
+        // $userSpidToken->redirect_token = null;
+        // $userSpidToken->save();
 
         Auth::guard('web')->loginUsingId($userSpidToken->user_id);
 
