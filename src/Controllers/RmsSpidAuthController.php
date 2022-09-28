@@ -4,6 +4,7 @@ namespace DeveloperUnijaya\RmsSpid\Controllers;
 
 // use DeveloperUnijaya\RmsSpid\Models\User;
 use App\Models\User;
+use DeveloperUnijaya\RmsSpid\Models\SpidResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
@@ -12,7 +13,9 @@ class RmsSpidAuthController
 {
     public function test(Request $request)
     {
-        return "eRMS-SPID API TEST";
+        $response = new SpidResponse;
+
+        return response()->json($response);
     }
 
     public function login(Request $request)
@@ -60,7 +63,10 @@ class RmsSpidAuthController
 
     public function me(Request $request)
     {
-        return response()->json(['user' => $request->user()]);
+        $response = new SpidResponse;
+        $response->data = $request->user();
+
+        return response()->json($response);
     }
 
     public function logout(Request $request)
