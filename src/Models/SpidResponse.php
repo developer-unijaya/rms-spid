@@ -15,3 +15,8 @@ class SpidResponse
         $this->data = $data;
     }
 }
+
+// $response = new SpidResponse;
+// $response->status = "";
+// $response->msg = "";
+// $response->data = "";

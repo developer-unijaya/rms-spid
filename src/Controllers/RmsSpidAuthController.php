@@ -30,29 +30,30 @@ class RmsSpidAuthController
             ]);
 
             if ($validateUser->fails()) {
-                return response()->json([
-                    'status' => false,
-                    'message' => 'validation error',
-                    'errors' => $validateUser->errors(),
-                ], 401);
-            }
 
-            $credentials = ['email' => $request->username, 'password' => $request->password];
-
-            if (Auth::attempt($credentials)) {
-
-                $user = User::where('email', $request->username)->first();
-
-                $response->status = 200;
-                $response->msg = "Authenticated";
-                $response->data = $user;
+                $response->status = 401;
+                $response->msg = "Validation Error";
+                $response->data = $validateUser->errors();
 
             } else {
-                $response->status = 401;
-                $response->msg = "Credentials does not match with our record";
+
+                $credentials = ['email' => $request->username, 'password' => $request->password];
+
+                if (Auth::attempt($credentials)) {
+
+                    $user = User::where('email', $request->username)->first();
+
+                    $response->status = 200;
+                    $response->msg = "Authenticated";
+                    $response->data = $user;
+
+                } else {
+                    $response->status = 401;
+                    $response->msg = "Credentials does not match with our record";
+                }
             }
 
-        } catch (\Throwable$th) {
+        } catch (\Throwable $th) {
 
             $response->status = 500;
             $response->msg = $th->getMessage();
