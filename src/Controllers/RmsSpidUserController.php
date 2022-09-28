@@ -2,11 +2,12 @@
 
 namespace DeveloperUnijaya\RmsSpid\Controllers;
 
-// use DeveloperUnijaya\RmsSpid\Models\User;
-use App\Models\User;
+use DeveloperUnijaya\RmsSpid\Models\User;
+// use App\Models\User;
 use DeveloperUnijaya\RmsSpid\Models\UserSpidToken;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Facades\Hash;
 
 class RmsSpidUserController
 {
