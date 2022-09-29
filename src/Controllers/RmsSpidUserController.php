@@ -42,33 +42,55 @@ class RmsSpidUserController
 
     public function profile(Request $request)
     {
+        $response = new SpidResponse;
+
         $validateData = Validator::make($request->all(), [
             'user_spid_id' => ['required'],
         ]);
 
         if ($validateData->fails()) {
-            return response()->json([
-                'status' => false,
-                'message' => 'VALIDATION_ERROR',
-                'errors' => $validateData->errors(),
-            ], 401);
-        }
 
-        $user = User::where('spid_id', $request->user_spid_id)->first();
+            $response->status = 401;
+            $response->msg = "VALIDATION_ERROR";
+            $response->data = $validateData->errors();
 
-        if ($user) {
-            return response()->json([
-                'status' => true,
-                'message' => '',
-                'user' => $user,
-            ], 200);
         } else {
-            return response()->json([
-                'status' => false,
-                'message' => '',
-                'user' => $user,
-            ], 404);
+
+            $userSpid = UserSpid::where('user_spid_id', $request->user_spid_id)->first();
+
+            if ($userSpid) {
+
+                $UserModel = config('auth.providers.users.model');
+                $UserModel = new $UserModel;
+
+                if (config('spid.user_profile_relationship')) {
+                    $user = $UserModel::with(config('spid.user_profile_relationship'))->where('id', $userSpid->user_id)->first();
+                } else {
+                    $user = $UserModel::where('id', $userSpid->user_id)->first();
+                }
+
+                if ($user) {
+
+                    $response->status = 200;
+                    $response->msg = "";
+                    $response->data = $user;
+
+                } else {
+
+                    $response->status = 404;
+                    $response->msg = "NOT_FOUND";
+
+                }
+            } else {
+
+                $response->status = 404;
+                $response->msg = "NOT_FOUND";
+            }
+
         }
+
+        return response()->json($response);
+
     }
 
     public function check(Request $request)

@@ -10,4 +10,7 @@ return [
 
     // User Model
     'user_model' => App\Models\User::class,
+
+    // User Eloquent Relationship to be included in Profile API
+    'user_profile_relationship' => [],
 ];
