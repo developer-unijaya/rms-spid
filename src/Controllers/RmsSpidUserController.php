@@ -78,13 +78,13 @@ class RmsSpidUserController
                 } else {
 
                     $response->status = 404;
-                    $response->msg = "NOT_FOUND";
+                    $response->msg = "USER_NOT_FOUND";
 
                 }
             } else {
 
                 $response->status = 404;
-                $response->msg = "NOT_FOUND";
+                $response->msg = "USERSPID_NOT_FOUND";
             }
 
         }
