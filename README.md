@@ -7,30 +7,21 @@
 </ol>
 
 
-'''
-ddd
-'''
-
-```
-lol
-```
-
 ### Instructions:
-<ol>
-    <li> 
-        ```php
-        composer require developer-unijaya/rms-spid
-        ``` 
-    </li>
-    <li> 
-        ```php artisan migrate
-        ``` 
-    </li>
-    <li> 
-        ```php artisan vendor:publish --provider="DeveloperUnijaya\RmsSpid\Providers\RmsSpidProvider" --tag="config"
-        ``` 
-    </li>
-</ol>
+
+
+```
+composer require developer-unijaya/rms-spid
+``` 
+
+```
+php artisan migrate
+``` 
+
+```
+php artisan vendor:publish --provider="DeveloperUnijaya\RmsSpid\Providers\RmsSpidProvider" --tag="config"
+``` 
+
 
 ### Add Exception *'spid/*'* in app\Http\Middleware\VerifyCsrfToken.php
 <pre>
