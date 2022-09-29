@@ -55,7 +55,7 @@ class RmsSpidController
 
                 $response->status = 404;
                 $response->msg = "USER_NOT_FOUND";
-                return redirect()->route('spid.sso.auth.failed', ['failed_msg' => 'USER_NOT_FOUND']);
+                return redirect()->route(config('spid.redirect_sso_failed'), ['failed_msg' => 'USER_NOT_FOUND']);
 
             }
 
@@ -63,7 +63,7 @@ class RmsSpidController
 
             $response->status = 404;
             $response->msg = "USERSPID_NOT_FOUND";
-            return redirect()->route('spid.sso.auth.failed', ['failed_msg' => 'USERSPID_NOT_FOUND']);
+            return redirect()->route(config('spid.redirect_sso_failed'), ['failed_msg' => 'USERSPID_NOT_FOUND']);
         }
 
         return response()->json($response);
