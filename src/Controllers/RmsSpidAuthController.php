@@ -14,6 +14,7 @@ class RmsSpidAuthController
     public function test(Request $request)
     {
         $response = new SpidResponse;
+        $response->msg = "Test From " . env('APP_NAME');
 
         return response()->json($response);
     }
@@ -45,7 +46,7 @@ class RmsSpidAuthController
 
                     $data['user'] = $user;
                     $data['auth_token'] = $user->createToken("auth_token")->plainTextToken;
-                    
+
                     $response->status = 200;
                     $response->msg = "Authenticated";
                     $response->data = $data;
