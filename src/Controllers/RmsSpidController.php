@@ -8,6 +8,7 @@ use DeveloperUnijaya\RmsSpid\Models\UserSpid;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
+use DeveloperUnijaya\RmsSpid\Models\SpidResponse;
 
 class RmsSpidController
 {
@@ -18,6 +19,8 @@ class RmsSpidController
 
     public function ssoAuth(Request $request)
     {
+        $response = new SpidResponse;
+
         // Validation/Log or anything here. Before Logged In
         $validate = Validator::make($request->all(), [
             'user_spid_id' => ['required'],
@@ -25,11 +28,11 @@ class RmsSpidController
         ]);
 
         if ($validate->fails()) {
-            return response()->json([
-                'status' => false,
-                'message' => 'validation error',
-                'errors' => $validate->errors(),
-            ], 401);
+
+            $response->status = 401;
+            $response->msg = "Validation Error";
+            $response->data = $validate->errors();
+
         }
 
         $userSpid = UserSpid::where('user_spid_id', $request->user_spid_id)->where('redirect_token', $request->redirect_token)->first();
@@ -62,8 +65,11 @@ class RmsSpidController
     public function ssoLogin(Request $request)
     {
         $userSpid = UserSpid::where('user_spid_id', $request->user_spid_id)->where('redirect_token', $request->redirect_token)->first();
-        // $userSpid->redirect_token = null;
-        // $userSpid->save();
+
+        if (config('spid.strict_redirect_token')) {
+            $userSpid->redirect_token = null;
+            $userSpid->save();
+        }
 
         Auth::guard('web')->loginUsingId($userSpid->user_id);
 

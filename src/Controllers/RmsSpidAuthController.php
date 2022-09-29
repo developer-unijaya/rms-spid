@@ -15,7 +15,6 @@ class RmsSpidAuthController
     {
         $response = new SpidResponse;
         $response->msg = "Test From " . env('APP_NAME');
-        // $response->data = Auth::user();
 
         return response()->json($response);
     }
@@ -53,8 +52,10 @@ class RmsSpidAuthController
                     $response->data = $data;
 
                 } else {
+
                     $response->status = 401;
                     $response->msg = "Credentials does not match with our record";
+
                 }
             }
 

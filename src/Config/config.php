@@ -1,6 +1,7 @@
 <?php
 
 return [
+
     // Redirect route name after Successful SSO
     'route_home' => 'home',
 

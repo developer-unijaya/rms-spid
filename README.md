@@ -25,3 +25,7 @@ class VerifyCsrfToken extends Middleware
     ];
 }
 </pre>
+
+Publish config file:
+
+<pre>php artisan vendor:publish --provider="DeveloperUnijaya\RmsSpid\Providers\RmsSpidProvider" --tag="config"</pre>
