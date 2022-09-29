@@ -1,23 +1,20 @@
-## eRMS-SPID SSO API Package
+## eRMS-SPID SSO API
 
 System Requirement:
 <ol>
-    <li> PHP version: <pre>7.0.0 and above</pre></li>
-    <li> Laravel Sanctum (Installed and configured) </li>
-    <li>  </li>
+    <li> PHP ^7.0 </li>
+    <li> Laravel Sanctum </li>
 </ol>
 
 Instructions:
 <ol>
-    <li> To install, run : <pre> composer require developer-unijaya/rms-spid </pre> </li>
+    <li> <pre> composer require developer-unijaya/rms-spid </pre> </li>
     <li> <pre> php artisan migrate </pre> </li>
+    <li> <pre> php artisan vendor:publish --provider="DeveloperUnijaya\RmsSpid\Providers\RmsSpidProvider" --tag="config" </pre> </li>
 </ol>
 
 Add Exception: in app\Http\Middleware\VerifyCsrfToken.php
 <pre>
-namespace App\Http\Middleware;
-use Illuminate\Foundation\Http\Middleware\VerifyCsrfToken as Middleware;
-
 class VerifyCsrfToken extends Middleware
 {
     protected $except = [
@@ -25,7 +22,3 @@ class VerifyCsrfToken extends Middleware
     ];
 }
 </pre>
-
-Publish config file:
-
-<pre>php artisan vendor:publish --provider="DeveloperUnijaya\RmsSpid\Providers\RmsSpidProvider" --tag="config"</pre>
