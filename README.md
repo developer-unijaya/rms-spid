@@ -8,9 +8,18 @@
 
 ### Instructions:
 <ol>
-    <li> ```composer require developer-unijaya/rms-spid``` </li>
-    <li> ```php artisan migrate``` </li>
-    <li> ```php artisan vendor:publish --provider="DeveloperUnijaya\RmsSpid\Providers\RmsSpidProvider" --tag="config"``` </li>
+    <li> 
+        ```composer require developer-unijaya/rms-spid
+        ``` 
+    </li>
+    <li> 
+        ```php artisan migrate
+        ``` 
+    </li>
+    <li> 
+        ```php artisan vendor:publish --provider="DeveloperUnijaya\RmsSpid\Providers\RmsSpidProvider" --tag="config"
+        ``` 
+    </li>
 </ol>
 
 ### Add Exception *'spid/*'* in app\Http\Middleware\VerifyCsrfToken.php
