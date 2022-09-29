@@ -6,10 +6,20 @@
     <li> Laravel Sanctum </li>
 </ol>
 
+
+'''
+ddd
+'''
+
+```
+lol
+```
+
 ### Instructions:
 <ol>
     <li> 
-        ```composer require developer-unijaya/rms-spid
+        ```php
+        composer require developer-unijaya/rms-spid
         ``` 
     </li>
     <li> 
