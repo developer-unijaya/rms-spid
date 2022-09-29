@@ -129,9 +129,9 @@ class RmsSpidUserController
 
                     if ($userSpid->exists) {
 
-                        $response->status = 200;
+                        $response->status = 409;
                         $response->msg .= "ABORT_ALREADY_BIND-";
-                        $response->data = ['user' => $user, 'userSpid' => $userSpid];
+                        $response->data = ['user' => $user];
 
                     } else {
 
@@ -147,7 +147,7 @@ class RmsSpidUserController
 
                 } else {
 
-                    $response->status = 200;
+                    $response->status = 409;
                     $response->msg .= "FAILED_CHECK-";
 
                 }
