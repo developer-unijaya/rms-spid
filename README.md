@@ -9,7 +9,6 @@
 
 ### Instructions:
 
-
 ```
 composer require developer-unijaya/rms-spid
 ``` 
@@ -22,8 +21,7 @@ php artisan migrate
 php artisan vendor:publish --provider="DeveloperUnijaya\RmsSpid\Providers\RmsSpidProvider" --tag="config"
 ``` 
 
-
-### Add Exception *'spid/*'* in app\Http\Middleware\VerifyCsrfToken.php
+### Add Exception *'spid/*'* in *app\Http\Middleware\VerifyCsrfToken.php*
 ```php
 class VerifyCsrfToken extends Middleware
 {

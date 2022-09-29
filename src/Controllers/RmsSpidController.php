@@ -22,17 +22,16 @@ class RmsSpidController
         $response = new SpidResponse;
 
         // Validation/Log or anything here. Before Logged In
-        $validate = Validator::make($request->all(), [
+        $validateData = Validator::make($request->all(), [
             'user_spid_id' => ['required'],
             'redirect_token' => ['required'],
         ]);
 
-        if ($validate->fails()) {
+        if ($validateData->fails()) {
 
             $response->status = 401;
-            $response->msg = "Validation Error";
-            $response->data = $validate->errors();
-
+            $response->msg = "VALIDATION_ERROR";
+            $response->data = $validateData->errors();
         }
 
         $userSpid = UserSpid::where('user_spid_id', $request->user_spid_id)->where('redirect_token', $request->redirect_token)->first();
@@ -58,7 +57,6 @@ class RmsSpidController
 
         } else {
             dd("UNAUTHORIZED");
-            // return redirect()->back();
         }
     }
 

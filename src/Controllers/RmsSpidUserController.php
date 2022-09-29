@@ -15,7 +15,7 @@ class RmsSpidUserController
 {
     public function register(Request $request)
     {
-        $validateUser = Validator::make($request->all(), [
+        $validateData = Validator::make($request->all(), [
             'user_id' => ['required'],
             'name' => ['required', 'string', 'max:255'],
             'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
@@ -23,11 +23,11 @@ class RmsSpidUserController
             'roles' => ['required'],
         ]);
 
-        if ($validateUser->fails()) {
+        if ($validateData->fails()) {
             return response()->json([
                 'status' => false,
-                'message' => 'validation error',
-                'errors' => $validateUser->errors(),
+                'message' => 'VALIDATION_ERROR',
+                'errors' => $validateData->errors(),
             ], 401);
         }
 
@@ -42,15 +42,15 @@ class RmsSpidUserController
 
     public function profile(Request $request)
     {
-        $validate = Validator::make($request->all(), [
+        $validateData = Validator::make($request->all(), [
             'user_spid_id' => ['required'],
         ]);
 
-        if ($validate->fails()) {
+        if ($validateData->fails()) {
             return response()->json([
                 'status' => false,
-                'message' => 'validation error',
-                'errors' => $validate->errors(),
+                'message' => 'VALIDATION_ERROR',
+                'errors' => $validateData->errors(),
             ], 401);
         }
 
@@ -74,6 +74,7 @@ class RmsSpidUserController
     public function check(Request $request)
     {
         $response = new SpidResponse;
+        $response->msg = "";
 
         $validateData = Validator::make($request->all(), [
             'username' => 'required',
@@ -84,7 +85,7 @@ class RmsSpidUserController
         if ($validateData->fails()) {
 
             $response->status = 401;
-            $response->msg = "Validation Error";
+            $response->msg = "VALIDATION_ERROR";
             $response->data = $validateData->errors();
 
         } else {
@@ -98,6 +99,8 @@ class RmsSpidUserController
 
                 if (Auth::guard('web')->attempt($credentials)) {
 
+                    $response->msg .= "AUTHENTICATED-";
+
                     $user = $UserModel::where('email', $request->username)->first();
 
                     $userSpid = UserSpid::firstOrNew(['user_id' => $user->id]);
@@ -105,7 +108,7 @@ class RmsSpidUserController
                     if ($userSpid->exists) {
 
                         $response->status = 200;
-                        $response->msg = "ALREADY BIND";
+                        $response->msg .= "ABORT_ALREADY_BIND-";
                         $response->data = ['user' => $user, 'userSpid' => $userSpid];
 
                     } else {
@@ -115,15 +118,15 @@ class RmsSpidUserController
                         $userSpid->save();
 
                         $response->status = 200;
-                        $response->msg = "Verified";
-                        $response->data = ['user' => $user, 'userSpid' => $userSpid];
+                        $response->msg .= "SUCCESS_BIND-";
+                        $response->data = ['user' => $user, 'userSpid' => $userSpid, 'redirect_url' => route(config('spid.redirect_sso'))];
 
                     }
 
                 } else {
 
                     $response->status = 200;
-                    $response->msg = "Check Failed";
+                    $response->msg .= "FAILED_CHECK-";
 
                 }
 
@@ -148,7 +151,7 @@ class RmsSpidUserController
         if ($validateData->fails()) {
 
             $response->status = 401;
-            $response->msg = "Validation Error";
+            $response->msg = "VALIDATION_ERROR";
             $response->data = $validateData->errors();
 
         } else {
@@ -162,7 +165,7 @@ class RmsSpidUserController
 
                 $response->status = 200;
                 $response->msg = "SUCCESS";
-                $response->data = $userSpid;
+                $response->data = ['redirect_token' => $userSpid->redirect_token, 'redirect_url' => route(config('spid.redirect_sso'))];
 
             } else {
 

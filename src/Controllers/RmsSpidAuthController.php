@@ -25,16 +25,16 @@ class RmsSpidAuthController
 
         try {
 
-            $validateUser = Validator::make($request->all(), [
+            $validateData = Validator::make($request->all(), [
                 'username' => 'required',
                 'password' => 'required',
             ]);
 
-            if ($validateUser->fails()) {
+            if ($validateData->fails()) {
 
                 $response->status = 401;
-                $response->msg = "Validation Error";
-                $response->data = $validateUser->errors();
+                $response->msg = "VALIDATION_ERROR";
+                $response->data = $validateData->errors();
 
             } else {
 

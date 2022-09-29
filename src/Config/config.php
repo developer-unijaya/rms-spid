@@ -3,7 +3,7 @@
 return [
 
     // Redirect route name after Successful SSO
-    'route_home' => 'home',
+    'redirect_sso' => 'spid.sso.auth',
 
     // When set to true, redirect_token can only be used once
     'strict_redirect_token' => false,
