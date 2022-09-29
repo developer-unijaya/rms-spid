@@ -16,7 +16,7 @@ return new class extends Migration
         Schema::create('user_spid', function (Blueprint $table) {
             $table->increments('id');
             $table->unsignedBigInteger('user_id')->unique();
-            $table->string('user_spid_id')->unique();
+            $table->string('user_spid_id');
             $table->string('redirect_token')->nullable();
             $table->timestamps();
         });

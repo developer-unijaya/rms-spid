@@ -101,17 +101,30 @@ class RmsSpidUserController
                     $user = $UserModel::where('email', $request->username)->first();
 
                     $userSpid = UserSpid::firstOrNew(['user_id' => $user->id]);
-                    $userSpid->user_spid_id = $request->user_spid_id;
-                    $userSpid->redirect_token = Str::uuid()->toString();
-                    $userSpid->save();
 
-                    $response->status = 200;
-                    $response->msg = "Verified";
-                    $response->data = ['user' => $user, 'userSpid' => $userSpid];
+                    if ($userSpid->exists) {
+
+                        $response->status = 200;
+                        $response->msg = "ALREADY BIND";
+                        $response->data = ['user' => $user, 'userSpid' => $userSpid];
+
+                    } else {
+
+                        $userSpid->user_spid_id = $request->user_spid_id;
+                        $userSpid->redirect_token = Str::uuid()->toString();
+                        $userSpid->save();
+
+                        $response->status = 200;
+                        $response->msg = "Verified";
+                        $response->data = ['user' => $user, 'userSpid' => $userSpid];
+
+                    }
 
                 } else {
+
                     $response->status = 200;
                     $response->msg = "Check Failed";
+
                 }
 
             } catch (\Throwable$th) {
