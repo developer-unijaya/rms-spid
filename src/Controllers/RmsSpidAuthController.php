@@ -44,17 +44,14 @@ class RmsSpidAuthController
 
                     $user = User::where('email', $request->username)->first();
 
-                    $data['user'] = $user;
-                    $data['auth_token'] = $user->createToken("auth_token")->plainTextToken;
-
                     $response->status = 200;
-                    $response->msg = "Authenticated";
-                    $response->data = $data;
+                    $response->msg = "AUTHENTICATED";
+                    $response->data = ['user' => $user, 'auth_token' => $user->createToken("auth_token")->plainTextToken];
 
                 } else {
 
                     $response->status = 401;
-                    $response->msg = "Credentials does not match with our record";
+                    $response->msg = "CREDENTIALS_DOES_NOT_MATCH";
 
                 }
             }
@@ -83,7 +80,7 @@ class RmsSpidAuthController
 
         $response = new SpidResponse;
         $response->status = 200;
-        $response->msg = "Logged out";
+        $response->msg = "LOGGED_OUT";
 
         return response()->json($response);
     }
