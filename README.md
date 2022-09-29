@@ -24,11 +24,11 @@ php artisan vendor:publish --provider="DeveloperUnijaya\RmsSpid\Providers\RmsSpi
 
 
 ### Add Exception *'spid/*'* in app\Http\Middleware\VerifyCsrfToken.php
-<pre>
+```php
 class VerifyCsrfToken extends Middleware
 {
     protected $except = [
         'spid/*'
     ];
 }
-</pre>
+```
