@@ -102,6 +102,7 @@ class RmsSpidUserController
 
                     $userSpid = UserSpid::firstOrNew(['user_id' => $user->id]);
                     $userSpid->user_spid_id = $request->user_spid_id;
+                    $userSpid->redirect_token = Str::uuid()->toString();
                     $userSpid->save();
 
                     $response->status = 200;

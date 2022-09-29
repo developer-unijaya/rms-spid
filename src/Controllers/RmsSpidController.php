@@ -32,7 +32,7 @@ class RmsSpidController
             ], 401);
         }
 
-        $userSpid = UserSpid::where('spid_id', $request->user_spid_id)->where('redirect_token', $request->redirect_token)->first();
+        $userSpid = UserSpid::where('user_spid_id', $request->user_spid_id)->where('redirect_token', $request->redirect_token)->first();
 
         if ($userSpid) {
 
@@ -61,7 +61,7 @@ class RmsSpidController
 
     public function ssoLogin(Request $request)
     {
-        $userSpid = UserSpid::where('spid_id', $request->user_spid_id)->where('redirect_token', $request->redirect_token)->first();
+        $userSpid = UserSpid::where('user_spid_id', $request->user_spid_id)->where('redirect_token', $request->redirect_token)->first();
         // $userSpid->redirect_token = null;
         // $userSpid->save();
 

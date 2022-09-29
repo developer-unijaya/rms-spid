@@ -15,6 +15,7 @@ class RmsSpidAuthController
     {
         $response = new SpidResponse;
         $response->msg = "Test From " . env('APP_NAME');
+        // $response->data = Auth::user();
 
         return response()->json($response);
     }
