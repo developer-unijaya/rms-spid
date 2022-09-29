@@ -13,10 +13,10 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('user_spid_token', function (Blueprint $table) {
+        Schema::create('user_spid', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('user_id')->nullable();
-            $table->string('spid_id')->nullable();
+            $table->unsignedBigInteger('user_id')->unique();
+            $table->string('user_spid_id')->unique();
             $table->string('redirect_token')->nullable();
             $table->timestamps();
         });
@@ -29,6 +29,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('user_spid_token');
+        Schema::dropIfExists('user_spid');
     }
 };

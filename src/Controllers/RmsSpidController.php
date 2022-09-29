@@ -4,7 +4,7 @@ namespace DeveloperUnijaya\RmsSpid\Controllers;
 
 // use DeveloperUnijaya\RmsSpid\Models\User;
 use App\Models\User;
-use DeveloperUnijaya\RmsSpid\Models\UserSpidToken;
+use DeveloperUnijaya\RmsSpid\Models\UserSpid;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
@@ -32,11 +32,11 @@ class RmsSpidController
             ], 401);
         }
 
-        $userSpidToken = UserSpidToken::where('spid_id', $request->user_spid_id)->where('redirect_token', $request->redirect_token)->first();
+        $userSpid = UserSpid::where('spid_id', $request->user_spid_id)->where('redirect_token', $request->redirect_token)->first();
 
-        if ($userSpidToken) {
+        if ($userSpid) {
 
-            $user = User::where('id', $userSpidToken->user_id)->first();
+            $user = User::where('id', $userSpid->user_id)->first();
 
             if ($user) {
 
@@ -44,8 +44,8 @@ class RmsSpidController
                     Auth::logout();
                 }
 
-                Auth::guard('web')->loginUsingId($userSpidToken->user_id);
-                
+                Auth::guard('web')->loginUsingId($userSpid->user_id);
+
                 // Login to Sub system
                 return redirect()->route('spid.sso.login', ['user_spid_id' => $request->user_spid_id, 'redirect_token' => $request->redirect_token]);
 
@@ -61,11 +61,11 @@ class RmsSpidController
 
     public function ssoLogin(Request $request)
     {
-        $userSpidToken = UserSpidToken::where('spid_id', $request->user_spid_id)->where('redirect_token', $request->redirect_token)->first();
-        // $userSpidToken->redirect_token = null;
-        // $userSpidToken->save();
+        $userSpid = UserSpid::where('spid_id', $request->user_spid_id)->where('redirect_token', $request->redirect_token)->first();
+        // $userSpid->redirect_token = null;
+        // $userSpid->save();
 
-        Auth::guard('web')->loginUsingId($userSpidToken->user_id);
+        Auth::guard('web')->loginUsingId($userSpid->user_id);
 
         return redirect()->intended('home');
     }

@@ -2,12 +2,14 @@
 
 namespace DeveloperUnijaya\RmsSpid\Controllers;
 
-use DeveloperUnijaya\RmsSpid\Models\User;
+use DeveloperUnijaya\RmsSpid\Models\SpidResponse;
 // use App\Models\User;
-use DeveloperUnijaya\RmsSpid\Models\UserSpidToken;
+use DeveloperUnijaya\RmsSpid\Models\User;
+use DeveloperUnijaya\RmsSpid\Models\UserSpid;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Validator;
 
 class RmsSpidUserController
 {
@@ -69,6 +71,57 @@ class RmsSpidUserController
         }
     }
 
+    public function check(Request $request)
+    {
+        $response = new SpidResponse;
+
+        $validateData = Validator::make($request->all(), [
+            'username' => 'required',
+            'password' => 'required',
+            'user_spid_id' => 'required',
+        ]);
+
+        if ($validateData->fails()) {
+
+            $response->status = 401;
+            $response->msg = "Validation Error";
+            $response->data = $validateData->errors();
+
+        } else {
+
+            try {
+
+                $UserModel = config('auth.providers.users.model');
+                $UserModel = new $UserModel;
+
+                $credentials = ['email' => $request->username, 'password' => $request->password];
+
+                if (Auth::guard('web')->attempt($credentials)) {
+
+                    $user = $UserModel::where('email', $request->username)->first();
+
+                    $userSpid = UserSpid::firstOrNew(['user_id' => $user->id]);
+                    $userSpid->user_spid_id = $request->user_spid_id;
+                    $userSpid->save();
+
+                    $response->status = 200;
+                    $response->msg = "Verified";
+                    $response->data = ['user' => $user, 'userSpid' => $userSpid];
+
+                } else {
+                    $response->status = 200;
+                    $response->msg = "Check Failed";
+                }
+
+            } catch (\Throwable$th) {
+                $response->status = 500;
+                $response->msg = $th->getMessage();
+            }
+        }
+
+        return response()->json($response);
+    }
+
     public function redirect(Request $request)
     {
         $validate = Validator::make($request->all(), [
@@ -95,16 +148,16 @@ class RmsSpidUserController
         }
 
         // Untuk subsystem nnt, kne tambah subsystem id
-        $userSpidToken = UserSpidToken::firstOrNew(['user_id' => $user->id]);
-        $userSpidToken->spid_id = $user->spid_id;
-        $userSpidToken->redirect_token = Str::uuid()->toString();
+        $userSpid = UserSpid::firstOrNew(['user_id' => $user->id]);
+        $userSpid->spid_id = $user->spid_id;
+        $userSpid->redirect_token = Str::uuid()->toString();
 
-        $userSpidToken->save();
+        $userSpid->save();
 
         return response()->json([
             'status' => true,
             'message' => '',
-            'data' => $userSpidToken,
+            'data' => $userSpid,
         ], 200);
 
     }

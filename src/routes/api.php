@@ -24,6 +24,8 @@ Route::prefix('api')->group(function () {
             Route::post('register', [RmsSpidUserController::class, 'register'])->name('spid.user.register');
             Route::post('profile', [RmsSpidUserController::class, 'profile'])->name('spid.user.profile');
 
+            Route::post('check', [RmsSpidUserController::class, 'check'])->name('spid.user.check');
+
             // To be used by Sub-system
             Route::post('redirect', [RmsSpidUserController::class, 'redirect'])->name('spid.user.redirect');
         });
