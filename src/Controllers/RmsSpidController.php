@@ -52,12 +52,28 @@ class RmsSpidController
                 return redirect()->route('spid.sso.login', ['user_spid_id' => $request->user_spid_id, 'redirect_token' => $request->redirect_token]);
 
             } else {
-                return redirect()->back();
+
+                $response->status = 404;
+                $response->msg = "USER_NOT_FOUND";
+                return redirect()->route('spid.sso.auth.failed', ['failed_msg' => 'USER_NOT_FOUND']);
+
             }
 
         } else {
-            dd("UNAUTHORIZED");
+
+            $response->status = 404;
+            $response->msg = "USERSPID_NOT_FOUND";
+            return redirect()->route('spid.sso.auth.failed', ['failed_msg' => 'USERSPID_NOT_FOUND']);
         }
+
+        return response()->json($response);
+    }
+
+    public function ssoAuthFailed(Request $request)
+    {
+        $failed_msg = $request->failed_msg;
+
+        return view('RmsSpidView::ssoAuthFailed', compact('failed_msg'));
     }
 
     public function ssoLogin(Request $request)

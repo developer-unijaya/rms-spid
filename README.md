@@ -1,6 +1,6 @@
 ## eRMS-SPID SSO API (For Laravel)
 
-### System Requirement:
+### System Requirements:
 <ol>
     <li> PHP ^7.0 </li>
     <li> Laravel Sanctum </li>

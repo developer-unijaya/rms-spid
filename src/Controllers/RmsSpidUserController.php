@@ -191,8 +191,8 @@ class RmsSpidUserController
 
             } else {
 
-                $response->status = 200;
-                $response->msg = "FAILED";
+                $response->status = 404;
+                $response->msg = "USERSPID_NOT_FOUND";
 
             }
         }
