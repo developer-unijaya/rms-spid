@@ -3,13 +3,13 @@
 namespace DeveloperUnijaya\RmsSpid\Controllers;
 
 use DeveloperUnijaya\RmsSpid\Models\SpidResponse;
-// use App\Models\User;
 use DeveloperUnijaya\RmsSpid\Models\User;
 use DeveloperUnijaya\RmsSpid\Models\UserSpid;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Str;
 
 class RmsSpidUserController
 {
@@ -124,41 +124,40 @@ class RmsSpidUserController
 
     public function redirect(Request $request)
     {
-        $validate = Validator::make($request->all(), [
-            'user_spid_id' => ['required'],
+        $response = new SpidResponse;
+
+        $validateData = Validator::make($request->all(), [
             'user_id' => ['required'],
+            'user_spid_id' => ['required'],
         ]);
 
-        if ($validate->fails()) {
-            return response()->json([
-                'status' => false,
-                'message' => 'validation error',
-                'errors' => $validate->errors(),
-            ], 401);
+        if ($validateData->fails()) {
+
+            $response->status = 401;
+            $response->msg = "Validation Error";
+            $response->data = $validateData->errors();
+
+        } else {
+
+            $userSpid = UserSpid::where('user_id', $request->user_id)->where('user_spid_id', $request->user_spid_id)->first();
+
+            if ($userSpid) {
+
+                $userSpid->redirect_token = Str::uuid()->toString();
+                $userSpid->save();
+
+                $response->status = 200;
+                $response->msg = "SUCCESS";
+                $response->data = $userSpid;
+
+            } else {
+
+                $response->status = 200;
+                $response->msg = "FAILED";
+
+            }
         }
 
-        $user = User::where('id', $request->user_id)->where('spid_id', $request->user_spid_id)->first();
-
-        if (!$user) {
-            return response()->json([
-                'status' => false,
-                'message' => 'user not found',
-                'errors' => $validate->errors(),
-            ], 404);
-        }
-
-        // Untuk subsystem nnt, kne tambah subsystem id
-        $userSpid = UserSpid::firstOrNew(['user_id' => $user->id]);
-        $userSpid->spid_id = $user->spid_id;
-        $userSpid->redirect_token = Str::uuid()->toString();
-
-        $userSpid->save();
-
-        return response()->json([
-            'status' => true,
-            'message' => '',
-            'data' => $userSpid,
-        ], 200);
-
+        return response()->json($response);
     }
 }

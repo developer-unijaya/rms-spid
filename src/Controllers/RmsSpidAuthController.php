@@ -57,7 +57,7 @@ class RmsSpidAuthController
                 }
             }
 
-        } catch (\Throwable $th) {
+        } catch (\Throwable$th) {
 
             $response->status = 500;
             $response->msg = $th->getMessage();
