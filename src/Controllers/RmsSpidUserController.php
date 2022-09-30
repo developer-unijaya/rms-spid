@@ -68,7 +68,6 @@ class RmsSpidUserController
                 }
 
             } catch (\Throwable$th) {
-                //throw $th;
 
                 $response->status = 500;
                 $response->msg = $th->getMessage();
