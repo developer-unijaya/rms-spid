@@ -14,10 +14,10 @@ return [
 
     // Set redirect_token validity in minutes
     // Set to 0 for never expire
-    'redirect_token_validity' => 1,
+    'redirect_token_validity' => 10,
 
     // User Model
-    'user_model' => App\Models\User::class,
+    // 'user_model' => App\Models\User::class,
 
     // User Model Eloquent Relationship to be included in Profile API
     'user_profile_relationship' => [],
