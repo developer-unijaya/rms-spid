@@ -14,7 +14,7 @@ return [
 
     // Set redirect_token validity in minutes
     // Set to 0 for never expire
-    'redirect_token_validity' => 10,
+    'redirect_token_validity' => 5,
 
     // User Model
     // 'user_model' => App\Models\User::class,
