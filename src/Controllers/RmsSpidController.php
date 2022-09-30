@@ -22,7 +22,6 @@ class RmsSpidController
     {
         $response = new SpidResponse;
 
-        // Validation/Log or anything here. Before Logged In
         $validateData = Validator::make($request->all(), [
             'user_spid_id' => ['required'],
             'redirect_token' => ['required'],
@@ -55,7 +54,6 @@ class RmsSpidController
 
                 Auth::guard('web')->loginUsingId($userSpid->user_id);
 
-                // Login to Sub system
                 return redirect()->route('spid.sso.login', ['user_spid_id' => $request->user_spid_id, 'redirect_token' => $request->redirect_token]);
 
             } else {
