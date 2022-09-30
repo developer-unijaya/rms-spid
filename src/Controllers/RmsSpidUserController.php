@@ -3,40 +3,80 @@
 namespace DeveloperUnijaya\RmsSpid\Controllers;
 
 use DeveloperUnijaya\RmsSpid\Models\SpidResponse;
-use DeveloperUnijaya\RmsSpid\Models\User;
 use DeveloperUnijaya\RmsSpid\Models\UserSpid;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Facades\Hash;
 
 class RmsSpidUserController
 {
     public function register(Request $request)
     {
+        $response = new SpidResponse;
+
         $validateData = Validator::make($request->all(), [
-            'user_id' => ['required'],
-            'name' => ['required', 'string', 'max:255'],
-            'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
-            'password' => ['required', 'string', 'min:8'],
-            'roles' => ['required'],
+            'user_spid_id' => ['required'],
+            'name' => ['required', 'string'],
+            'email' => ['required', 'string', 'email'],
+            'username' => ['required'],
+            'password' => ['required'],
         ]);
 
         if ($validateData->fails()) {
-            return response()->json([
-                'status' => false,
-                'message' => 'VALIDATION_ERROR',
-                'errors' => $validateData->errors(),
-            ], 401);
+
+            $response->status = 401;
+            $response->msg = "VALIDATION_ERROR";
+            $response->data = $validateData->errors();
+
+        } else {
+
+            try {
+
+                $UserModel = config('auth.providers.users.model');
+                $UserModel = new $UserModel;
+
+                $user = $UserModel::firstOrNew(['email' => $request->email]);
+
+                if ($user->exists) {
+
+                    $response->status = 401;
+                    $response->msg = "USER_ALREADY_EXIST";
+
+                } else {
+
+                    $user->name = $request->name;
+                    $user->password = Hash::make($request->password);
+
+                    if ($user->save()) {
+
+                        $userSpid = UserSpid::firstOrNew(['user_id' => $user->id]);
+                        $userSpid->user_spid_id = $request->user_spid_id;
+                        $userSpid->save();
+
+                        $response->status = 200;
+                        $response->msg = "";
+                        $response->data = ['user' => $user, 'userSpid' => $userSpid];
+
+                    } else {
+
+                        $response->status = 401;
+                        $response->msg = "USER_CREATE_FAILED";
+
+                    }
+
+                }
+
+            } catch (\Throwable$th) {
+                //throw $th;
+
+                $response->status = 500;
+                $response->msg = $th->getMessage();
+            }
+
         }
 
-        $user = User::create([
-            'name' => $request->name,
-            'email' => $request->email,
-            'password' => Hash::make($request->password),
-        ]);
-
-        return response()->json(['user' => $user]);
+        return response()->json($response);
     }
 
     public function profile(Request $request)
