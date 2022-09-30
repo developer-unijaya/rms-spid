@@ -18,6 +18,7 @@ return new class extends Migration
             $table->unsignedBigInteger('user_id')->unique();
             $table->string('user_spid_id');
             $table->string('redirect_token')->nullable();
+            $table->dateTime('redirect_token_expired_at')->nullable();
             $table->timestamps();
         });
     }

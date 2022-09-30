@@ -136,7 +136,6 @@ class RmsSpidUserController
                     } else {
 
                         $userSpid->user_spid_id = $request->user_spid_id;
-                        $userSpid->redirect_token = Str::uuid()->toString();
                         $userSpid->save();
 
                         $response->status = 200;
@@ -182,12 +181,15 @@ class RmsSpidUserController
 
             if ($userSpid) {
 
-                $userSpid->redirect_token = Str::uuid()->toString();
-                $userSpid->save();
+                $userSpid->generateRedirectToken();
 
                 $response->status = 200;
                 $response->msg = "SUCCESS";
-                $response->data = ['redirect_token' => $userSpid->redirect_token, 'redirect_url' => route(config('spid.redirect_sso'))];
+                $response->data = [
+                    'redirect_token' => $userSpid->redirect_token,
+                    'redirect_token_expired_at' => $userSpid->redirect_token_expired_at ? $userSpid->redirect_token_expired_at->format('Y-m-d H:i:s') : null,
+                    'redirect_url' => route(config('spid.redirect_sso')),
+                ];
 
             } else {
 

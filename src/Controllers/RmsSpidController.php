@@ -4,11 +4,12 @@ namespace DeveloperUnijaya\RmsSpid\Controllers;
 
 // use DeveloperUnijaya\RmsSpid\Models\User;
 use App\Models\User;
+use Carbon\Carbon;
+use DeveloperUnijaya\RmsSpid\Models\SpidResponse;
 use DeveloperUnijaya\RmsSpid\Models\UserSpid;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
-use DeveloperUnijaya\RmsSpid\Models\SpidResponse;
 
 class RmsSpidController
 {
@@ -38,8 +39,14 @@ class RmsSpidController
 
         if ($userSpid) {
 
-            $user = User::where('id', $userSpid->user_id)->first();
+            if ($userSpid->redirect_token_expired_at) {
+                $now = Carbon::now();
+                if ($now->gt($userSpid->redirect_token_expired_at)) {
+                    return redirect()->route(config('spid.redirect_sso_failed'), ['failed_msg' => 'TOKEN_EXPIRED']);
+                }
+            }
 
+            $user = User::where('id', $userSpid->user_id)->first();
             if ($user) {
 
                 if (Auth::check()) {
@@ -80,9 +87,8 @@ class RmsSpidController
     {
         $userSpid = UserSpid::where('user_spid_id', $request->user_spid_id)->where('redirect_token', $request->redirect_token)->first();
 
-        if (config('spid.strict_redirect_token')) {
-            $userSpid->redirect_token = null;
-            $userSpid->save();
+        if (config('spid.redirect_token_once')) {
+            $userSpid->resetRedirectToken();
         }
 
         Auth::guard('web')->loginUsingId($userSpid->user_id);
