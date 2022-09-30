@@ -3,7 +3,7 @@
 namespace DeveloperUnijaya\RmsSpid\Controllers;
 
 // use DeveloperUnijaya\RmsSpid\Models\User;
-use App\Models\User;
+// use App\Models\User;
 use Carbon\Carbon;
 use DeveloperUnijaya\RmsSpid\Models\SpidResponse;
 use DeveloperUnijaya\RmsSpid\Models\UserSpid;
@@ -45,7 +45,10 @@ class RmsSpidController
                 }
             }
 
-            $user = User::where('id', $userSpid->user_id)->first();
+            $UserModel = config('auth.providers.users.model');
+            $UserModel = new $UserModel;
+
+            $user = $UserModel::where('id', $userSpid->user_id)->first();
             if ($user) {
 
                 if (Auth::check()) {

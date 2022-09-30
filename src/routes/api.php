@@ -1,6 +1,7 @@
 <?php
 
 use DeveloperUnijaya\RmsSpid\Controllers\RmsSpidAuthController;
+use DeveloperUnijaya\RmsSpid\Controllers\RmsSpidConfigController;
 use DeveloperUnijaya\RmsSpid\Controllers\RmsSpidUserController;
 use Illuminate\Support\Facades\Route;
 
@@ -28,6 +29,11 @@ Route::prefix('api')->group(function () {
             Route::post('check', [RmsSpidUserController::class, 'check'])->name('spid.user.check');
 
             Route::post('redirect', [RmsSpidUserController::class, 'redirect'])->name('spid.user.redirect');
+        });
+
+        Route::prefix('config')->middleware('auth:sanctum')->group(function () {
+
+            Route::post('get-config', [RmsSpidConfigController::class, 'getConfig'])->name('spid.config.getConfig');
         });
     });
 });

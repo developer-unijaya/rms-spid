@@ -42,7 +42,10 @@ class RmsSpidAuthController
 
                 if (Auth::attempt($credentials)) {
 
-                    $user = User::where('email', $request->username)->first();
+                    $UserModel = config('auth.providers.users.model');
+                    $UserModel = new $UserModel;
+
+                    $user = $UserModel::where('email', $request->username)->first();
 
                     $response->status = 200;
                     $response->msg = "AUTHENTICATED";
