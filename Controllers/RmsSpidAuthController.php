@@ -3,7 +3,7 @@
 namespace DeveloperUnijaya\RmsSpid\Controllers;
 
 // use DeveloperUnijaya\RmsSpid\Models\User;
-use App\Models\User;
+// use App\Models\User;
 use DeveloperUnijaya\RmsSpid\Models\SpidResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -14,6 +14,7 @@ class RmsSpidAuthController
     public function test(Request $request)
     {
         $response = new SpidResponse;
+        $response->msg = "Test From " . env('APP_NAME');
 
         return response()->json($response);
     }
@@ -24,16 +25,16 @@ class RmsSpidAuthController
 
         try {
 
-            $validateUser = Validator::make($request->all(), [
+            $validateData = Validator::make($request->all(), [
                 'username' => 'required',
                 'password' => 'required',
             ]);
 
-            if ($validateUser->fails()) {
+            if ($validateData->fails()) {
 
                 $response->status = 401;
-                $response->msg = "Validation Error";
-                $response->data = $validateUser->errors();
+                $response->msg = "VALIDATION_ERROR";
+                $response->data = $validateData->errors();
 
             } else {
 
@@ -41,22 +42,24 @@ class RmsSpidAuthController
 
                 if (Auth::attempt($credentials)) {
 
-                    $user = User::where('email', $request->username)->first();
+                    $UserModel = config('auth.providers.users.model');
+                    $UserModel = new $UserModel;
 
-                    $data['user'] = $user;
-                    $data['auth_token'] = $user->createToken("auth_token")->plainTextToken;
-                    
+                    $user = $UserModel::where('email', $request->username)->first();
+
                     $response->status = 200;
-                    $response->msg = "Authenticated";
-                    $response->data = $data;
+                    $response->msg = "AUTHENTICATED";
+                    $response->data = ['user' => $user, 'auth_token' => $user->createToken("auth_token")->plainTextToken];
 
                 } else {
+
                     $response->status = 401;
-                    $response->msg = "Credentials does not match with our record";
+                    $response->msg = "CREDENTIALS_DOES_NOT_MATCH";
+
                 }
             }
 
-        } catch (\Throwable $th) {
+        } catch (\Throwable$th) {
 
             $response->status = 500;
             $response->msg = $th->getMessage();
@@ -80,7 +83,7 @@ class RmsSpidAuthController
 
         $response = new SpidResponse;
         $response->status = 200;
-        $response->msg = "Logged out";
+        $response->msg = "LOGGED_OUT";
 
         return response()->json($response);
     }
