@@ -52,7 +52,14 @@ return [
 
 ## Usage
 
+Add following route to VerifyCsrfToken Exception in _App\Http\Middleware\VerifyCsrfToken.php_
 ```php
+class VerifyCsrfToken extends Middleware
+{
+    protected $except = [
+        "spid/*"
+    ];
+}
 ```
 
 ## Testing
