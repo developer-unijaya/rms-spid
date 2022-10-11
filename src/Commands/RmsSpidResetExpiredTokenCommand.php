@@ -5,7 +5,7 @@ namespace DeveloperUnijaya\RmsSpid\Commands;
 use Illuminate\Console\Command;
 use DeveloperUnijaya\RmsSpid\Models\UserSpid;
 use Carbon\Carbon;
-class RmsSpidCommand extends Command
+class RmsSpidResetExpiredTokenCommand extends Command
 {
     public $signature = 'spid:reset-expired-token';
 

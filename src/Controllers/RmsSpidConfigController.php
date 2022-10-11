@@ -12,6 +12,7 @@ class RmsSpidConfigController
         $response = new SpidResponse;
 
         $data = [
+            'rms-spid' => config('rms-spid'),
             'app' => config('app'),
             'auth' => config('auth'),
             'sanctum' => config('sanctum'),

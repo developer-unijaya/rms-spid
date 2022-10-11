@@ -2,7 +2,7 @@
 
 namespace DeveloperUnijaya\RmsSpid;
 
-use DeveloperUnijaya\RmsSpid\Commands\RmsSpidCommand;
+use DeveloperUnijaya\RmsSpid\Commands\RmsSpidResetExpiredTokenCommand;
 use Spatie\LaravelPackageTools\Package;
 use Spatie\LaravelPackageTools\PackageServiceProvider;
 
@@ -20,6 +20,6 @@ class RmsSpidServiceProvider extends PackageServiceProvider
             ->hasRoutes(['web', 'api'])
             ->hasViews('RmsSpidView')
             ->hasMigration('create_user_spid_table')
-            ->hasCommand(RmsSpidCommand::class);
+            ->hasCommand(RmsSpidResetExpiredTokenCommand::class);
     }
 }
