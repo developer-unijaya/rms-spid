@@ -14,14 +14,14 @@ composer require developer-unijaya/rms-spid
 You can publish and run the migrations with:
 
 ```bash
-php artisan vendor:publish --tag="developer-unijaya/rms-spid-migrations"
+php artisan vendor:publish --tag="rms-spid-migrations"
 php artisan migrate
 ```
 
 You can publish the config file with:
 
 ```bash
-php artisan vendor:publish --tag="developer-unijaya/rms-spid-config"
+php artisan vendor:publish --tag="rms-spid-config"
 ```
 
 This is the contents of the published config file:
