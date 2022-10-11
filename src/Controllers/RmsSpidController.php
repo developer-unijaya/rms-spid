@@ -81,7 +81,7 @@ class RmsSpidController
     {
         $failed_msg = $request->failed_msg;
 
-        return view('RmsSpidView::ssoAuthFailed', compact('failed_msg'));
+        return view('RmsSpidView::rms-spid.ssoAuthFailed', compact('failed_msg'));
     }
 
     public function ssoLogin(Request $request)

@@ -18,6 +18,7 @@ class RmsSpidServiceProvider extends PackageServiceProvider
         $package->name('rms-spid')
             ->hasConfigFile('rms-spid')
             ->hasRoutes(['web', 'api'])
+            ->hasViews('RmsSpidView')
             ->hasMigration('create_user_spid_table')
             ->hasCommand(RmsSpidCommand::class);
     }
