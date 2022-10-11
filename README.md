@@ -18,6 +18,12 @@ php artisan vendor:publish --tag="rms-spid-migrations"
 php artisan migrate
 ```
 
+You can publish the views file with:
+
+```bash
+php artisan vendor:publish --tag="RmsSpidView-views"
+```
+
 You can publish the config file with:
 
 ```bash
@@ -53,6 +59,7 @@ return [
 ## Usage
 
 Add following route to VerifyCsrfToken Exception in _App\Http\Middleware\VerifyCsrfToken.php_
+
 ```php
 class VerifyCsrfToken extends Middleware
 {
