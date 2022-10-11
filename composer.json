@@ -4,7 +4,8 @@
     "keywords": [
         "unijaya",
         "laravel",
-        "eRMS"
+        "eRMS",
+        "SPID"
     ],
     "homepage": "https://github.com/developer-unijaya/rms-spid",
     "license": "MIT",
