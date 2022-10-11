@@ -16,9 +16,8 @@ class RmsSpidServiceProvider extends PackageServiceProvider
          * More info: https://github.com/spatie/laravel-package-tools
          */
         $package->name('rms-spid')
-            ->hasConfigFile()
-            ->hasRoute('web')
-            ->hasRoute('api')
+            ->hasConfigFile('rms-spid')
+            ->hasRoutes(['web', 'api'])
             ->hasMigration('create_user_spid_table')
             ->hasCommand(RmsSpidCommand::class);
     }
