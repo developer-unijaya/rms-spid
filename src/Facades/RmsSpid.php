@@ -5,7 +5,7 @@ namespace DeveloperUnijaya\RmsSpid\Facades;
 use Illuminate\Support\Facades\Facade;
 
 /**
- * @see \VendorName\Skeleton\Skeleton
+ * @see \DeveloperUnijaya\RmsSpid\RmsSpid
  */
 class RmsSpid extends Facade
 {

@@ -2,9 +2,10 @@
 
 namespace DeveloperUnijaya\RmsSpid\Commands;
 
-use Illuminate\Console\Command;
-use DeveloperUnijaya\RmsSpid\Models\UserSpid;
 use Carbon\Carbon;
+use DeveloperUnijaya\RmsSpid\Models\UserSpid;
+use Illuminate\Console\Command;
+
 class RmsSpidResetExpiredTokenCommand extends Command
 {
     public $signature = 'spid:reset-expired-token';
@@ -13,19 +14,18 @@ class RmsSpidResetExpiredTokenCommand extends Command
 
     public function handle(): int
     {
-
         $now = Carbon::now();
 
         $userSpids = UserSpid::where('redirect_token_expired_at', '<=', $now)->get();
+        $count = count($userSpids);
 
-        foreach($userSpids as $userSpid)
-        {
+        foreach ($userSpids as $userSpid) {
             $userSpid->redirect_token = null;
             $userSpid->redirect_token_expired_at = null;
             $userSpid->save();
         }
 
-        $this->comment('completed');
+        $this->comment($count . ' redirect_token resetted');
 
         return self::SUCCESS;
     }
