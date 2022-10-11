@@ -11,8 +11,8 @@ Route::prefix('api')->group(function () {
 
         Route::post('test', [RmsSpidAuthController::class, 'test'])->name('api.spid.test');
 
+        // Auth API
         Route::prefix('auth')->group(function () {
-
             Route::post('login', [RmsSpidAuthController::class, 'login'])->name('spid.auth.login');
 
             Route::middleware('auth:sanctum')->group(function () {
@@ -21,8 +21,8 @@ Route::prefix('api')->group(function () {
             });
         });
 
+        // User API
         Route::prefix('user')->middleware('auth:sanctum')->group(function () {
-
             Route::post('register', [RmsSpidUserController::class, 'register'])->name('spid.user.register');
             Route::post('profile', [RmsSpidUserController::class, 'profile'])->name('spid.user.profile');
 
@@ -31,8 +31,8 @@ Route::prefix('api')->group(function () {
             Route::post('redirect', [RmsSpidUserController::class, 'redirect'])->name('spid.user.redirect');
         });
 
+        // Config API
         Route::prefix('config')->middleware('auth:sanctum')->group(function () {
-
             Route::post('get-config', [RmsSpidConfigController::class, 'getConfig'])->name('spid.config.getConfig');
         });
     });

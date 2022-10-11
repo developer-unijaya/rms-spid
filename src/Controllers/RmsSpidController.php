@@ -38,8 +38,11 @@ class RmsSpidController
 
         if ($userSpid) {
 
+            // To check if the token has Expiry Timestamp
             if ($userSpid->redirect_token_expired_at) {
                 $now = Carbon::now();
+
+                // Check Token Validity
                 if ($now->gt($userSpid->redirect_token_expired_at)) {
                     return redirect()->route(config('rms-spid.redirect_sso_failed'), ['failed_msg' => 'TOKEN_EXPIRED']);
                 }

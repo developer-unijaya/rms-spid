@@ -10,7 +10,7 @@ return [
 
     // When set to true, redirect_token can only be use once.
     // Delete redirect_token after successful redirect
-    'redirect_token_once' => true,
+    'redirect_token_once' => false,
 
     // Set redirect_token validity in minutes
     // Set to 0 for never expire
