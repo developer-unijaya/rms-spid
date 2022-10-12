@@ -10,12 +10,12 @@ return [
 
     // When set to true, redirect_token can only be use once.
     // Delete redirect_token after successful redirect
-    // Note: Prevoiusly generated token will not be affected
+    // Note: Previously generated token will not be affected
     'redirect_token_once' => true,
 
     // Set redirect_token validity in minutes
     // Set to 0 for never expire
-    // Note: Prevoiusly generated token will not be affected
+    // Note: Previously generated token will not be affected
     'redirect_token_validity' => 5,
 
     // User Model

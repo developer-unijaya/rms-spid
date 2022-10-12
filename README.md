@@ -6,34 +6,31 @@
 ## Installation
 
 You can install the package via composer:
-
 ```bash
 composer require developer-unijaya/rms-spid
 ```
 
-You can publish and run the migrations with:
 
+You can publish and run the migrations with:
 ```bash
 php artisan vendor:publish --tag="rms-spid-migrations"
-```
-```bash
 php artisan migrate
 ```
 
-You can publish the views file with:
 
+You can publish the views file with:
 ```bash
 php artisan vendor:publish --tag="RmsSpidView-views"
 ```
 
-You can publish the config file with:
 
+You can publish the config file with:
 ```bash
 php artisan vendor:publish --tag="rms-spid-config"
 ```
 
-This is the contents of the published config file:
 
+This is the contents of the published config file:
 ```php
 return [
 
@@ -45,12 +42,12 @@ return [
 
     // When set to true, redirect_token can only be use once.
     // Delete redirect_token after successful redirect
-    // Note: Prevoiusly generated token will not be affected
+    // Note: Previously generated token will not be affected
     'redirect_token_once' => true,
 
     // Set redirect_token validity in minutes
     // Set to 0 for never expire
-    // Note: Prevoiusly generated token will not be affected
+    // Note: Previously generated token will not be affected
     'redirect_token_validity' => 5,
 
     // User Model
@@ -61,8 +58,8 @@ return [
 ];
 ```
 
-Add following route to VerifyCsrfToken Exception in _App\Http\Middleware\VerifyCsrfToken.php_
 
+Add following route to VerifyCsrfToken Exception in _App\Http\Middleware\VerifyCsrfToken.php_
 ```php
 class VerifyCsrfToken extends Middleware
 {
@@ -71,6 +68,7 @@ class VerifyCsrfToken extends Middleware
     ];
 }
 ```
+
 
 ## Usage
 
