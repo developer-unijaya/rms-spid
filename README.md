@@ -92,6 +92,7 @@ Please review [our security policy](../../security/policy) on how to report secu
 ## Credits
 
 - [Syafiq Unijaya](https://github.com/syafiq-unijaya)
+- [Developer Unijaya](https://github.com/developer-unijaya)
 - [All Contributors](../../contributors)
 
 ## License
