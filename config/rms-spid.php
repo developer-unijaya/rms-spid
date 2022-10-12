@@ -3,7 +3,7 @@
 return [
 
     // Redirect route name after Successful SSO
-    'redirect_sso' => 'spid.sso.auth',
+    'redirect_sso_success' => 'home',
 
     // Redirect route name after Failed SSO
     'redirect_sso_failed' => 'spid.sso.auth.failed',
@@ -16,7 +16,7 @@ return [
     // Set redirect_token validity in minutes
     // Set to 0 for never expire
     // Note: Prevoiusly generated token will not be affected
-    'redirect_token_validity' => 60,
+    'redirect_token_validity' => 5,
 
     // User Model
     // 'user_model' => App\Models\User::class,

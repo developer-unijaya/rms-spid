@@ -13,7 +13,7 @@ use Illuminate\Support\Facades\Validator;
 
 class RmsSpidSsoController
 {
-    public function testSpid()
+    public function spidTest()
     {
         echo "eRMS-SPID";
     }
@@ -60,7 +60,7 @@ class RmsSpidSsoController
 
                 Auth::guard('web')->loginUsingId($userSpid->user_id);
 
-                return redirect()->route('spid.sso.login', ['user_spid_id' => $request->user_spid_id, 'redirect_token' => $request->redirect_token]);
+                return redirect()->route('spid.sso.auth.login', ['user_spid_id' => $request->user_spid_id, 'redirect_token' => $request->redirect_token]);
 
             } else {
 
@@ -80,13 +80,6 @@ class RmsSpidSsoController
         return response()->json($response);
     }
 
-    public function ssoAuthFailed(Request $request)
-    {
-        $failed_msg = $request->failed_msg;
-
-        return view('RmsSpidView::ssoAuthFailed', compact('failed_msg'));
-    }
-
     public function ssoLogin(Request $request)
     {
         $userSpid = UserSpid::where('user_spid_id', $request->user_spid_id)->where('redirect_token', $request->redirect_token)->first();
@@ -97,6 +90,14 @@ class RmsSpidSsoController
 
         Auth::guard('web')->loginUsingId($userSpid->user_id);
 
-        return redirect()->intended('home');
+        return redirect()->intended(config('rms-spid.redirect_sso_success'));
     }
+
+    public function ssoFailed(Request $request)
+    {
+        $failed_msg = $request->failed_msg;
+
+        return view('RmsSpidView::ssoAuthFailed', compact('failed_msg'));
+    }
+
 }
