@@ -36,18 +36,21 @@ This is the contents of the published config file:
 
 ```php
 return [
+
     // Redirect route name after Successful SSO
-    'redirect_sso' => 'spid.sso.auth',
+    'redirect_sso_success' => 'home',
 
     // Redirect route name after Failed SSO
     'redirect_sso_failed' => 'spid.sso.auth.failed',
 
     // When set to true, redirect_token can only be use once.
     // Delete redirect_token after successful redirect
+    // Note: Prevoiusly generated token will not be affected
     'redirect_token_once' => true,
 
     // Set redirect_token validity in minutes
     // Set to 0 for never expire
+    // Note: Prevoiusly generated token will not be affected
     'redirect_token_validity' => 5,
 
     // User Model
