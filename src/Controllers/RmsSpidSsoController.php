@@ -54,12 +54,6 @@ class RmsSpidSsoController
             $user = $UserModel::where('id', $userSpid->user_id)->first();
             if ($user) {
 
-                if (Auth::check()) {
-                    Auth::logout();
-                }
-
-                Auth::guard('web')->loginUsingId($userSpid->user_id);
-
                 return redirect()->route('spid.sso.auth.login', ['user_spid_id' => $request->user_spid_id, 'redirect_token' => $request->redirect_token]);
 
             } else {
@@ -88,6 +82,10 @@ class RmsSpidSsoController
             $userSpid->resetRedirectToken();
         }
 
+        if (Auth::check()) {
+            Auth::logout();
+        }
+
         Auth::guard('web')->loginUsingId($userSpid->user_id);
 
         return redirect()->intended(config('rms-spid.redirect_sso_success'));
@@ -99,5 +97,4 @@ class RmsSpidSsoController
 
         return view('RmsSpidView::ssoAuthFailed', compact('failed_msg'));
     }
-
 }
