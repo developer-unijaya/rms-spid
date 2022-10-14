@@ -5,6 +5,8 @@
 
 ## Requirements
 - [laravel/sanctum](https://github.com/laravel/sanctum)
+- PHP ^8.0
+- Laravel ^8.0
 
 ## Installation
 
@@ -72,20 +74,19 @@ class VerifyCsrfToken extends Middleware
 }
 ```
 
+
 Check and Locate your Auth User Model at
 config\auth.php
-
 ```php
 'providers' => [
-        'users' => [
-            'driver' => 'eloquent',
-            'model' => App\Models\User::class, // <= Your Auth User Model
-        ],
+    'users' => [
+        'driver' => 'eloquent',
+        'model' => App\Models\User::class, // <= Your Auth User Model
     ],
+],
 ```
 
 Add the _HasApiTokens_ Trait to your Auth User Model
-
 ```php
 use Laravel\Sanctum\HasApiTokens;
 
