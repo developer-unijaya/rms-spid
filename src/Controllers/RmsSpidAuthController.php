@@ -71,6 +71,19 @@ class RmsSpidAuthController
     public function me(Request $request)
     {
         $response = new SpidResponse;
+
+        try {
+
+            $response->status = 200;
+            $response->data = $request->user();
+
+        } catch (\Throwable$th) {
+
+            $response->status = 500;
+            $response->msg = $th->getMessage();
+
+        }
+
         $response->status = 200;
         $response->data = $request->user();
 
@@ -79,11 +92,20 @@ class RmsSpidAuthController
 
     public function logout(Request $request)
     {
-        $request->user()->tokens()->delete();
-
         $response = new SpidResponse;
-        $response->status = 200;
-        $response->msg = "LOGGED_OUT";
+
+        try {
+
+            $request->user()->tokens()->delete();
+            $response->status = 200;
+            $response->msg = "LOGGED_OUT";
+
+        } catch (\Throwable$th) {
+
+            $response->status = 500;
+            $response->msg = $th->getMessage();
+
+        }
 
         return response()->json($response);
     }
