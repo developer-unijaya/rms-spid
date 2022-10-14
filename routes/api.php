@@ -31,6 +31,7 @@ Route::prefix('api')->group(function () {
         Route::prefix('user')->middleware('auth:sanctum')->group(function () {
             Route::post('register', [RmsSpidUserController::class, 'register'])->name('spid.user.register');
             Route::post('profile', [RmsSpidUserController::class, 'profile'])->name('spid.user.profile');
+            Route::post('update-spid_id', [RmsSpidUserController::class, 'updateSpidId'])->name('spid.user.updateSpidId');
 
             // Bind account
             Route::post('check', [RmsSpidUserController::class, 'check'])->name('spid.user.check');

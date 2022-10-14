@@ -131,6 +131,49 @@ class RmsSpidUserController
 
     }
 
+    public function updateSpidId(Request $request)
+    {
+        $response = new SpidResponse;
+
+        $validateData = Validator::make($request->all(), [
+            'user_id' => ['required'],
+            'user_spid_id' => ['required'],
+        ]);
+
+        if ($validateData->fails()) {
+
+            $response->status = 401;
+            $response->msg = "VALIDATION_ERROR";
+            $response->data = $validateData->errors();
+
+        } else {
+
+            $UserModel = config('auth.providers.users.model');
+            $UserModel = new $UserModel;
+
+            $user = $UserModel::where('id', $request->user_id)->first();
+
+            if ($user) {
+
+                $userSpid = UserSpid::firstOrNew(['user_id' => $user->id]);
+                $userSpid->user_spid_id = $request->user_spid_id;
+                $userSpid->save();
+
+                $response->status = 200;
+                $response->msg .= "SUCCESS";
+                $response->data = ['user' => $user, 'userSpid' => $userSpid];
+
+            } else {
+
+                $response->status = 401;
+                $response->msg = "USER_NOT_FOUND";
+
+            }
+        }
+
+        return response()->json($response);
+    }
+
     public function check(Request $request)
     {
         $response = new SpidResponse;
