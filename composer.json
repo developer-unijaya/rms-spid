@@ -1,11 +1,8 @@
 {
     "name": "developer-unijaya/rms-spid",
-    "description": "eRMS-SPID Packages",
+    "description": "eRMS-SPID Packages (API + SSO)",
     "keywords": [
-        "unijaya",
-        "laravel",
-        "eRMS",
-        "SPID"
+        "eRMS"
     ],
     "homepage": "https://github.com/developer-unijaya/rms-spid",
     "license": "MIT",

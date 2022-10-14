@@ -7,7 +7,7 @@ use Illuminate\Http\Request;
 
 class RmsSpidConfigController
 {
-    // For Dev & Debug purpose
+    // ! For Dev & Debug purpose
     public function getConfig(Request $request)
     {
         $response = new SpidResponse;

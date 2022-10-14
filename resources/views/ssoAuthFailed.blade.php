@@ -6,12 +6,12 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title> {{ env('APP_NAME', '') }} - SSO Auth Failed </title>
 </head>
-<body style="background-color: #B4B5B5">
+<body style="background-color: #898AA6">
 
     <center>
         <br/><br/><br/>
 
-        <h1> SSO Auth Failed </h1>
+        <h2> SSO Auth Failed </h2>
         <p> {{ $failed_msg }} </p>
 
         <br/><br/><br/>

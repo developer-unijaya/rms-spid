@@ -3,6 +3,9 @@
 [![Latest Version on Packagist](https://img.shields.io/packagist/v/developer-unijaya/rms-spid.svg?style=flat-square)](https://packagist.org/packages/developer-unijaya/rms-spid)
 [![Total Downloads](https://img.shields.io/packagist/dt/developer-unijaya/rms-spid.svg?style=flat-square)](https://packagist.org/packages/developer-unijaya/rms-spid)
 
+## Requirements
+- [laravel/sanctum](https://github.com/laravel/sanctum)
+
 ## Installation
 
 You can install the package via composer:
@@ -66,6 +69,29 @@ class VerifyCsrfToken extends Middleware
     protected $except = [
         "spid/*"
     ];
+}
+```
+
+Check and Locate your Auth User Model at
+config\auth.php
+
+```php
+'providers' => [
+        'users' => [
+            'driver' => 'eloquent',
+            'model' => App\Models\User::class, // <= Your Auth User Model
+        ],
+    ],
+```
+
+Add the _HasApiTokens_ Trait to your Auth User Model
+
+```php
+use Laravel\Sanctum\HasApiTokens;
+
+class User extends Authenticatable
+{
+    use HasApiTokens;
 }
 ```
 
