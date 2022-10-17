@@ -18,9 +18,6 @@ return [
     // Note: Previously generated token will not be affected
     'redirect_token_validity' => 5,
 
-    // User Model
-    // 'user_model' => App\Models\User::class,
-
     // User Model Eloquent Relationship to be included in Profile API
     'user_profile_relationship' => [],
 ];

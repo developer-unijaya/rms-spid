@@ -129,21 +129,32 @@ class RmsSpidUserSpidController
 
         if ($userSpid) {
 
-            if ($request->user_id) {
-                $userSpid->user_id = $request->user_id;
+            try {
+
+                if ($request->user_id) {
+                    $userSpid->user_id = $request->user_id;
+                }
+
+                if ($request->user_spid_id) {
+                    $userSpid->user_spid_id = $request->user_spid_id;
+                }
+
+                if ($request->redirect_token) {
+                    $userSpid->redirect_token = $request->redirect_token;
+                }
+
+                $userSpid->save();
+
+                $response->status = 200;
+                $response->msg = 'SUCCESS';
+                $response->data = $userSpid;
+
+            } catch (\Throwable$th) {
+
+                $response->status = 500;
+                $response->msg = $th->getMessage();
+                
             }
-
-            if ($request->user_spid_id) {
-                $userSpid->user_spid_id = $request->user_spid_id;
-            }
-
-            if ($request->redirect_token) {
-                $userSpid->redirect_token = $request->redirect_token;
-            }
-
-            $userSpid->save();
-
-            $response->data = $userSpid;
 
         } else {
 

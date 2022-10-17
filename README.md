@@ -4,6 +4,7 @@
 [![Total Downloads](https://img.shields.io/packagist/dt/developer-unijaya/rms-spid.svg?style=flat-square)](https://packagist.org/packages/developer-unijaya/rms-spid)
 
 ## Requirements
+
 - PHP ^8.0
 - Laravel ^8.0
 - [Laravel Sanctum](https://laravel.com/docs/9.x/sanctum)
@@ -55,9 +56,6 @@ return [
     // Note: Previously generated token will not be affected
     'redirect_token_validity' => 5,
 
-    // User Model
-    // 'user_model' => App\Models\User::class,
-
     // User Model Eloquent Relationship to be included in Profile API
     'user_profile_relationship' => [],
 ];
@@ -99,12 +97,6 @@ class User extends Authenticatable
 
 ## Usage
 
-
-## Testing
-
-```bash
-composer test
-```
 
 ## Changelog
 
