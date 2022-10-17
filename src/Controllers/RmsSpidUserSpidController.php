@@ -15,7 +15,7 @@ class RmsSpidUserSpidController
 
         try {
 
-            $userSpids = UserSpid::get();
+            $userSpids = UserSpid::orderBy('id')->get();
 
             $response->status = 200;
             $response->msg = "SUCCESS";
@@ -142,7 +142,7 @@ class RmsSpidUserSpidController
             }
 
             $userSpid->save();
-            
+
             $response->data = $userSpid;
 
         } else {
@@ -164,11 +164,19 @@ class RmsSpidUserSpidController
 
             $tempData = $userSpid;
 
-            $userSpid->delete();
-            
-            $response->status = 200;
-            $response->msg = 'SUCCESS';
-            $response->data = $tempData;
+            try {
+
+                $userSpid->delete();
+
+                $response->status = 200;
+                $response->msg = 'SUCCESS';
+                $response->data = $tempData;
+
+            } catch (\Throwable$th) {
+
+                $response->status = 500;
+                $response->msg = $th->getMessage();
+            }
 
         } else {
 

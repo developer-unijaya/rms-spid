@@ -4,7 +4,6 @@ use DeveloperUnijaya\RmsSpid\Controllers\RmsSpidAuthController;
 use DeveloperUnijaya\RmsSpid\Controllers\RmsSpidConfigController;
 use DeveloperUnijaya\RmsSpid\Controllers\RmsSpidUserController;
 use DeveloperUnijaya\RmsSpid\Controllers\RmsSpidUserSpidController;
-
 use Illuminate\Support\Facades\Route;
 
 Route::prefix('api')->group(function () {
