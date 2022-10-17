@@ -221,7 +221,7 @@ class RmsSpidUserController
 
                         $response->status = 200;
                         $response->msg .= "SUCCESS_BIND-";
-                        $response->data = ['user' => $user, 'userSpid' => $userSpid, 'redirect_url' => route(config('rms-spid.redirect_sso'))];
+                        $response->data = ['user' => $user, 'userSpid' => $userSpid, 'redirect_url' => route(config('rms-spid.redirect_sso_success'))];
 
                     }
 
@@ -269,7 +269,7 @@ class RmsSpidUserController
                 $response->data = [
                     'redirect_token' => $userSpid->redirect_token,
                     'redirect_token_expired_at' => $userSpid->redirect_token_expired_at ? $userSpid->redirect_token_expired_at->format('Y-m-d H:i:s') : null,
-                    'redirect_url' => route(config('rms-spid.redirect_sso')),
+                    'redirect_url' => route(config('rms-spid.redirect_sso_success')),
                 ];
 
             } else {
