@@ -4,9 +4,9 @@
 [![Total Downloads](https://img.shields.io/packagist/dt/developer-unijaya/rms-spid.svg?style=flat-square)](https://packagist.org/packages/developer-unijaya/rms-spid)
 
 ## Requirements
-- [laravel/sanctum](https://github.com/laravel/sanctum)
 - PHP ^8.0
 - Laravel ^8.0
+- [Laravel Sanctum](https://laravel.com/docs/9.x/sanctum)
 
 ## Installation
 
