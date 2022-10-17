@@ -3,6 +3,8 @@
 use DeveloperUnijaya\RmsSpid\Controllers\RmsSpidAuthController;
 use DeveloperUnijaya\RmsSpid\Controllers\RmsSpidConfigController;
 use DeveloperUnijaya\RmsSpid\Controllers\RmsSpidUserController;
+use DeveloperUnijaya\RmsSpid\Controllers\RmsSpidUserSpidController;
+
 use Illuminate\Support\Facades\Route;
 
 Route::prefix('api')->group(function () {
@@ -10,6 +12,7 @@ Route::prefix('api')->group(function () {
     Route::prefix('spid')->group(function () {
 
         Route::post('test', [RmsSpidAuthController::class, 'test'])->name('api.spid.test');
+        Route::resource('user-spid', RmsSpidUserSpidController::class);
 
         // * Auth API
         Route::prefix('auth')->group(function () {
