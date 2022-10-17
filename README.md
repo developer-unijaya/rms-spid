@@ -7,7 +7,7 @@
 
 - PHP ^8.0
 - Laravel ^8.0
-- [Laravel Sanctum](https://laravel.com/docs/9.x/sanctum)
+- [Laravel Sanctum](https://laravel.com/docs/8.x/sanctum)
 
 ## Installation
 

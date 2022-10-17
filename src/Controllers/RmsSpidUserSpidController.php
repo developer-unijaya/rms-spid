@@ -153,7 +153,7 @@ class RmsSpidUserSpidController
 
                 $response->status = 500;
                 $response->msg = $th->getMessage();
-                
+
             }
 
         } else {
