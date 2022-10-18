@@ -4,8 +4,8 @@ namespace DeveloperUnijaya\RmsSpid\Controllers;
 
 // use DeveloperUnijaya\RmsSpid\Models\User;
 // use App\Models\User;
-use DeveloperUnijaya\RmsSpid\Models\SpidResponse;
 use DeveloperUnijaya\RmsSpid\Models\SpidKey;
+use DeveloperUnijaya\RmsSpid\Models\SpidResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
@@ -15,7 +15,7 @@ class RmsSpidAuthController
     public function test(Request $request)
     {
         $response = new SpidResponse;
-        $response->msg = "Test From " . env('APP_NAME');
+        $response->msg[] = "Test From " . env('APP_NAME');
 
         return response()->json($response);
     }
@@ -34,36 +34,58 @@ class RmsSpidAuthController
             if ($validateData->fails()) {
 
                 $response->status = 401;
-                $response->msg = "VALIDATION_ERROR";
+                $response->msg[] = "VALIDATION_ERROR";
                 $response->data = $validateData->errors();
 
             } else {
 
+                $response->msg[] = "VALIDATION_OK";
+
                 $credentials = ['email' => $request->username, 'password' => $request->password];
 
                 if (Auth::attempt($credentials)) {
+
+                    $response->msg[] = "CREDENTIALS_MATCH";
 
                     $UserModel = config('auth.providers.users.model');
                     $UserModel = new $UserModel;
 
                     $user = $UserModel::where('email', $request->username)->first();
 
+                    if (config('rms-spid.spid_users_id')) {
+
+                        $response->msg[] = "CONFIG_SPID_USERS_ID_EXIST";
+
+                        if (!in_array($user->id, config('rms-spid.spid_users_id'))) {
+
+                            $response->status = 401;
+                            $response->msg[] = "CREDENTIALS_NOT_ALLOWED";
+                        }
+
+                        $response->msg[] = "CREDENTIALS_ALLOWED";
+                    } else {
+                        
+                        $response->msg[] = "CONFIG_SPID_USERS_ID_DOES_NOT_EXIST";
+                    }
+
                     $response->status = 200;
-                    $response->msg = "AUTHENTICATED";
+                    $response->msg[] = "AUTHENTICATED";
+                    $response->msg[] = 'SUCCESS';
                     $response->data = ['user' => $user, 'auth_token' => $user->createToken("auth_token")->plainTextToken];
 
                 } else {
 
                     $response->status = 401;
-                    $response->msg = "CREDENTIALS_DOES_NOT_MATCH";
+                    $response->msg[] = "CREDENTIALS_DOES_NOT_MATCH";
 
                 }
             }
 
         } catch (\Throwable$th) {
 
+            $response->msg[] = 'ERROR';
             $response->status = 500;
-            $response->msg = $th->getMessage();
+            $response->msg[] = $th->getMessage();
         }
 
         return response()->json($response);
@@ -71,7 +93,7 @@ class RmsSpidAuthController
 
     public function me(Request $request)
     {
-        SpidKey::check($request);
+        // SpidKey::check($request);
 
         $response = new SpidResponse;
 
@@ -79,16 +101,15 @@ class RmsSpidAuthController
 
             $response->status = 200;
             $response->data = $request->user();
+            $response->msg[] = 'SUCCESS';
 
         } catch (\Throwable$th) {
 
+            $response->msg[] = 'ERROR';
             $response->status = 500;
-            $response->msg = $th->getMessage();
+            $response->msg[] = $th->getMessage();
 
         }
-
-        $response->status = 200;
-        $response->data = $request->user();
 
         return response()->json($response);
     }
@@ -101,12 +122,13 @@ class RmsSpidAuthController
 
             $request->user()->tokens()->delete();
             $response->status = 200;
-            $response->msg = "LOGGED_OUT";
+            $response->msg[] = "LOGGED_OUT";
 
         } catch (\Throwable$th) {
 
+            $response->msg[] = 'ERROR';
             $response->status = 500;
-            $response->msg = $th->getMessage();
+            $response->msg[] = $th->getMessage();
 
         }
 

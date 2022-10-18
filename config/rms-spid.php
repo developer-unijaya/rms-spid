@@ -5,6 +5,9 @@ return [
     // SPID Key
     'spid_key' => 'keyyyy',
 
+    // Users ID that allowed to access API
+    'spid_users_id' => [],
+
     // Redirect route name after Successful SSO
     'redirect_sso_success' => 'home',
 

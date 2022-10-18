@@ -27,16 +27,29 @@ class UserSpid extends Model
 
     public function generateRedirectToken()
     {
-        $redirect_token = Str::uuid()->toString();
-        $redirect_token_expired_at = null;
+        $is_success = false;
 
-        if (config('rms-spid.redirect_token_validity')) {
-            $redirect_token_expired_at = Carbon::now()->addMinutes(config('spid.redirect_token_validity'));
+        try {
+
+            $redirect_token = Str::uuid()->toString();
+            $redirect_token_expired_at = null;
+
+            if (config('rms-spid.redirect_token_validity')) {
+                $redirect_token_expired_at = Carbon::now()->addMinutes(config('spid.redirect_token_validity'));
+            }
+
+            $this->redirect_token = $redirect_token;
+            $this->redirect_token_expired_at = $redirect_token_expired_at;
+            $this->save();
+
+            $is_success = true;
+
+        } catch (\Throwable$th) {
+
+            $is_success = false;
         }
 
-        $this->redirect_token = $redirect_token;
-        $this->redirect_token_expired_at = $redirect_token_expired_at;
-        $this->save();
+        return $is_success;
     }
 
     public function resetRedirectToken()

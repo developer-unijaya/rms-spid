@@ -30,45 +30,65 @@ class RmsSpidSsoController
         if ($validateData->fails()) {
 
             $response->status = 401;
-            $response->msg = "VALIDATION_ERROR";
+            $response->msg[] = "VALIDATION_ERROR";
             $response->data = $validateData->errors();
-        }
+        } else {
 
-        $userSpid = UserSpid::where('user_spid_id', $request->user_spid_id)->where('redirect_token', $request->redirect_token)->first();
+            $response->msg[] = "VALIDATION_OK";
 
-        if ($userSpid) {
+            $userSpid = UserSpid::where('user_spid_id', $request->user_spid_id)->where('redirect_token', $request->redirect_token)->first();
 
-            // To check if the token has Expiry Timestamp
-            if ($userSpid->redirect_token_expired_at) {
-                $now = Carbon::now();
+            if ($userSpid) {
 
-                // Check Token Validity
-                if ($now->gt($userSpid->redirect_token_expired_at)) {
-                    return redirect()->route(config('rms-spid.redirect_sso_failed'), ['failed_msg' => 'TOKEN_EXPIRED']);
+                $response->msg[] = "USERSPID_FOUND";
+
+                // To check if the token has Expiry Timestamp
+                if ($userSpid->redirect_token_expired_at) {
+
+                    $response->msg[] = "REDIRECT_TOKEN_EXPIRED_AT_EXIST";
+                    $now = Carbon::now();
+
+                    // Check Token Validity
+                    if ($now->gt($userSpid->redirect_token_expired_at)) {
+
+                        $response->msg[] = "REDIRECT_TOKEN_EXPIRED";
+
+                        return redirect()->route(config('rms-spid.redirect_sso_failed'), ['failed_msg' => 'TOKEN_EXPIRED']);
+                    } else {
+
+                        $response->msg[] = "REDIRECT_TOKEN_DOES_NOT_EXPIRED";
+                    }
+                } else {
+
+                    $response->msg[] = "REDIRECT_TOKEN_EXPIRED_AT_DOES_NOT_EXIST";
                 }
-            }
 
-            $UserModel = config('auth.providers.users.model');
-            $UserModel = new $UserModel;
+                $UserModel = config('auth.providers.users.model');
+                $UserModel = new $UserModel;
 
-            $user = $UserModel::where('id', $userSpid->user_id)->first();
-            if ($user) {
+                $user = $UserModel::where('id', $userSpid->user_id)->first();
+                if ($user) {
 
-                return redirect()->route('spid.sso.auth.login', ['user_spid_id' => $request->user_spid_id, 'redirect_token' => $request->redirect_token]);
+                    $response->msg[] = "USER_FOUND";
+                    $response->msg[] = "SUCCESS";
+
+                    return redirect()->route('spid.sso.auth.login', ['user_spid_id' => $request->user_spid_id, 'redirect_token' => $request->redirect_token]);
+
+                } else {
+
+                    $response->status = 404;
+                    $response->msg[] = "USER_NOT_FOUND";
+                    return redirect()->route(config('rms-spid.redirect_sso_failed'), ['failed_msg' => 'USER_NOT_FOUND']);
+
+                }
 
             } else {
 
                 $response->status = 404;
-                $response->msg = "USER_NOT_FOUND";
-                return redirect()->route(config('rms-spid.redirect_sso_failed'), ['failed_msg' => 'USER_NOT_FOUND']);
-
+                $response->msg[] = "USERSPID_NOT_FOUND";
+                return redirect()->route(config('rms-spid.redirect_sso_failed'), ['failed_msg' => 'USERSPID_NOT_FOUND']);
             }
 
-        } else {
-
-            $response->status = 404;
-            $response->msg = "USERSPID_NOT_FOUND";
-            return redirect()->route(config('rms-spid.redirect_sso_failed'), ['failed_msg' => 'USERSPID_NOT_FOUND']);
         }
 
         return response()->json($response);
