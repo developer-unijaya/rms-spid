@@ -4,7 +4,6 @@ namespace DeveloperUnijaya\RmsSpid\Controllers;
 
 // use DeveloperUnijaya\RmsSpid\Models\User;
 // use App\Models\User;
-use DeveloperUnijaya\RmsSpid\Models\SpidKey;
 use DeveloperUnijaya\RmsSpid\Models\SpidResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -52,26 +51,33 @@ class RmsSpidAuthController
 
                     $user = $UserModel::where('email', $request->username)->first();
 
+                    $isAllowed = true;
                     if (config('rms-spid.spid_users_id')) {
 
                         $response->msg[] = "CONFIG_SPID_USERS_ID_EXIST";
 
                         if (!in_array($user->id, config('rms-spid.spid_users_id'))) {
-
-                            $response->status = 401;
-                            $response->msg[] = "CREDENTIALS_NOT_ALLOWED";
+                            $isAllowed = false;
+                        } else {
+                            $response->msg[] = "CREDENTIALS_ALLOWED";
                         }
 
-                        $response->msg[] = "CREDENTIALS_ALLOWED";
                     } else {
-                        
                         $response->msg[] = "CONFIG_SPID_USERS_ID_DOES_NOT_EXIST";
                     }
 
-                    $response->status = 200;
-                    $response->msg[] = "AUTHENTICATED";
-                    $response->msg[] = 'SUCCESS';
-                    $response->data = ['user' => $user, 'auth_token' => $user->createToken("auth_token")->plainTextToken];
+                    if ($isAllowed) {
+
+                        $response->status = 200;
+                        $response->msg[] = "AUTHENTICATED";
+                        $response->msg[] = 'SUCCESS';
+                        $response->data = ['user' => $user, 'auth_token' => $user->createToken("auth_token")->plainTextToken];
+
+                    } else {
+
+                        $response->status = 401;
+                        $response->msg[] = "CREDENTIALS_NOT_ALLOWED";
+                    }
 
                 } else {
 

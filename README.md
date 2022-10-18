@@ -12,36 +12,42 @@
 ## Installation
 
 You can install the package via composer:
+
 ```bash
 composer require developer-unijaya/rms-spid
 ```
 
-
 Publish and run the migrations with:
+
 ```bash
 php artisan vendor:publish --tag="rms-spid-migrations"
 php artisan migrate
 ```
 
-
 Publish the views file with:
+
 ```bash
 php artisan vendor:publish --tag="RmsSpidView-views"
 ```
 
-
 Publish the config file with:
+
 ```bash
 php artisan vendor:publish --tag="rms-spid-config"
 ```
 
-
 This is the contents of the published config file:
+
 ```php
 return [
 
-    // SPID Key
+    // Set NULL to disable VerifySpidKey Middleware
+    // Set to any UUID Value to enable
     'spid_key' => null,
+
+    // Users ID that allowed to access Login API
+    // Set to Empty to enable All User Access (Not Secure)
+    'spid_users_id' => [],
 
     // Redirect route name after Successful SSO
     'redirect_sso_success' => 'home',
@@ -49,13 +55,13 @@ return [
     // Redirect route name after Failed SSO
     'redirect_sso_failed' => 'spid.sso.auth.failed',
 
-    // When set to true, redirect_token can only be use once.
-    // Delete redirect_token after successful redirect
+    // When set to true, redirect_token can only be used once.
+    // The redirect_token will be deleted after successful redirect
     // Note: Previously generated token will not be affected
     'redirect_token_once' => true,
 
     // Set redirect_token validity in minutes
-    // Set to 0 for never expire
+    // Set 0 to never expire
     // Note: Previously generated token will not be affected
     'redirect_token_validity' => 5,
 
@@ -64,8 +70,8 @@ return [
 ];
 ```
 
-
 Add following route to VerifyCsrfToken Exception in _App\Http\Middleware\VerifyCsrfToken.php_
+
 ```php
 class VerifyCsrfToken extends Middleware
 {
@@ -75,9 +81,9 @@ class VerifyCsrfToken extends Middleware
 }
 ```
 
-
 Check and Locate your Auth Provider User Model
 config\auth.php
+
 ```php
 'providers' => [
     'users' => [
@@ -88,6 +94,7 @@ config\auth.php
 ```
 
 Add Laravel Sanctum _HasApiTokens_ Trait to your Auth Provider User Model
+
 ```php
 use Laravel\Sanctum\HasApiTokens;
 
@@ -97,9 +104,16 @@ class User extends Authenticatable
 }
 ```
 
+Add _VerifySpidKey_ Middleware in _$routeMiddleware_ at _App\Http\Kernel.php_
+You can optionally Enable or Disable the middleware on the published Config File
+```php
+protected $routeMiddleware = [
+    // ...
+    'verifyspidkey' => \DeveloperUnijaya\RmsSpid\Middleware\VerifySpidKey::class,
+];
+```
 
 ## Usage
-
 
 ## Changelog
 

@@ -14,7 +14,7 @@ Route::prefix('api')->group(function () {
         Route::resource('user-spid', RmsSpidUserSpidController::class);
 
         // * Auth API
-        Route::prefix('auth')->group(function () {
+        Route::prefix('auth')->middleware('verifyspidkey')->group(function () {
 
             // * Login System account and return auth_token
             Route::post('login', [RmsSpidAuthController::class, 'login'])->name('spid.auth.login');
