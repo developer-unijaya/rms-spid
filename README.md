@@ -17,20 +17,20 @@ composer require developer-unijaya/rms-spid
 ```
 
 
-You can publish and run the migrations with:
+Publish and run the migrations with:
 ```bash
 php artisan vendor:publish --tag="rms-spid-migrations"
 php artisan migrate
 ```
 
 
-You can publish the views file with:
+Publish the views file with:
 ```bash
 php artisan vendor:publish --tag="RmsSpidView-views"
 ```
 
 
-You can publish the config file with:
+Publish the config file with:
 ```bash
 php artisan vendor:publish --tag="rms-spid-config"
 ```
@@ -39,6 +39,9 @@ php artisan vendor:publish --tag="rms-spid-config"
 This is the contents of the published config file:
 ```php
 return [
+
+    // SPID Key
+    'spid_key' => null,
 
     // Redirect route name after Successful SSO
     'redirect_sso_success' => 'home',
@@ -73,18 +76,18 @@ class VerifyCsrfToken extends Middleware
 ```
 
 
-Check and Locate your Auth User Model at
+Check and Locate your Auth Provider User Model
 config\auth.php
 ```php
 'providers' => [
     'users' => [
         'driver' => 'eloquent',
-        'model' => App\Models\User::class, // <= Your Auth User Model
+        'model' => App\Models\User::class, // <= Your Auth Provider User Model
     ],
 ],
 ```
 
-Add the _HasApiTokens_ Trait to your Auth User Model
+Add Laravel Sanctum _HasApiTokens_ Trait to your Auth Provider User Model
 ```php
 use Laravel\Sanctum\HasApiTokens;
 

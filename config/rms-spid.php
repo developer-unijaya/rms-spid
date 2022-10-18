@@ -2,6 +2,9 @@
 
 return [
 
+    // SPID Key
+    'spid_key' => 'keyyyy',
+
     // Redirect route name after Successful SSO
     'redirect_sso_success' => 'home',
 

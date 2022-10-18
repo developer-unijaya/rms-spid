@@ -5,6 +5,7 @@ namespace DeveloperUnijaya\RmsSpid\Controllers;
 // use DeveloperUnijaya\RmsSpid\Models\User;
 // use App\Models\User;
 use DeveloperUnijaya\RmsSpid\Models\SpidResponse;
+use DeveloperUnijaya\RmsSpid\Models\SpidKey;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
@@ -70,6 +71,8 @@ class RmsSpidAuthController
 
     public function me(Request $request)
     {
+        SpidKey::check($request);
+
         $response = new SpidResponse;
 
         try {

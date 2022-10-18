@@ -221,7 +221,7 @@ class RmsSpidUserController
 
                         $response->status = 200;
                         $response->msg .= "SUCCESS_BIND-";
-                        $response->data = ['user' => $user, 'userSpid' => $userSpid, 'redirect_url' => route(config('rms-spid.redirect_sso_success'))];
+                        $response->data = ['user' => $user, 'userSpid' => $userSpid];
 
                     }
 
