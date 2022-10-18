@@ -30,7 +30,8 @@ Route::prefix('api')->group(function () {
         });
 
         // User API
-        Route::prefix('user')->middleware('auth:sanctum')->group(function () {
+        Route::prefix('user')->middleware(['auth:sanctum', 'verifyspidkey'])->group(function () {
+
             Route::post('register', [RmsSpidUserController::class, 'register'])->name('spid.user.register');
             Route::post('profile', [RmsSpidUserController::class, 'profile'])->name('spid.user.profile');
             Route::post('update-spid_id', [RmsSpidUserController::class, 'updateSpidId'])->name('spid.user.updateSpidId');
@@ -43,7 +44,7 @@ Route::prefix('api')->group(function () {
         });
 
         // ! Config API
-        Route::prefix('config')->middleware('auth:sanctum')->group(function () {
+        Route::prefix('config')->middleware(['auth:sanctum', 'verifyspidkey'])->group(function () {
 
             // ! Get Sub-system config data
             Route::post('get-config', [RmsSpidConfigController::class, 'getConfig'])->name('spid.config.getConfig');

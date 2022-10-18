@@ -3,7 +3,7 @@
 return [
 
     // Set NULL to disable VerifySpidKey Middleware
-    // Set to any UUID Value to enable
+    // Set to any UUID value to enable
     'spid_key' => null,
 
     // Users ID that allowed to access Login API
