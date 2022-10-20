@@ -63,7 +63,7 @@ class RmsSpidUserController
 
                             $response->msg[] = "USERSPID_SAVE_SUCCESS";
                             $response->status = 200;
-                            
+
                             $response->msg[] = "SUCCESS";
                             $response->data = ['user' => $user, 'userSpid' => $userSpid];
                         } else {
@@ -327,7 +327,7 @@ class RmsSpidUserController
 
                     $response->msg[] = "REDIRECT_TOKEN_GENERATE_SUCCESS";
                 } else {
-                    
+
                     $response->msg[] = "REDIRECT_TOKEN_GENERATE_FAILED";
                 }
 

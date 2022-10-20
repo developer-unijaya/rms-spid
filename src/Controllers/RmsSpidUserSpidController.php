@@ -114,7 +114,7 @@ class RmsSpidUserSpidController
 
             $response->status = 200;
             $response->msg[] = "USERSPID_EXIST";
-            
+
             $response->data = $userSpid;
             $response->msg[] = "SUCCESS";
 
