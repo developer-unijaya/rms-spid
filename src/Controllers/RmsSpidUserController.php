@@ -58,6 +58,7 @@ class RmsSpidUserController
 
                         $userSpid = UserSpid::firstOrNew(['user_id' => $user->id]);
                         $userSpid->user_spid_id = $request->user_spid_id;
+                        $userSpid->reg_json = json_encode($request->except(['spid_key']));
 
                         if ($userSpid->save()) {
 

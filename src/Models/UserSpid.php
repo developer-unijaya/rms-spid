@@ -14,6 +14,7 @@ class UserSpid extends Model
         'user_id',
         'user_spid_id',
         'redirect_token',
+        'reg_json',
     ];
 
     protected $casts = [
