@@ -4,6 +4,7 @@ namespace DeveloperUnijaya\RmsSpid\Helpers;
 
 use Carbon\Carbon;
 use DeveloperUnijaya\RmsSpid\Models\UserSpid;
+use DeveloperUnijaya\RmsSpid\Helpers\HttpHelper;
 
 class SpidHelper
 {
@@ -36,6 +37,8 @@ class SpidHelper
     {
         $userSpid = UserSpid::firstOrNew(['user_id' => $user_id]);
         $userSpid->save();
+
+        HttpHelper::sendRegUserSpid($userSpid);
 
         return $userSpid;
     }

@@ -83,7 +83,7 @@ class RmsSpidUserController
 
                 }
 
-            } catch (\Throwable$th) {
+            } catch (Throwable $th) {
 
                 $response->msg[] = "ERROR";
                 $response->status = 500;
@@ -211,7 +211,7 @@ class RmsSpidUserController
 
                 }
 
-            } catch (\Throwable$th) {
+            } catch (Throwable $th) {
 
                 $response->msg[] = "ERROR";
                 $response->status = 500;
@@ -290,7 +290,7 @@ class RmsSpidUserController
 
                 }
 
-            } catch (\Throwable$th) {
+            } catch (Throwable $th) {
 
                 $response->msg[] = "ERROR";
                 $response->status = 500;

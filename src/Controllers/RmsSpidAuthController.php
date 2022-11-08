@@ -88,7 +88,7 @@ class RmsSpidAuthController
                 }
             }
 
-        } catch (\Throwable$th) {
+        } catch (Throwable $th) {
 
             $response->msg[] = 'ERROR';
             $response->status = 500;
@@ -110,7 +110,7 @@ class RmsSpidAuthController
             $response->data = $request->user();
             $response->msg[] = 'SUCCESS';
 
-        } catch (\Throwable$th) {
+        } catch (Throwable $th) {
 
             $response->msg[] = 'ERROR';
             $response->status = 500;
@@ -131,7 +131,7 @@ class RmsSpidAuthController
             $response->status = 200;
             $response->msg[] = "LOGGED_OUT";
 
-        } catch (\Throwable$th) {
+        } catch (Throwable $th) {
 
             $response->msg[] = 'ERROR';
             $response->status = 500;

@@ -21,7 +21,7 @@ class RmsSpidUserSpidController
             $response->data = $userSpids;
             $response->msg[] = "SUCCESS";
 
-        } catch (\Throwable$th) {
+        } catch (Throwable $th) {
 
             $response->msg[] = 'ERROR';
             $response->status = 500;
@@ -93,7 +93,7 @@ class RmsSpidUserSpidController
                     $response->msg[] = "USER_DOES_NOT_EXIST";
                 }
 
-            } catch (\Throwable$th) {
+            } catch (Throwable $th) {
 
                 $response->msg[] = 'ERROR';
                 $response->status = 500;
@@ -164,7 +164,7 @@ class RmsSpidUserSpidController
                 $response->data = $userSpid;
                 $response->msg[] = 'SUCCESS';
 
-            } catch (\Throwable$th) {
+            } catch (Throwable $th) {
 
                 $response->msg[] = 'ERROR';
                 $response->status = 500;
@@ -199,7 +199,7 @@ class RmsSpidUserSpidController
                 $response->msg[] = 'SUCCESS';
                 $response->data = $tempData;
 
-            } catch (\Throwable$th) {
+            } catch (Throwable $th) {
 
                 $response->msg[] = 'ERROR';
                 $response->status = 500;

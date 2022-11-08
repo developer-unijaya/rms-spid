@@ -25,7 +25,7 @@ class RmsSpidConfigController
             $response->data = $data;
             $response->msg[] = "SUCCESS";
 
-        } catch (\Throwable$th) {
+        } catch (Throwable $th) {
 
             $response->msg[] = "ERROR";
             $response->status = 500;
