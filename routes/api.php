@@ -22,10 +22,10 @@ Route::prefix('api')->group(function () {
             Route::middleware('auth:sanctum')->group(function () {
 
                 // * Return logged-in user data
-                Route::post('me', [RmsSpidAuthController::class, 'me'])->middleware('auth:sanctum')->name('spid.auth.me');
+                Route::post('me', [RmsSpidAuthController::class, 'me'])->name('spid.auth.me');
 
                 // * Destroy auth_token and logout user
-                Route::post('logout', [RmsSpidAuthController::class, 'logout'])->middleware('auth:sanctum')->name('spid.auth.logout');
+                Route::post('logout', [RmsSpidAuthController::class, 'logout'])->name('spid.auth.logout');
             });
         });
 

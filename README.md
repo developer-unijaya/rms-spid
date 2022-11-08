@@ -71,7 +71,7 @@ class User extends Authenticatable
 ```
 
 Add _VerifySpidKey_ Middleware in _$routeMiddleware_ at _App\Http\Kernel.php_
-You can optionally Enable or Disable the middleware on the published Config File
+You can optionally Enable or Disable the middleware on the published Config File in *spid_key* property
 ```php
 protected $routeMiddleware = [
     // ...
@@ -80,6 +80,18 @@ protected $routeMiddleware = [
 ```
 
 ## Usage
+
+Register new User to SPID:
+Add following code to _app\Http\Controllers\Auth\RegisterController.php_ 
+```php
+use Illuminate\Http\Request;
+use DeveloperUnijaya\RmsSpid\Helpers\SpidHelper;
+
+public function registered(Request $request, $user)
+{
+    SpidHelper::regUserSpid($user->id);
+}
+```
 
 Update user Registration Status:
 ```php

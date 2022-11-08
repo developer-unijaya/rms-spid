@@ -20,12 +20,22 @@ class SpidHelper
 
             if ($is_reg_approve) {
                 $userSpid->reg_approve_at = Carbon::now();
+                $userSpid->reg_reject_at = null;
             } else {
+                $userSpid->reg_approve_at = null;
                 $userSpid->reg_reject_at = Carbon::now();
             }
 
             $userSpid->save();
         }
+
+        return $userSpid;
+    }
+
+    public static function regUserSpid($user_id)
+    {
+        $userSpid = UserSpid::firstOrNew(['user_id' => $user_id]);
+        $userSpid->save();
 
         return $userSpid;
     }
