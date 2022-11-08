@@ -5,14 +5,14 @@ namespace DeveloperUnijaya\RmsSpid\Helpers;
 use Carbon\Carbon;
 use DeveloperUnijaya\RmsSpid\Models\UserSpid;
 
-class UserSpidHelper
+class SpidHelper
 {
     public static function updateProfile($user_id)
     {
 
     }
 
-    public static function approveRegistration($user_id, $is_reg_approve = true)
+    public static function updateRegStatus($user_id, $is_reg_approve = true)
     {
         $userSpid = UserSpid::where('user_id', $user_id)->first();
 
