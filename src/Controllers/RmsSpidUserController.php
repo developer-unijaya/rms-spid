@@ -27,6 +27,7 @@ class RmsSpidUserController
 
             $response->status = 401;
             $response->msg[] = "VALIDATION_ERROR";
+            $response->msg[] = json_encode($validateData->errors());
             $response->data = $validateData->errors();
 
         } else {
@@ -106,6 +107,7 @@ class RmsSpidUserController
 
             $response->status = 401;
             $response->msg[] = "VALIDATION_ERROR";
+            $response->msg[] = json_encode($validateData->errors());
             $response->data = $validateData->errors();
 
         } else {
@@ -136,7 +138,7 @@ class RmsSpidUserController
                     $response->msg[] = "USER_FOUND";
                     $response->status = 200;
                     $response->msg[] = "SUCCESS";
-                    $response->data = $user;
+                    $response->data = ['user' => $user, 'userSpid' => $userSpid];
 
                 } else {
 
@@ -168,6 +170,7 @@ class RmsSpidUserController
 
             $response->status = 401;
             $response->msg[] = "VALIDATION_ERROR";
+            $response->msg[] = json_encode($validateData->errors());
             $response->data = $validateData->errors();
 
         } else {
@@ -235,6 +238,7 @@ class RmsSpidUserController
 
             $response->status = 401;
             $response->msg[] = "VALIDATION_ERROR";
+            $response->msg[] = json_encode($validateData->errors());
             $response->data = $validateData->errors();
 
         } else {
@@ -310,6 +314,7 @@ class RmsSpidUserController
 
             $response->status = 401;
             $response->msg[] = "VALIDATION_ERROR";
+            $response->msg[] = json_encode($validateData->errors());
             $response->data = $validateData->errors();
 
         } else {

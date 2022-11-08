@@ -2,6 +2,13 @@
 
 return [
 
+    // SPID Base URL
+    'spid_base_url' => 'http://erms-spid.test',
+
+    // SPID Cred
+    'spid_username' => 'user_eps@yopmail.com',
+    'spid_password' => 'password',
+
     // Set NULL to disable VerifySpidKey Middleware
     // Set to any UUID value to enable
     'spid_key' => null,

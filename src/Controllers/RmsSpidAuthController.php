@@ -34,6 +34,7 @@ class RmsSpidAuthController
 
                 $response->status = 401;
                 $response->msg[] = "VALIDATION_ERROR";
+                $response->msg[] = json_encode($validateData->errors());
                 $response->data = $validateData->errors();
 
             } else {
