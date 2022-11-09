@@ -23,14 +23,6 @@ class UserSpid extends Model
         'reg_reject_at' => 'datetime',
     ];
 
-    // protected static function boot()
-    // {
-    //     parent::boot();
-    //     static::creating(function ($userSpid) {
-    //         $userSpid->log = [];
-    //     });
-    // }
-
     public function user()
     {
         return $this->belongsTo(config('auth.providers.users.model'));
