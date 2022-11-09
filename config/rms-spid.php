@@ -35,4 +35,7 @@ return [
 
     // User Model Eloquent Relationship to be included in Profile API
     'user_profile_relationship' => [],
+
+    // Log options
+    'enable_log' => true,
 ];

@@ -7,52 +7,10 @@ use Illuminate\Support\Facades\Http;
 
 class HttpHelper
 {
-    public static function getAuthToken()
-    {
-        $auth_token = null;
-
-        try {
-
-            $loginUrl = config('rms-spid.spid_base_url') . '/api/v1/auth/login';
-
-            $data = [
-                'spid_key' => config('rms-spid.spid_key'),
-                'username' => config('rms-spid.spid_username'),
-                'password' => config('rms-spid.spid_password'),
-            ];
-
-            $responseCheck = Http::timeout(60)->post($loginUrl, $data);
-
-            if ($responseCheck->successful()) {
-
-                $responseJson = $responseCheck->json();
-                $responseObj = (object) $responseJson;
-
-                if ($responseObj->status == 200) {
-
-                    $responseData = (object) $responseObj->data;
-                    $auth_token = $responseData->auth_token;
-
-                    var_dump($auth_token);
-
-                }
-
-            } else {
-                dd("FAILED", $responseCheck->body());
-            }
-
-        } catch (Throwable $th) {
-
-            dd("FAILED", $th->getMessage());
-
-        }
-
-        return $auth_token;
-    }
-
     public static function sendRegUserSpid(UserSpid $userSpid)
     {
         $success = false;
+        $userSpid->appendLog(['sendRegUserSpid START']);
 
         try {
 
@@ -69,20 +27,22 @@ class HttpHelper
                 'email' => $user->email,
             ];
 
-            $auth_token = HttpHelper::getAuthToken();
+            $auth_token = HttpHelper::getAuthToken($userSpid);
 
             $responseCheck = Http::timeout(60)->withToken($auth_token)->post($spid_reg_url, $data);
 
             if ($responseCheck->successful()) {
+
+                $userSpid->appendLog(['sendRegUserSpid SUCCESSFUL']);
 
                 $responseJson = $responseCheck->json();
                 $responseObj = (object) $responseJson;
 
                 if ($responseObj->status == 200) {
 
-                    $responseData = (object) $responseObj->data;
+                    $userSpid->appendLog(['sendRegUserSpid 200']);
 
-                    dd($responseData);
+                    $responseData = (object) $responseObj->data;
 
                     $responseUser = (object) $responseData->user;
 
@@ -92,18 +52,62 @@ class HttpHelper
                     $success = true;
 
                 } else {
-                    dd("FAILED", $responseObj->status);
+
+                    $userSpid->appendLog(['sendRegUserSpid FAILED', $responseObj->status]);
                 }
 
             } else {
-                dd("FAILED", $responseCheck->body());
+                $userSpid->appendLog(['sendRegUserSpid UNSUCCESSFUL', $responseCheck->body()]);
             }
 
         } catch (Throwable $th) {
 
-            dd("FAILED", $th->getMessage());
+            $userSpid->appendLog(['sendRegUserSpid FAILED', $th->getMessage()]);
         }
 
         return $success;
+    }
+
+    public static function getAuthToken(UserSpid $userSpid = null)
+    {
+        $auth_token = null;
+
+        $userSpid->appendLog(['getAuthToken START']);
+        try {
+
+            $loginUrl = config('rms-spid.spid_base_url') . '/api/v1/auth/login';
+
+            $data = [
+                'spid_key' => config('rms-spid.spid_key'),
+                'username' => config('rms-spid.spid_username'),
+                'password' => config('rms-spid.spid_password'),
+            ];
+
+            $responseCheck = Http::timeout(60)->post($loginUrl, $data);
+
+            if ($responseCheck->successful()) {
+
+                $userSpid->appendLog(['getAuthToken SUCCESSFUL']);
+
+                $responseJson = $responseCheck->json();
+                $responseObj = (object) $responseJson;
+
+                if ($responseObj->status == 200) {
+
+                    $responseData = (object) $responseObj->data;
+                    $auth_token = $responseData->auth_token;
+                }
+
+            } else {
+                $userSpid->appendLog(['getAuthToken FAILED', $responseCheck->body()]);
+            }
+
+        } catch (Throwable $th) {
+
+            $userSpid->appendLog(['getAuthToken FAILED', $th->getMessage()]);
+
+        }
+
+        return $auth_token;
     }
 }

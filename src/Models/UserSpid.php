@@ -19,7 +19,17 @@ class UserSpid extends Model
 
     protected $casts = [
         'redirect_token_expired_at' => 'datetime',
+        'reg_approve_at' => 'datetime',
+        'reg_reject_at' => 'datetime',
     ];
+
+    // protected static function boot()
+    // {
+    //     parent::boot();
+    //     static::creating(function ($userSpid) {
+    //         $userSpid->log = [];
+    //     });
+    // }
 
     public function user()
     {
@@ -58,5 +68,32 @@ class UserSpid extends Model
         $this->redirect_token = null;
         $this->redirect_token_expired_at = null;
         $this->save();
+    }
+
+    public function appendLog($logs = [])
+    {
+        try {
+            if (config('rms-spid.enable_log')) {
+                $userSpidLog = $this->log;
+
+                if (!$userSpidLog) {
+                    $userSpidLog = [];
+                } else {
+                    $userSpidLog = json_decode($this->log, true);
+                }
+
+                foreach ($logs as $key => $log) {
+                    $userSpidLog[now()->format("Y-m-d H:i:s.u")] = $log;
+                }
+
+                $logJson = json_encode($userSpidLog, JSON_PRETTY_PRINT);
+
+                $this->log = $logJson;
+                $this->save();
+            }
+
+        } catch (Throwable $th) {
+            //throw $th;
+        }
     }
 }

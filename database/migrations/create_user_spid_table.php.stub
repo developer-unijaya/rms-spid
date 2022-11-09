@@ -22,6 +22,7 @@ class CreateUserSpidTable extends Migration
             $table->text('reg_json')->nullable();
             $table->dateTime('reg_approve_at)->nullable();
             $table->dateTime('reg_reject_at)->nullable();
+            $table->longText('log')->nullable();
             $table->timestamps();
         });
     }
