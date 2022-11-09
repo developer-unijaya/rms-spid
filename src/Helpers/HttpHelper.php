@@ -68,7 +68,7 @@ class HttpHelper
         return $success;
     }
 
-    public static function getAuthToken(UserSpid $userSpid = null)
+    public static function getAuthToken(UserSpid $userSpid)
     {
         $auth_token = null;
 

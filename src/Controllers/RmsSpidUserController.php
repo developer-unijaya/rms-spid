@@ -58,6 +58,7 @@ class RmsSpidUserController
                         $response->msg[] = "USER_SAVE_SUCCESS";
 
                         $userSpid = UserSpid::firstOrNew(['user_id' => $user->id]);
+                        $userSpid->src = 'from_spid_reg';
                         $userSpid->user_spid_id = $request->user_spid_id;
                         $userSpid->reg_json = json_encode($request->except(['spid_key']));
 
@@ -189,6 +190,7 @@ class RmsSpidUserController
                     $response->msg[] = "USER_FOUND";
 
                     $userSpid = UserSpid::firstOrNew(['user_id' => $user->id]);
+                    // $userSpid->src = 'from_spid_reg';
                     $userSpid->user_spid_id = $request->new_user_spid_id;
 
                     if ($userSpid->save()) {
@@ -259,6 +261,7 @@ class RmsSpidUserController
                     $user = $UserModel::where('email', $request->username)->first();
 
                     $userSpid = UserSpid::firstOrNew(['user_id' => $user->id]);
+                    $userSpid->src = 'from_spid_bind';
 
                     if ($userSpid->exists) {
 
