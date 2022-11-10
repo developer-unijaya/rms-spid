@@ -4,6 +4,7 @@ namespace DeveloperUnijaya\RmsSpid\Controllers;
 
 use DeveloperUnijaya\RmsSpid\Models\SpidResponse;
 use Illuminate\Http\Request;
+use Throwable;
 
 class RmsSpidConfigController
 {
