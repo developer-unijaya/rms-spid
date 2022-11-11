@@ -70,6 +70,17 @@ class User extends Authenticatable
 }
 ```
 
+You can add _HasUserSpid_ Trait to your Auth Provider User Model
+
+```php
+use DeveloperUnijaya\RmsSpid\Traits\HasUserSpid;
+
+class User extends Authenticatable
+{
+    use HasUserSpid;
+}
+```
+
 Add _VerifySpidKey_ Middleware in _$routeMiddleware_ at _App\Http\Kernel.php_
 You can optionally Enable or Disable the middleware on the published Config File in *spid_key* property
 ```php
