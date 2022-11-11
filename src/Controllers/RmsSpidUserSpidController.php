@@ -24,8 +24,8 @@ class RmsSpidUserSpidController
 
         } catch (Throwable $th) {
 
-            $response->msg[] = 'ERROR';
             $response->status = 500;
+            $response->msg[] = 'ERROR';
             $response->msg[] = $th->getMessage();
         }
 
@@ -96,8 +96,8 @@ class RmsSpidUserSpidController
 
             } catch (Throwable $th) {
 
-                $response->msg[] = 'ERROR';
                 $response->status = 500;
+                $response->msg[] = 'ERROR';
                 $response->msg[] = $th->getMessage();
             }
 
@@ -162,13 +162,13 @@ class RmsSpidUserSpidController
                 $userSpid->save();
 
                 $response->status = 200;
-                $response->data = $userSpid;
                 $response->msg[] = 'SUCCESS';
+                $response->data = $userSpid;
 
             } catch (Throwable $th) {
 
-                $response->msg[] = 'ERROR';
                 $response->status = 500;
+                $response->msg[] = 'ERROR';
                 $response->msg[] = $th->getMessage();
 
             }
@@ -202,8 +202,8 @@ class RmsSpidUserSpidController
 
             } catch (Throwable $th) {
 
-                $response->msg[] = 'ERROR';
                 $response->status = 500;
+                $response->msg[] = 'ERROR';
                 $response->msg[] = $th->getMessage();
             }
 

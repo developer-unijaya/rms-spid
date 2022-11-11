@@ -91,8 +91,8 @@ class RmsSpidAuthController
 
         } catch (Throwable $th) {
 
-            $response->msg[] = 'ERROR';
             $response->status = 500;
+            $response->msg[] = 'ERROR';
             $response->msg[] = $th->getMessage();
         }
 
@@ -113,8 +113,8 @@ class RmsSpidAuthController
 
         } catch (Throwable $th) {
 
-            $response->msg[] = 'ERROR';
             $response->status = 500;
+            $response->msg[] = 'ERROR';
             $response->msg[] = $th->getMessage();
 
         }
@@ -134,8 +134,8 @@ class RmsSpidAuthController
 
         } catch (Throwable $th) {
 
-            $response->msg[] = 'ERROR';
             $response->status = 500;
+            $response->msg[] = 'ERROR';
             $response->msg[] = $th->getMessage();
 
         }

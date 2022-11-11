@@ -67,8 +67,8 @@ class RmsSpidUserController
 
                         if ($userSpid->save()) {
 
-                            $response->msg[] = "USERSPID_SAVE_SUCCESS";
                             $response->status = 200;
+                            $response->msg[] = "USERSPID_SAVE_SUCCESS";
 
                             $response->msg[] = "SUCCESS";
                             $response->data = ['user' => $user, 'userSpid' => $userSpid];
@@ -89,8 +89,8 @@ class RmsSpidUserController
 
             } catch (Throwable $th) {
 
-                $response->msg[] = "ERROR";
                 $response->status = 500;
+                $response->msg[] = "ERROR";
                 $response->msg[] = $th->getMessage();
             }
 
@@ -139,8 +139,8 @@ class RmsSpidUserController
 
                 if ($user) {
 
-                    $response->msg[] = "USER_FOUND";
                     $response->status = 200;
+                    $response->msg[] = "USER_FOUND";
                     $response->msg[] = "SUCCESS";
                     $response->data = ['user' => $user, 'userSpid' => $userSpid];
 
@@ -198,9 +198,8 @@ class RmsSpidUserController
 
                     if ($userSpid->save()) {
 
-                        $response->msg[] = "USERSPID_SAVE_SUCCESS";
-
                         $response->status = 200;
+                        $response->msg[] = "USERSPID_SAVE_SUCCESS";
                         $response->msg[] = "SUCCESS";
                         $response->data = ['user' => $user, 'userSpid' => $userSpid];
 
@@ -218,8 +217,8 @@ class RmsSpidUserController
 
             } catch (Throwable $th) {
 
-                $response->msg[] = "ERROR";
                 $response->status = 500;
+                $response->msg[] = "ERROR";
                 $response->msg[] = $th->getMessage();
 
             }
@@ -298,8 +297,8 @@ class RmsSpidUserController
 
             } catch (Throwable $th) {
 
-                $response->msg[] = "ERROR";
                 $response->status = 500;
+                $response->msg[] = "ERROR";
                 $response->msg[] = $th->getMessage();
             }
         }
