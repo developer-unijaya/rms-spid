@@ -108,11 +108,19 @@ Update user Registration Status:
 ```php
 use DeveloperUnijaya\RmsSpid\Helpers\SpidHelper;
 
+// Using SpidHelper
 // Approve
 SpidHelper::updateRegStatus($user_id, true);
 
 // Reject
 SpidHelper::updateRegStatus($user_id, false);
+
+// Using Trait
+// Approve
+$user->approveSpidReg();
+
+// Reject
+$user->rejectSpidReg();
 ```
 
 ## Changelog
