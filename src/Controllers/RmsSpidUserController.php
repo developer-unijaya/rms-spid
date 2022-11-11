@@ -22,6 +22,7 @@ class RmsSpidUserController
             'email' => ['required', 'string', 'email'],
             'username' => ['required'],
             'password' => ['required'],
+            'reg_type' => ['required']
         ]);
 
         if ($validateData->fails()) {
@@ -61,6 +62,7 @@ class RmsSpidUserController
                         $userSpid = UserSpid::firstOrNew(['user_id' => $user->id]);
                         $userSpid->src = 'from_spid_reg';
                         $userSpid->user_spid_id = $request->user_spid_id;
+                        $userSpid->reg_type = $request->reg_type;
                         $userSpid->reg_json = json_encode($request->except(['spid_key']));
 
                         if ($userSpid->save()) {
