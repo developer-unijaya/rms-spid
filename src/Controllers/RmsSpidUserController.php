@@ -69,7 +69,6 @@ class RmsSpidUserController
 
                             $response->status = 200;
                             $response->msg[] = "USERSPID_SAVE_SUCCESS";
-
                             $response->msg[] = "SUCCESS";
                             $response->data = ['user' => $user, 'userSpid' => $userSpid];
                         } else {

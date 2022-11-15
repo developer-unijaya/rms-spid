@@ -5,6 +5,7 @@ namespace DeveloperUnijaya\RmsSpid\Models;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Str;
+use Throwable;
 
 class UserSpid extends Model
 {
@@ -47,7 +48,7 @@ class UserSpid extends Model
 
             $is_success = true;
 
-        } catch (\Throwable$th) {
+        } catch (Throwable $th) {
 
             $is_success = false;
         }

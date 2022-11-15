@@ -101,8 +101,6 @@ class RmsSpidAuthController
 
     public function me(Request $request)
     {
-        // SpidKey::check($request);
-
         $response = new SpidResponse;
 
         try {
