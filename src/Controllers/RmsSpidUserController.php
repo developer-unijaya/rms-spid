@@ -28,13 +28,13 @@ class RmsSpidUserController
         if ($validateData->fails()) {
 
             $response->status = 401;
-            $response->msg[] = "VALIDATION_ERROR";
-            $response->msg[] = json_encode($validateData->errors());
+            $response->message[] = "VALIDATION_ERROR";
+            $response->message[] = json_encode($validateData->errors());
             $response->data = $validateData->errors();
 
         } else {
 
-            $response->msg[] = "VALIDATION_OK";
+            $response->message[] = "VALIDATION_OK";
 
             try {
 
@@ -46,18 +46,18 @@ class RmsSpidUserController
                 if ($user->exists) {
 
                     $response->status = 401;
-                    $response->msg[] = "USER_ALREADY_EXIST";
+                    $response->message[] = "USER_ALREADY_EXIST";
 
                 } else {
 
-                    $response->msg[] = "USER_NEW";
+                    $response->message[] = "USER_NEW";
 
                     $user->name = $request->name;
                     $user->password = Hash::make($request->password);
 
                     if ($user->save()) {
 
-                        $response->msg[] = "USER_SAVE_SUCCESS";
+                        $response->message[] = "USER_SAVE_SUCCESS";
 
                         $userSpid = UserSpid::firstOrNew(['user_id' => $user->id]);
                         $userSpid->src = 'from_spid_reg';
@@ -68,19 +68,19 @@ class RmsSpidUserController
                         if ($userSpid->save()) {
 
                             $response->status = 200;
-                            $response->msg[] = "USERSPID_SAVE_SUCCESS";
-                            $response->msg[] = "SUCCESS";
+                            $response->message[] = "USERSPID_SAVE_SUCCESS";
+                            $response->message[] = "SUCCESS";
                             $response->data = ['user' => $user, 'userSpid' => $userSpid];
                         } else {
 
                             $response->status = 401;
-                            $response->msg[] = "USERSPID_SAVE_FAILED";
+                            $response->message[] = "USERSPID_SAVE_FAILED";
                         }
 
                     } else {
 
                         $response->status = 401;
-                        $response->msg[] = "USER_SAVE_FAILED";
+                        $response->message[] = "USER_SAVE_FAILED";
 
                     }
 
@@ -89,8 +89,8 @@ class RmsSpidUserController
             } catch (Throwable $th) {
 
                 $response->status = 500;
-                $response->msg[] = "ERROR";
-                $response->msg[] = $th->getMessage();
+                $response->message[] = "ERROR";
+                $response->message[] = $th->getMessage();
             }
 
         }
@@ -109,50 +109,50 @@ class RmsSpidUserController
         if ($validateData->fails()) {
 
             $response->status = 401;
-            $response->msg[] = "VALIDATION_ERROR";
-            $response->msg[] = json_encode($validateData->errors());
+            $response->message[] = "VALIDATION_ERROR";
+            $response->message[] = json_encode($validateData->errors());
             $response->data = $validateData->errors();
 
         } else {
 
-            $response->msg[] = "VALIDATION_OK";
+            $response->message[] = "VALIDATION_OK";
 
             $userSpid = UserSpid::where('user_spid_id', $request->user_spid_id)->first();
 
             if ($userSpid) {
 
-                $response->msg[] = "USERSPID_FOUND";
+                $response->message[] = "USERSPID_FOUND";
 
                 $UserModel = config('auth.providers.users.model');
                 $UserModel = new $UserModel;
 
                 if (config('rms-spid.user_profile_relationship')) {
 
-                    $response->msg[] = "CONFIG_USER_PROFILE_RELATIONSHIP_EXIST";
+                    $response->message[] = "CONFIG_USER_PROFILE_RELATIONSHIP_EXIST";
                     $user = $UserModel::with(config('rms-spid.user_profile_relationship'))->where('id', $userSpid->user_id)->first();
                 } else {
 
-                    $response->msg[] = "CONFIG_USER_PROFILE_RELATIONSHIP_DOES_NOT_EXIST";
+                    $response->message[] = "CONFIG_USER_PROFILE_RELATIONSHIP_DOES_NOT_EXIST";
                     $user = $UserModel::where('id', $userSpid->user_id)->first();
                 }
 
                 if ($user) {
 
                     $response->status = 200;
-                    $response->msg[] = "USER_FOUND";
-                    $response->msg[] = "SUCCESS";
+                    $response->message[] = "USER_FOUND";
+                    $response->message[] = "SUCCESS";
                     $response->data = ['user' => $user, 'userSpid' => $userSpid];
 
                 } else {
 
                     $response->status = 404;
-                    $response->msg[] = "USER_NOT_FOUND";
+                    $response->message[] = "USER_NOT_FOUND";
 
                 }
             } else {
 
                 $response->status = 404;
-                $response->msg[] = "USERSPID_NOT_FOUND";
+                $response->message[] = "USERSPID_NOT_FOUND";
             }
 
         }
@@ -172,13 +172,13 @@ class RmsSpidUserController
         if ($validateData->fails()) {
 
             $response->status = 401;
-            $response->msg[] = "VALIDATION_ERROR";
-            $response->msg[] = json_encode($validateData->errors());
+            $response->message[] = "VALIDATION_ERROR";
+            $response->message[] = json_encode($validateData->errors());
             $response->data = $validateData->errors();
 
         } else {
 
-            $response->msg[] = "VALIDATION_OK";
+            $response->message[] = "VALIDATION_OK";
 
             try {
 
@@ -189,7 +189,7 @@ class RmsSpidUserController
 
                 if ($user) {
 
-                    $response->msg[] = "USER_FOUND";
+                    $response->message[] = "USER_FOUND";
 
                     $userSpid = UserSpid::firstOrNew(['user_id' => $user->id]);
                     // $userSpid->src = 'from_spid_reg';
@@ -198,27 +198,27 @@ class RmsSpidUserController
                     if ($userSpid->save()) {
 
                         $response->status = 200;
-                        $response->msg[] = "USERSPID_SAVE_SUCCESS";
-                        $response->msg[] = "SUCCESS";
+                        $response->message[] = "USERSPID_SAVE_SUCCESS";
+                        $response->message[] = "SUCCESS";
                         $response->data = ['user' => $user, 'userSpid' => $userSpid];
 
                     } else {
 
-                        $response->msg[] = "USERSPID_SAVE_FAILED";
+                        $response->message[] = "USERSPID_SAVE_FAILED";
                     }
 
                 } else {
 
                     $response->status = 401;
-                    $response->msg[] = "USER_NOT_FOUND";
+                    $response->message[] = "USER_NOT_FOUND";
 
                 }
 
             } catch (Throwable $th) {
 
                 $response->status = 500;
-                $response->msg[] = "ERROR";
-                $response->msg[] = $th->getMessage();
+                $response->message[] = "ERROR";
+                $response->message[] = $th->getMessage();
 
             }
 
@@ -240,13 +240,13 @@ class RmsSpidUserController
         if ($validateData->fails()) {
 
             $response->status = 401;
-            $response->msg[] = "VALIDATION_ERROR";
-            $response->msg[] = json_encode($validateData->errors());
+            $response->message[] = "VALIDATION_ERROR";
+            $response->message[] = json_encode($validateData->errors());
             $response->data = $validateData->errors();
 
         } else {
 
-            $response->msg[] = "VALIDATION_OK";
+            $response->message[] = "VALIDATION_OK";
 
             try {
 
@@ -257,7 +257,7 @@ class RmsSpidUserController
 
                 if (Auth::guard('web')->attempt($credentials)) {
 
-                    $response->msg[] = "ATTEMPT_CRED_SUCCESS";
+                    $response->message[] = "ATTEMPT_CRED_SUCCESS";
 
                     $user = $UserModel::where('email', $request->username)->first();
 
@@ -267,7 +267,7 @@ class RmsSpidUserController
                     if ($userSpid->exists) {
 
                         $response->status = 409;
-                        $response->msg[] = "ABORT_ALREADY_BIND";
+                        $response->message[] = "ABORT_ALREADY_BIND";
                         $response->data = ['user' => $user];
 
                     } else {
@@ -277,12 +277,12 @@ class RmsSpidUserController
                         if ($userSpid->save()) {
 
                             $response->status = 200;
-                            $response->msg[] = "SUCCESS_BIND";
+                            $response->message[] = "SUCCESS_BIND";
                             $response->data = ['user' => $user, 'userSpid' => $userSpid];
 
                         } else {
 
-                            $response->msg[] = "USERSPID_SAVE_FAILED";
+                            $response->message[] = "USERSPID_SAVE_FAILED";
                         }
 
                     }
@@ -290,15 +290,15 @@ class RmsSpidUserController
                 } else {
 
                     $response->status = 409;
-                    $response->msg[] = "ATTEMPT_CRED_FAILED";
+                    $response->message[] = "ATTEMPT_CRED_FAILED";
 
                 }
 
             } catch (Throwable $th) {
 
                 $response->status = 500;
-                $response->msg[] = "ERROR";
-                $response->msg[] = $th->getMessage();
+                $response->message[] = "ERROR";
+                $response->message[] = $th->getMessage();
             }
         }
 
@@ -317,32 +317,32 @@ class RmsSpidUserController
         if ($validateData->fails()) {
 
             $response->status = 401;
-            $response->msg[] = "VALIDATION_ERROR";
-            $response->msg[] = json_encode($validateData->errors());
+            $response->message[] = "VALIDATION_ERROR";
+            $response->message[] = json_encode($validateData->errors());
             $response->data = $validateData->errors();
 
         } else {
 
-            $response->msg[] = "VALIDATION_OK";
+            $response->message[] = "VALIDATION_OK";
 
             $userSpid = UserSpid::where('user_id', $request->user_id)->where('user_spid_id', $request->user_spid_id)->first();
 
             if ($userSpid) {
 
-                $response->msg[] = "USERSPID_FOUND";
+                $response->message[] = "USERSPID_FOUND";
 
                 $tokenSuccess = $userSpid->generateRedirectToken();
 
                 if ($tokenSuccess) {
 
-                    $response->msg[] = "REDIRECT_TOKEN_GENERATE_SUCCESS";
+                    $response->message[] = "REDIRECT_TOKEN_GENERATE_SUCCESS";
                 } else {
 
-                    $response->msg[] = "REDIRECT_TOKEN_GENERATE_FAILED";
+                    $response->message[] = "REDIRECT_TOKEN_GENERATE_FAILED";
                 }
 
                 $response->status = 200;
-                $response->msg[] = "SUCCESS";
+                $response->message[] = "SUCCESS";
                 $response->data = [
                     'redirect_token' => $userSpid->redirect_token,
                     'redirect_token_expired_at' => $userSpid->redirect_token_expired_at ? $userSpid->redirect_token_expired_at->format('Y-m-d H:i:s') : null,
@@ -352,7 +352,7 @@ class RmsSpidUserController
             } else {
 
                 $response->status = 404;
-                $response->msg[] = "USERSPID_NOT_FOUND";
+                $response->message[] = "USERSPID_NOT_FOUND";
 
             }
         }

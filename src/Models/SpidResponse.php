@@ -5,19 +5,19 @@ namespace DeveloperUnijaya\RmsSpid\Models;
 class SpidResponse
 {
     public $status;
-    public $msg;
+    public $message;
     public $data;
 
-    public function __construct($status = 200, $msg = [], $data = null)
+    public function __construct($status = 200, $message = [], $data = null)
     {
         $this->status = $status;
-        $this->msg = $msg;
+        $this->message = $message;
         $this->data = $data;
     }
 }
 
 // $response = new SpidResponse;
 // $response->status = "";
-// $response->msg[] = "";
+// $response->message[] = "";
 // $response->data = "";
 // return response()->json($response);

@@ -20,13 +20,13 @@ class RmsSpidUserSpidController
 
             $response->status = 200;
             $response->data = $userSpids;
-            $response->msg[] = "SUCCESS";
+            $response->message[] = "SUCCESS";
 
         } catch (Throwable $th) {
 
             $response->status = 500;
-            $response->msg[] = 'ERROR';
-            $response->msg[] = $th->getMessage();
+            $response->message[] = 'ERROR';
+            $response->message[] = $th->getMessage();
         }
 
         return response()->json($response);
@@ -49,13 +49,13 @@ class RmsSpidUserSpidController
         if ($validateData->fails()) {
 
             $response->status = 401;
-            $response->msg[] = "VALIDATION_ERROR";
-            $response->msg[] = json_encode($validateData->errors());
+            $response->message[] = "VALIDATION_ERROR";
+            $response->message[] = json_encode($validateData->errors());
             $response->data = $validateData->errors();
 
         } else {
 
-            $response->msg[] = "VALIDATION_OK";
+            $response->message[] = "VALIDATION_OK";
 
             try {
 
@@ -66,18 +66,18 @@ class RmsSpidUserSpidController
 
                 if ($user) {
 
-                    $response->msg[] = "USER_EXIST";
+                    $response->message[] = "USER_EXIST";
 
                     $userSpid = UserSpid::firstOrNew(['user_id' => $user->id]);
 
                     $isExist = null;
                     if ($userSpid->exists) {
 
-                        $response->msg[] = "USERSPID_EXIST";
+                        $response->message[] = "USERSPID_EXIST";
                         $isExist = true;
                     } else {
 
-                        $response->msg[] = "USERSPID_DOES_NOT_EXIST";
+                        $response->message[] = "USERSPID_DOES_NOT_EXIST";
                         $isExist = false;
                     }
 
@@ -86,19 +86,19 @@ class RmsSpidUserSpidController
 
                     $response->status = 200;
                     $response->data = ['user' => $user, 'userSpid' => $userSpid, 'isExist' => $isExist];
-                    $response->msg[] = "SUCCESS";
+                    $response->message[] = "SUCCESS";
 
                 } else {
 
                     $response->status = 401;
-                    $response->msg[] = "USER_DOES_NOT_EXIST";
+                    $response->message[] = "USER_DOES_NOT_EXIST";
                 }
 
             } catch (Throwable $th) {
 
                 $response->status = 500;
-                $response->msg[] = 'ERROR';
-                $response->msg[] = $th->getMessage();
+                $response->message[] = 'ERROR';
+                $response->message[] = $th->getMessage();
             }
 
         }
@@ -115,15 +115,15 @@ class RmsSpidUserSpidController
         if ($userSpid) {
 
             $response->status = 200;
-            $response->msg[] = "USERSPID_EXIST";
+            $response->message[] = "USERSPID_EXIST";
 
             $response->data = $userSpid;
-            $response->msg[] = "SUCCESS";
+            $response->message[] = "SUCCESS";
 
         } else {
 
             $response->status = 401;
-            $response->msg[] = "USERSPID_DOES_NOT_EXIST";
+            $response->message[] = "USERSPID_DOES_NOT_EXIST";
 
         }
 
@@ -143,7 +143,7 @@ class RmsSpidUserSpidController
 
         if ($userSpid) {
 
-            $response->msg[] = "USERSPID_EXIST";
+            $response->message[] = "USERSPID_EXIST";
 
             try {
 
@@ -162,21 +162,21 @@ class RmsSpidUserSpidController
                 $userSpid->save();
 
                 $response->status = 200;
-                $response->msg[] = 'SUCCESS';
+                $response->message[] = 'SUCCESS';
                 $response->data = $userSpid;
 
             } catch (Throwable $th) {
 
                 $response->status = 500;
-                $response->msg[] = 'ERROR';
-                $response->msg[] = $th->getMessage();
+                $response->message[] = 'ERROR';
+                $response->message[] = $th->getMessage();
 
             }
 
         } else {
 
             $response->status = 401;
-            $response->msg[] = "USERSPID_DOES_NOT_EXIST";
+            $response->message[] = "USERSPID_DOES_NOT_EXIST";
         }
 
         return response()->json($response);
@@ -197,20 +197,20 @@ class RmsSpidUserSpidController
                 $userSpid->delete();
 
                 $response->status = 200;
-                $response->msg[] = 'SUCCESS';
+                $response->message[] = 'SUCCESS';
                 $response->data = $tempData;
 
             } catch (Throwable $th) {
 
                 $response->status = 500;
-                $response->msg[] = 'ERROR';
-                $response->msg[] = $th->getMessage();
+                $response->message[] = 'ERROR';
+                $response->message[] = $th->getMessage();
             }
 
         } else {
 
             $response->status = 401;
-            $response->msg[] = "USERSPID_DOES_NOT_EXIST";
+            $response->message[] = "USERSPID_DOES_NOT_EXIST";
         }
 
         return response()->json($response);

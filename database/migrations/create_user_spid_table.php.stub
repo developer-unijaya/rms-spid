@@ -17,7 +17,7 @@ class CreateUserSpidTable extends Migration
             $table->increments('id');
             $table->unsignedBigInteger('user_id')->unique();
             $table->string('user_spid_id')->nullable();
-            $table->enum('src', ['from_spid_bind', 'from_spid_reg', 'from_subsystem_reg'])->nullable();
+            $table->string('src')->nullable();
             $table->string('redirect_token')->nullable();
             $table->dateTime('redirect_token_expired_at')->nullable();
             $table->string('reg_type')->nullable();

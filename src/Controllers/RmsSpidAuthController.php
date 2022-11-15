@@ -15,7 +15,7 @@ class RmsSpidAuthController
     public function test(Request $request)
     {
         $response = new SpidResponse;
-        $response->msg[] = "Test From " . env('APP_NAME');
+        $response->message[] = "Test From " . env('APP_NAME');
 
         return response()->json($response);
     }
@@ -34,19 +34,19 @@ class RmsSpidAuthController
             if ($validateData->fails()) {
 
                 $response->status = 401;
-                $response->msg[] = "VALIDATION_ERROR";
-                $response->msg[] = json_encode($validateData->errors());
+                $response->message[] = "VALIDATION_ERROR";
+                $response->message[] = json_encode($validateData->errors());
                 $response->data = $validateData->errors();
 
             } else {
 
-                $response->msg[] = "VALIDATION_OK";
+                $response->message[] = "VALIDATION_OK";
 
                 $credentials = ['email' => $request->username, 'password' => $request->password];
 
                 if (Auth::attempt($credentials)) {
 
-                    $response->msg[] = "CREDENTIALS_MATCH";
+                    $response->message[] = "CREDENTIALS_MATCH";
 
                     $UserModel = config('auth.providers.users.model');
                     $UserModel = new $UserModel;
@@ -56,35 +56,35 @@ class RmsSpidAuthController
                     $isAllowed = true;
                     if (config('rms-spid.spid_users_id')) {
 
-                        $response->msg[] = "CONFIG_SPID_USERS_ID_EXIST";
+                        $response->message[] = "CONFIG_SPID_USERS_ID_EXIST";
 
                         if (!in_array($user->id, config('rms-spid.spid_users_id'))) {
                             $isAllowed = false;
                         } else {
-                            $response->msg[] = "CREDENTIALS_ALLOWED";
+                            $response->message[] = "CREDENTIALS_ALLOWED";
                         }
 
                     } else {
-                        $response->msg[] = "CONFIG_SPID_USERS_ID_DOES_NOT_EXIST";
+                        $response->message[] = "CONFIG_SPID_USERS_ID_DOES_NOT_EXIST";
                     }
 
                     if ($isAllowed) {
 
                         $response->status = 200;
-                        $response->msg[] = "AUTHENTICATED";
-                        $response->msg[] = 'SUCCESS';
+                        $response->message[] = "AUTHENTICATED";
+                        $response->message[] = 'SUCCESS';
                         $response->data = ['user' => $user, 'auth_token' => $user->createToken("auth_token")->plainTextToken];
 
                     } else {
 
                         $response->status = 401;
-                        $response->msg[] = "CREDENTIALS_NOT_ALLOWED";
+                        $response->message[] = "CREDENTIALS_NOT_ALLOWED";
                     }
 
                 } else {
 
                     $response->status = 401;
-                    $response->msg[] = "CREDENTIALS_DOES_NOT_MATCH";
+                    $response->message[] = "CREDENTIALS_DOES_NOT_MATCH";
 
                 }
             }
@@ -92,8 +92,8 @@ class RmsSpidAuthController
         } catch (Throwable $th) {
 
             $response->status = 500;
-            $response->msg[] = 'ERROR';
-            $response->msg[] = $th->getMessage();
+            $response->message[] = 'ERROR';
+            $response->message[] = $th->getMessage();
         }
 
         return response()->json($response);
@@ -107,13 +107,13 @@ class RmsSpidAuthController
 
             $response->status = 200;
             $response->data = $request->user();
-            $response->msg[] = 'SUCCESS';
+            $response->message[] = 'SUCCESS';
 
         } catch (Throwable $th) {
 
             $response->status = 500;
-            $response->msg[] = 'ERROR';
-            $response->msg[] = $th->getMessage();
+            $response->message[] = 'ERROR';
+            $response->message[] = $th->getMessage();
 
         }
 
@@ -128,13 +128,13 @@ class RmsSpidAuthController
 
             $request->user()->tokens()->delete();
             $response->status = 200;
-            $response->msg[] = "LOGGED_OUT";
+            $response->message[] = "LOGGED_OUT";
 
         } catch (Throwable $th) {
 
             $response->status = 500;
-            $response->msg[] = 'ERROR';
-            $response->msg[] = $th->getMessage();
+            $response->message[] = 'ERROR';
+            $response->message[] = $th->getMessage();
 
         }
 
