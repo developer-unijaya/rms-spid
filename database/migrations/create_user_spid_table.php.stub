@@ -16,12 +16,12 @@ class CreateUserSpidTable extends Migration
         Schema::create('user_spid', function (Blueprint $table) {
             $table->increments('id');
             $table->unsignedBigInteger('user_id')->unique();
-            $table->string('user_spid_id')->nullable();
+            $table->char('user_spid_id', 36)->nullable();
             $table->string('src')->nullable();
-            $table->string('redirect_token')->nullable();
+            $table->char('redirect_token', 36)->nullable();
             $table->dateTime('redirect_token_expired_at')->nullable();
             $table->string('reg_type')->nullable();
-            $table->text('reg_json')->nullable();
+            $table->longText('reg_json')->nullable();
             $table->dateTime('reg_approve_at)->nullable();
             $table->dateTime('reg_reject_at)->nullable();
             $table->longText('log')->nullable();

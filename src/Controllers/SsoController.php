@@ -33,6 +33,7 @@ class SsoController
             $response->message[] = "VALIDATION_ERROR";
             $response->message[] = json_encode($validateData->errors());
             $response->data = $validateData->errors();
+
         } else {
 
             $response->message[] = "VALIDATION_OK";
@@ -72,7 +73,6 @@ class SsoController
 
                     $response->message[] = "USER_FOUND";
                     $response->message[] = "SUCCESS";
-
                     return redirect()->route('spid.sso.auth.login', ['user_spid_id' => $request->user_spid_id, 'redirect_token' => $request->redirect_token]);
 
                 } else {
@@ -80,7 +80,6 @@ class SsoController
                     $response->status = 404;
                     $response->message[] = "USER_NOT_FOUND";
                     return redirect()->route(config('rms-spid.redirect_sso_failed'), ['failed_msg' => 'USER_NOT_FOUND']);
-
                 }
 
             } else {
@@ -89,7 +88,6 @@ class SsoController
                 $response->message[] = "USERSPID_NOT_FOUND";
                 return redirect()->route(config('rms-spid.redirect_sso_failed'), ['failed_msg' => 'USERSPID_NOT_FOUND']);
             }
-
         }
 
         return response()->json($response);

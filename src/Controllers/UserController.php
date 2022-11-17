@@ -22,7 +22,7 @@ class UserController
             'email' => ['required', 'string', 'email'],
             'username' => ['required'],
             'password' => ['required'],
-            'reg_type' => ['required']
+            'reg_type' => ['required'],
         ]);
 
         if ($validateData->fails()) {
@@ -264,7 +264,7 @@ class UserController
                     $userSpid = UserSpid::firstOrNew(['user_id' => $user->id]);
                     $userSpid->src = 'from_spid_bind';
 
-                    if ($userSpid->exists) {
+                    if ($userSpid->exists && $userSpid->user_spid_id) {
 
                         $response->status = 409;
                         $response->message[] = "ABORT_ALREADY_BIND";
@@ -285,7 +285,6 @@ class UserController
                             $response->status = 401;
                             $response->message[] = "USERSPID_SAVE_FAILED";
                         }
-
                     }
 
                 } else {
