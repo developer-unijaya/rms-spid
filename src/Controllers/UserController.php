@@ -10,7 +10,7 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 use Throwable;
 
-class RmsSpidUserController
+class UserController
 {
     public function register(Request $request)
     {
@@ -209,7 +209,7 @@ class RmsSpidUserController
 
                 } else {
 
-                    $response->status = 401;
+                    $response->status = 404;
                     $response->message[] = "USER_NOT_FOUND";
 
                 }
@@ -282,6 +282,7 @@ class RmsSpidUserController
 
                         } else {
 
+                            $response->status = 401;
                             $response->message[] = "USERSPID_SAVE_FAILED";
                         }
 
@@ -291,7 +292,6 @@ class RmsSpidUserController
 
                     $response->status = 409;
                     $response->message[] = "ATTEMPT_CRED_FAILED";
-
                 }
 
             } catch (Throwable $th) {
@@ -346,14 +346,13 @@ class RmsSpidUserController
                 $response->data = [
                     'redirect_token' => $userSpid->redirect_token,
                     'redirect_token_expired_at' => $userSpid->redirect_token_expired_at ? $userSpid->redirect_token_expired_at->format('Y-m-d H:i:s') : null,
-                    'redirect_url' => route(config('rms-spid.redirect_sso_success')),
+                    'redirect_url' => route('spid.sso.auth'),
                 ];
 
             } else {
 
                 $response->status = 404;
                 $response->message[] = "USERSPID_NOT_FOUND";
-
             }
         }
 

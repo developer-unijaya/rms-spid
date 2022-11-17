@@ -10,7 +10,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
 use Throwable;
 
-class RmsSpidAuthController
+class AuthController
 {
     public function test(Request $request)
     {
@@ -114,7 +114,6 @@ class RmsSpidAuthController
             $response->status = 500;
             $response->message[] = 'ERROR';
             $response->message[] = $th->getMessage();
-
         }
 
         return response()->json($response);
@@ -135,7 +134,6 @@ class RmsSpidAuthController
             $response->status = 500;
             $response->message[] = 'ERROR';
             $response->message[] = $th->getMessage();
-
         }
 
         return response()->json($response);

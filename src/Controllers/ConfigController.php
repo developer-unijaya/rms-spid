@@ -6,7 +6,7 @@ use DeveloperUnijaya\RmsSpid\Models\SpidResponse;
 use Illuminate\Http\Request;
 use Throwable;
 
-class RmsSpidConfigController
+class ConfigController
 {
     // ! For Dev & Debug purpose
     // ! Remove Later

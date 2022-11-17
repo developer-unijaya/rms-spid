@@ -8,7 +8,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use Throwable;
 
-class RmsSpidUserSpidController
+class UserSpidController
 {
     public function index()
     {
