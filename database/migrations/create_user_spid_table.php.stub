@@ -22,8 +22,8 @@ class CreateUserSpidTable extends Migration
             $table->dateTime('redirect_token_expired_at')->nullable();
             $table->string('reg_type')->nullable();
             $table->longText('reg_json')->nullable();
-            $table->dateTime('reg_approve_at)->nullable();
-            $table->dateTime('reg_reject_at)->nullable();
+            $table->dateTime('reg_approve_at')->nullable();
+            $table->dateTime('reg_reject_at')->nullable();
             $table->longText('log')->nullable();
             $table->timestamps();
         });
