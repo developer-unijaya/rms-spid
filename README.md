@@ -36,6 +36,16 @@ Publish the config file with:
 php artisan vendor:publish --tag="rms-spid-config"
 ```
 
+Add the following SPID_* variables in _.env_
+
+```
+SPID_BASE_URL=https://erms-spid.nakmenangtender.com
+SPID_USERNAME=user_pprn@yopmail.com
+SPID_PASSWORD=password
+SPID_KEY=60fceedf-870e-49d1-a3e0-911e1c36d978
+```
+The above SPID_* config value will be provided later.
+
 Add following route to VerifyCsrfToken Exception in _App\Http\Middleware\VerifyCsrfToken.php_
 
 ```php
