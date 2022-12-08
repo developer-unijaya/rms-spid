@@ -3,11 +3,11 @@
 return [
 
     // SPID Base URL
-    'spid_base_url' => env('SPID_BASE_URL', 'http://erms-spid.test'),
+    'spid_base_url' => env('SPID_BASE_URL', null),
 
     // SPID Cred
-    'spid_username' => env('SPID_USERNAME', 'user_eps@yopmail.com'),
-    'spid_password' => env('SPID_PASSWORD', 'password'),
+    'spid_username' => env('SPID_USERNAME', null),
+    'spid_password' => env('SPID_PASSWORD', null),
 
     // Set NULL to disable VerifySpidKey Middleware
     // Set to any UUID value to enable
@@ -37,5 +37,5 @@ return [
     'user_profile_relationship' => [],
 
     // Log options
-    'enable_log' => true,
+    'enable_log' => env('SPID_LOG', true),
 ];
