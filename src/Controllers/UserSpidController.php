@@ -16,7 +16,7 @@ class UserSpidController
 
         try {
 
-            $userSpids = UserSpid::orderBy('id')->get();
+            $userSpids = UserSpid::with('user')->orderBy('id')->get();
 
             $response->status = 200;
             $response->data = $userSpids;
