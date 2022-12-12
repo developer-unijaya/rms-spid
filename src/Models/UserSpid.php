@@ -39,7 +39,7 @@ class UserSpid extends Model
             $redirect_token_expired_at = null;
 
             if (config('rms-spid.redirect_token_validity')) {
-                $redirect_token_expired_at = Carbon::now(config('rms-spid.timezone'))->addMinutes(config('spid.redirect_token_validity'));
+                $redirect_token_expired_at = Carbon::now(config('rms-spid.timezone'))->addMinutes(config('rms-spid.redirect_token_validity'));
             }
 
             $this->redirect_token = $redirect_token;
