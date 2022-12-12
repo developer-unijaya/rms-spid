@@ -2,6 +2,7 @@
 
 namespace DeveloperUnijaya\RmsSpid\Controllers;
 
+use Carbon\Carbon;
 use DeveloperUnijaya\RmsSpid\Models\SpidResponse;
 use Illuminate\Http\Request;
 use Throwable;
@@ -17,6 +18,8 @@ class ConfigController
         try {
 
             $data = [
+                'timestamp' => Carbon::now()->format('Y-m-d H:i:s'),
+                'timezone' => Carbon::now()->tz(),
                 'rms-spid' => config('rms-spid'),
                 'app' => config('app'),
                 'auth' => config('auth'),
