@@ -48,7 +48,7 @@ class SsoController
                 if ($userSpid->redirect_token_expired_at) {
 
                     $response->message[] = "REDIRECT_TOKEN_EXPIRED_AT_EXIST";
-                    $now = Carbon::now();
+                    $now = Carbon::now(config('rms-spid.timezone'));
 
                     // Check Token Validity
                     if ($now->gt($userSpid->redirect_token_expired_at)) {

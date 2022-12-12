@@ -13,6 +13,9 @@ return [
     // Set to any UUID value to enable
     'spid_key' => env('SPID_KEY', null),
 
+    // Timezone setting
+    'timezone' => env('SPID_TIMEZONE', 'Asia/Kuala_Lumpur'),
+
     // Users ID that allowed to access Login API
     // Set to Empty to enable All User Access (Not Secure)
     'spid_users_id' => [],
@@ -38,4 +41,5 @@ return [
 
     // Log options
     'enable_log' => env('SPID_LOG', true),
+
 ];

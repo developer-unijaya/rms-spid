@@ -39,7 +39,7 @@ class UserSpid extends Model
             $redirect_token_expired_at = null;
 
             if (config('rms-spid.redirect_token_validity')) {
-                $redirect_token_expired_at = Carbon::now()->addMinutes(config('spid.redirect_token_validity'));
+                $redirect_token_expired_at = Carbon::now(config('rms-spid.timezone'))->addMinutes(config('spid.redirect_token_validity'));
             }
 
             $this->redirect_token = $redirect_token;
@@ -76,7 +76,7 @@ class UserSpid extends Model
                 }
 
                 foreach ($logs as $key => $log) {
-                    $userSpidLog[now()->format("Y-m-d H:i:s.u")] = $log;
+                    $userSpidLog[Carbon::now(config('rms-spid.timezone'))->format("Y-m-d H:i:s.u")] = $log;
                 }
 
                 $logJson = json_encode($userSpidLog, JSON_PRETTY_PRINT);

@@ -16,7 +16,7 @@ trait HasUserSpid
     {
         $userSpid = $this->userSpid;
         if ($userSpid) {
-            $userSpid->reg_approve_at = Carbon::now();
+            $userSpid->reg_approve_at = Carbon::now(config('rms-spid.timezone'));
             $userSpid->reg_reject_at = null;
             $userSpid->save();
         }
@@ -29,7 +29,7 @@ trait HasUserSpid
         $userSpid = $this->userSpid;
         if ($userSpid) {
             $userSpid->reg_approve_at = null;
-            $userSpid->reg_reject_at = Carbon::now();
+            $userSpid->reg_reject_at = Carbon::now(config('rms-spid.timezone'));
             $userSpid->save();
         }
 

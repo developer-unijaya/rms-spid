@@ -21,12 +21,12 @@ class SpidHelper
 
             if ($is_reg_approve) {
 
-                $userSpid->reg_approve_at = Carbon::now();
+                $userSpid->reg_approve_at = Carbon::now(config('rms-spid.timezone'));
                 $userSpid->reg_reject_at = null;
             } else {
 
                 $userSpid->reg_approve_at = null;
-                $userSpid->reg_reject_at = Carbon::now();
+                $userSpid->reg_reject_at = Carbon::now(config('rms-spid.timezone'));
             }
 
             $userSpid->save();

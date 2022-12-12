@@ -106,7 +106,7 @@ class AuthController
         try {
 
             $response->status = 200;
-            $response->data = $request->user();
+            $response->data = ['user' => $request->user()];
             $response->message[] = 'SUCCESS';
 
         } catch (Throwable $th) {

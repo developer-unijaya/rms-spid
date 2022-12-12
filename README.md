@@ -43,6 +43,7 @@ SPID_BASE_URL=
 SPID_USERNAME=
 SPID_PASSWORD=
 SPID_KEY=
+SPID_TIMEZONE='Asia/Kuala_Lumpur'
 SPID_LOG=true
 ```
 The above SPID_* config value will be provided by SPID later.

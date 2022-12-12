@@ -14,7 +14,7 @@ class SpidResetExpiredTokenCommand extends Command
 
     public function handle(): int
     {
-        $now = Carbon::now();
+        $now = Carbon::now(config('rms-spid.timezone'));
 
         $userSpids = UserSpid::where('redirect_token_expired_at', '<=', $now)->get();
         $count = count($userSpids);
