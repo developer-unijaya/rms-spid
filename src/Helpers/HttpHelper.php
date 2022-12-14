@@ -4,6 +4,7 @@ namespace DeveloperUnijaya\RmsSpid\Helpers;
 
 use DeveloperUnijaya\RmsSpid\Models\UserSpid;
 use Illuminate\Support\Facades\Http;
+use Throwable;
 
 class HttpHelper
 {
