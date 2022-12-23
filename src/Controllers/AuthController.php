@@ -33,7 +33,7 @@ class AuthController
 
             if ($validateData->fails()) {
 
-                $response->status = 401;
+                $response->status = 400;
                 $response->message[] = "VALIDATION_ERROR";
                 $response->message[] = json_encode($validateData->errors());
                 $response->data = $validateData->errors();
