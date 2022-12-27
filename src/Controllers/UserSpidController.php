@@ -109,7 +109,7 @@ class UserSpidController
     {
         $response = new SpidResponse;
 
-        $userSpid = UserSpid::where('id', $id)->with('user')->first();
+        $userSpid = UserSpid::where('id', $id)->orWhere('user_spid_id', $id)->with('user')->first();
 
         if ($userSpid) {
 
