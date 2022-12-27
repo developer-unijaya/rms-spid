@@ -34,7 +34,6 @@ class UserSpidController
 
     public function create()
     {
-
     }
 
     public function store(Request $request)
@@ -110,21 +109,20 @@ class UserSpidController
     {
         $response = new SpidResponse;
 
-        $userSpid = UserSpid::where('id', $id)->first();
+        $userSpid = UserSpid::where('id', $id)->with('user')->first();
 
         if ($userSpid) {
 
             $response->status = 200;
             $response->message[] = "USERSPID_EXIST";
 
-            $response->data = $userSpid;
             $response->message[] = "SUCCESS";
+            $response->data = $userSpid;
 
         } else {
 
             $response->status = 401;
             $response->message[] = "USERSPID_DOES_NOT_EXIST";
-
         }
 
         return response()->json($response);
@@ -132,7 +130,6 @@ class UserSpidController
 
     public function edit(Request $request, $id)
     {
-
     }
 
     public function update(Request $request, $id)
