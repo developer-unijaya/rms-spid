@@ -3,8 +3,8 @@
 namespace DeveloperUnijaya\RmsSpid\Helpers;
 
 use Carbon\Carbon;
-use DeveloperUnijaya\RmsSpid\Models\UserSpid;
 use DeveloperUnijaya\RmsSpid\Helpers\HttpHelper;
+use DeveloperUnijaya\RmsSpid\Models\UserSpid;
 
 class SpidHelper
 {

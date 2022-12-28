@@ -13,18 +13,18 @@ Route::prefix('api')->group(function () {
         Route::post('test', [AuthController::class, 'test'])->name('api.spid.test');
         Route::resource('user-spid', UserSpidController::class);
 
-        // * Auth API
+        // Auth API
         Route::prefix('auth')->middleware('verifyspidkey')->group(function () {
 
-            // * Login System account and return auth_token
+            // Login System account and return auth_token
             Route::post('login', [AuthController::class, 'login'])->name('spid.auth.login');
 
             Route::middleware('auth:sanctum')->group(function () {
 
-                // * Return logged-in user data
+                // Return logged-in user data
                 Route::post('me', [AuthController::class, 'me'])->name('spid.auth.me');
 
-                // * Destroy auth_token and logout user
+                // Destroy auth_token and logout user
                 Route::post('logout', [AuthController::class, 'logout'])->name('spid.auth.logout');
             });
         });
@@ -36,17 +36,17 @@ Route::prefix('api')->group(function () {
             Route::post('profile', [UserController::class, 'profile'])->name('spid.user.profile');
             Route::post('update-spid_id', [UserController::class, 'updateSpidId'])->name('spid.user.updateSpidId');
 
-            // * Bind account
+            // Bind account
             Route::post('check', [UserController::class, 'check'])->name('spid.user.check');
 
-            // * Generate and return redirect_token
+            // Generate and return redirect_token
             Route::post('redirect', [UserController::class, 'redirect'])->name('spid.user.redirect');
         });
 
-        // ! Config API
+        // Config API
         Route::prefix('config')->middleware(['auth:sanctum', 'verifyspidkey'])->group(function () {
 
-            // ! Get Sub-system config data
+            // Get Sub-system config data
             Route::post('get-config', [ConfigController::class, 'getConfig'])->name('spid.config.getConfig');
         });
     });

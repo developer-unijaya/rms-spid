@@ -10,13 +10,37 @@ use Throwable;
 
 class UserSpidController
 {
-    public function index()
+    public function index(Request $request)
     {
         $response = new SpidResponse;
 
         try {
 
-            $userSpids = UserSpid::with('user')->orderBy('id')->get();
+            $userSpidQuery = UserSpid::query();
+
+            if ($request->kw) {
+                $kw = $request->kw;
+                $kw = '%' . $kw . '%';
+                $userSpidQuery->where('user_spid_id', 'LIKE', $kw)->orWhere('reg_json', 'LIKE', $kw)->orWhere('log', 'LIKE', $kw);
+            }
+
+            if ($request->user_id) {
+                $userSpidQuery->where('user_id', $request->user_id);
+            }
+
+            if ($request->user_spid_id) {
+                $userSpidQuery->where('user_spid_id', $request->user_spid_id);
+            }
+
+            if ($request->src) {
+                $userSpidQuery->where('src', $request->src);
+            }
+
+            if ($request->reg_type) {
+                $userSpidQuery->where('reg_type', $request->reg_type);
+            }
+
+            $userSpids = $userSpidQuery->with('user')->orderBy('id')->get();
 
             $response->status = 200;
             $response->data = $userSpids;

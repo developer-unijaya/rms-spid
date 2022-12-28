@@ -28,6 +28,10 @@ class HttpHelper
                 'email' => $user->email,
             ];
 
+            if (config('rms-spid.spid_key')) {
+                $data['spid_key'] = config('rms-spid.spid_key');
+            }
+
             $auth_token = HttpHelper::getAuthToken($userSpid);
 
             $responseCheck = Http::timeout(60)->withToken($auth_token)->post($spid_reg_url, $data);
@@ -79,10 +83,13 @@ class HttpHelper
             $loginUrl = config('rms-spid.spid_base_url') . '/api/v1/auth/login';
 
             $data = [
-                'spid_key' => config('rms-spid.spid_key'),
                 'username' => config('rms-spid.spid_username'),
                 'password' => config('rms-spid.spid_password'),
             ];
+
+            if (config('rms-spid.spid_key')) {
+                $data['spid_key'] = config('rms-spid.spid_key');
+            }
 
             $responseCheck = Http::timeout(60)->post($loginUrl, $data);
 
