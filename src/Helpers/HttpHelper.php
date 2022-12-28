@@ -33,7 +33,7 @@ class HttpHelper
             }
 
             $auth_token = HttpHelper::getAuthToken($userSpid);
-
+            
             $responseCheck = Http::timeout(60)->withToken($auth_token)->post($spid_reg_url, $data);
 
             if ($responseCheck->successful()) {
@@ -48,7 +48,6 @@ class HttpHelper
                     $userSpid->appendLog(['sendRegUserSpid 200']);
 
                     $responseData = (object) $responseObj->data;
-
                     $responseUser = (object) $responseData->user;
 
                     $userSpid->user_spid_id = $responseUser->spid_id;
