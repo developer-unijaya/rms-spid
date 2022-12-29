@@ -261,5 +261,4 @@ class UserSpidController
 
         return response()->json($response);
     }
-
 }
