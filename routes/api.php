@@ -11,7 +11,6 @@ Route::prefix('api')->group(function () {
     Route::prefix('spid')->group(function () {
 
         Route::post('test', [AuthController::class, 'test'])->name('api.spid.test');
-        Route::resource('user-spid', UserSpidController::class);
 
         // Auth API
         Route::prefix('auth')->middleware('verifyspidkey')->group(function () {
@@ -41,6 +40,10 @@ Route::prefix('api')->group(function () {
 
             // Generate and return redirect_token
             Route::post('redirect', [UserController::class, 'redirect'])->name('spid.user.redirect');
+        });
+
+        Route::middleware(['auth:sanctum', 'verifyspidkey'])->group(function () {
+            Route::resource('user-spid', UserSpidController::class);
         });
 
         // Config API

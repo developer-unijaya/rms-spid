@@ -175,11 +175,35 @@ class UserSpidController
                 if ($request->user_spid_id) {
                     $userSpid->user_spid_id = $request->user_spid_id;
                 }
+                
+                if ($request->src) {
+                    $userSpid->src = $request->src;
+                }
 
                 if ($request->redirect_token) {
                     $userSpid->redirect_token = $request->redirect_token;
                 }
-
+                
+                if ($request->reg_type) {
+                    $userSpid->reg_type = $request->reg_type;
+                }
+                
+                if ($request->reg_json) {
+                    $userSpid->reg_json = $request->reg_json;
+                }
+                
+                if ($request->reg_approve_at) {
+                    $userSpid->reg_approve_at = $request->reg_approve_at;
+                }
+                
+                if ($request->reg_reject_at) {
+                    $userSpid->reg_reject_at = $request->reg_reject_at;
+                }
+                
+                if ($request->log) {
+                    $userSpid->log = $request->log;
+                }
+                
                 $userSpid->save();
 
                 $response->status = 200;
