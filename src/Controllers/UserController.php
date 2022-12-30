@@ -89,7 +89,6 @@ class UserController
 
                         $response->status = 401;
                         $response->message[] = "USER_SAVE_FAILED";
-
                     }
 
                 }

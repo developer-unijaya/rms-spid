@@ -33,7 +33,6 @@ class VerifySpidKey
                 $response->status = 403;
                 $response->message[] = "SPID_KEY_NOT_FOUND";
                 return response()->json($response);
-
             }
         }
 

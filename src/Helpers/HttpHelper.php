@@ -33,7 +33,7 @@ class HttpHelper
             }
 
             $auth_token = HttpHelper::getAuthToken($userSpid);
-            
+
             $responseCheck = Http::timeout(60)->withToken($auth_token)->post($spid_reg_url, $data);
 
             if ($responseCheck->successful()) {

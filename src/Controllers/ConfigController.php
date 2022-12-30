@@ -9,8 +9,8 @@ use Throwable;
 
 class ConfigController
 {
-    // ! For Dev & Debug purpose
-    // ! Remove Later
+    // For Dev & Debug purpose
+    // Remove Later
     public function getConfig(Request $request)
     {
         $response = new SpidResponse;

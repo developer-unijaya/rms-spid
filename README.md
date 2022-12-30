@@ -105,7 +105,7 @@ protected $routeMiddleware = [
 ## Usage
 
 Register new User to SPID:
-Add following code to _app\Http\Controllers\Auth\RegisterController.php_ 
+Add following code to _App\Http\Controllers\Auth\RegisterController.php_ 
 ```php
 use Illuminate\Http\Request;
 use DeveloperUnijaya\RmsSpid\Helpers\SpidHelper;
@@ -133,6 +133,17 @@ $user->approveSpidReg();
 
 // Reject
 $user->rejectSpidReg();
+```
+
+Commands:
+To clear all log datas:
+```bash
+php artisan spid:clear-log
+```
+
+To clear all expired redirect token:
+```bash
+php artisan spid:reset-expired-token
 ```
 
 ## Changelog

@@ -26,7 +26,6 @@ class SpidResetExpiredTokenCommand extends Command
         }
 
         $this->comment($count . ' redirect_token resetted');
-
         return self::SUCCESS;
     }
 }
