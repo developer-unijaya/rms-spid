@@ -42,6 +42,7 @@ class UserController
                 $UserModel = new $UserModel;
 
                 $user = $UserModel::firstOrNew(['email' => $request->email]);
+                $userFillables = $user->getFillable();
 
                 if ($user->exists) {
 
@@ -52,7 +53,14 @@ class UserController
 
                     $response->message[] = "USER_NEW";
 
-                    $user->name = $request->name;
+                    if (in_array('name', $userFillables)) {
+                        $user->name = $request->name;
+                    }
+
+                    if (in_array('fullname', $userFillables)) {
+                        $user->fullname = $request->name;
+                    }
+
                     $user->password = Hash::make($request->password);
 
                     if ($user->save()) {
