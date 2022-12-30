@@ -135,7 +135,7 @@ $user->approveSpidReg();
 $user->rejectSpidReg();
 ```
 
-Commands:
+### Commands:
 To clear all log datas:
 ```bash
 php artisan spid:clear-log

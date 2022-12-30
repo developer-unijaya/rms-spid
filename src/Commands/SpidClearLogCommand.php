@@ -14,7 +14,7 @@ class SpidClearLogCommand extends Command
     public function handle(): int
     {
         $userSpids = UserSpid::whereNotNull('log')->update(['log' => null]);
-        
+
         $this->comment('Success');
         return self::SUCCESS;
     }
