@@ -14,7 +14,8 @@ class UserSpid extends Model
     protected $fillable = [
         'user_id',
         'user_spid_id',
-        'redirect_token',
+        'src',
+        'reg_type',
         'reg_json',
     ];
 
@@ -22,6 +23,8 @@ class UserSpid extends Model
         'redirect_token_expired_at' => 'datetime',
         'reg_approve_at' => 'datetime',
         'reg_reject_at' => 'datetime',
+        'created_at' => 'datetime',
+        'updated_at' => 'datetime',
     ];
 
     public function user()
@@ -79,7 +82,7 @@ class UserSpid extends Model
                     $userSpidLog[Carbon::now(config('rms-spid.timezone'))->format("Y-m-d H:i:s.u")] = $log;
                 }
 
-                $logJson = json_encode($userSpidLog, JSON_PRETTY_PRINT);
+                $logJson = json_encode($userSpidLog);
 
                 $this->log = $logJson;
                 $this->save();
