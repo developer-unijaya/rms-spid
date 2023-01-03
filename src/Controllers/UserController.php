@@ -75,7 +75,7 @@ class UserController
                         $userSpid->src = 'from_spid_reg';
                         $userSpid->user_spid_id = $request->user_spid_id;
                         $userSpid->reg_type = $request->reg_type;
-                        $userSpid->reg_json = json_encode($request->except(['spid_key']));
+                        $userSpid->reg_json = json_encode($request->except(['spid_key', 'password']));
 
                         if ($userSpid->save()) {
 
