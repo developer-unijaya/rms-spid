@@ -57,12 +57,17 @@ class UserController
                         $user->name = $request->name;
                     }
 
-                    if (in_array('fullname', $userFillables)) {
-                        $user->fullname = $request->name;
+                    if (in_array('no_ic', $userFillables)) {
+                        $user->no_ic = $request->ic_no;
                     }
 
                     if (in_array('is_active', $userFillables)) {
                         $user->is_active = 0;
+                    }
+
+                    // PPRN
+                    if (in_array('fullname', $userFillables)) {
+                        $user->fullname = $request->name;
                     }
 
                     $user->password = Hash::make($request->password);

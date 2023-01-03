@@ -10,7 +10,6 @@ class SpidHelper
 {
     public static function updateProfile($user_id)
     {
-
     }
 
     public static function updateRegStatus($user_id, $is_reg_approve = true)
