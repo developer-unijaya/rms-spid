@@ -92,4 +92,27 @@ class UserSpid extends Model
             //throw $th;
         }
     }
+
+    public function userActive()
+    {
+        $isActive = false;
+
+        $user = $this->user;
+        if ($user) {
+            $userFillables = $user->getFillable();
+
+            if (in_array('is_active', $userFillables)) {
+                $isActive = $user->is_active;
+            }
+
+            if (in_array('status', $userFillables)) {
+                $status = $user->status;
+                if ($status == 'aktif') {
+                    $isActive = true;
+                }
+            }
+        }
+
+        return $isActive;
+    }
 }

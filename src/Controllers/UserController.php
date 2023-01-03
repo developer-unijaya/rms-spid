@@ -61,6 +61,10 @@ class UserController
                         $user->fullname = $request->name;
                     }
 
+                    if (in_array('is_active', $userFillables)) {
+                        $user->is_active = 0;
+                    }
+
                     $user->password = Hash::make($request->password);
 
                     if ($user->save()) {

@@ -2,8 +2,6 @@
 
 namespace DeveloperUnijaya\RmsSpid\Controllers;
 
-// use DeveloperUnijaya\RmsSpid\Models\User;
-// use App\Models\User;
 use DeveloperUnijaya\RmsSpid\Models\SpidResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;

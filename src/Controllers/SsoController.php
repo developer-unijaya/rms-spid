@@ -2,8 +2,6 @@
 
 namespace DeveloperUnijaya\RmsSpid\Controllers;
 
-// use DeveloperUnijaya\RmsSpid\Models\User;
-// use App\Models\User;
 use Carbon\Carbon;
 use DeveloperUnijaya\RmsSpid\Models\SpidResponse;
 use DeveloperUnijaya\RmsSpid\Models\UserSpid;
@@ -44,42 +42,50 @@ class SsoController
 
                 $response->message[] = "USERSPID_FOUND";
 
-                // To check if the token has Expiry Timestamp
-                if ($userSpid->redirect_token_expired_at) {
+                if ($userSpid->userActive()) {
 
-                    $response->message[] = "REDIRECT_TOKEN_EXPIRED_AT_EXIST";
-                    $now = Carbon::now(config('rms-spid.timezone'));
+                    // To check if the token has Expiry Timestamp
+                    if ($userSpid->redirect_token_expired_at) {
 
-                    // Check Token Validity
-                    if ($now->gt($userSpid->redirect_token_expired_at)) {
+                        $response->message[] = "REDIRECT_TOKEN_EXPIRED_AT_EXIST";
+                        $now = Carbon::now(config('rms-spid.timezone'));
 
-                        $response->message[] = "REDIRECT_TOKEN_EXPIRED";
+                        // Check Token Validity
+                        if ($now->gt($userSpid->redirect_token_expired_at)) {
 
-                        return redirect()->route(config('rms-spid.redirect_sso_failed'), ['failed_msg' => 'TOKEN_EXPIRED']);
+                            $response->message[] = "REDIRECT_TOKEN_EXPIRED";
+
+                            return redirect()->route(config('rms-spid.redirect_sso_failed'), ['failed_msg' => 'TOKEN_EXPIRED']);
+                        } else {
+
+                            $response->message[] = "REDIRECT_TOKEN_DOES_NOT_EXPIRED";
+                        }
                     } else {
 
-                        $response->message[] = "REDIRECT_TOKEN_DOES_NOT_EXPIRED";
+                        $response->message[] = "REDIRECT_TOKEN_EXPIRED_AT_DOES_NOT_EXIST";
+                    }
+
+                    $UserModel = config('auth.providers.users.model');
+                    $UserModel = new $UserModel;
+
+                    $user = $UserModel::where('id', $userSpid->user_id)->first();
+                    if ($user) {
+
+                        $response->message[] = "USER_FOUND";
+                        $response->message[] = "SUCCESS";
+                        return redirect()->route('spid.sso.auth.login', ['user_spid_id' => $request->user_spid_id, 'redirect_token' => $request->redirect_token]);
+
+                    } else {
+
+                        $response->status = 404;
+                        $response->message[] = "USER_NOT_FOUND";
+                        return redirect()->route(config('rms-spid.redirect_sso_failed'), ['failed_msg' => 'USER_NOT_FOUND']);
                     }
                 } else {
 
-                    $response->message[] = "REDIRECT_TOKEN_EXPIRED_AT_DOES_NOT_EXIST";
-                }
-
-                $UserModel = config('auth.providers.users.model');
-                $UserModel = new $UserModel;
-
-                $user = $UserModel::where('id', $userSpid->user_id)->first();
-                if ($user) {
-
-                    $response->message[] = "USER_FOUND";
-                    $response->message[] = "SUCCESS";
-                    return redirect()->route('spid.sso.auth.login', ['user_spid_id' => $request->user_spid_id, 'redirect_token' => $request->redirect_token]);
-
-                } else {
-
-                    $response->status = 404;
-                    $response->message[] = "USER_NOT_FOUND";
-                    return redirect()->route(config('rms-spid.redirect_sso_failed'), ['failed_msg' => 'USER_NOT_FOUND']);
+                    $response->status = 401;
+                    $response->message[] = "USER_INACTIVE_OR_NOT_EXIST";
+                    return redirect()->route(config('rms-spid.redirect_sso_failed'), ['failed_msg' => 'USER_INACTIVE_OR_NOT_EXIST']);
                 }
 
             } else {
