@@ -66,8 +66,16 @@ class UserController
                     }
 
                     // PPRN
-                    if (in_array('fullname', $userFillables)) {
+                    if (in_array($request->reg_type, ['researcher_pprn', 'company_pprn'])) {
+
+                        if ($request->reg_type == 'researcher_pprn') {
+                            $user->role = 'researcher';
+                        } else if ($request->reg_type == 'company_pprn') {
+                            $user->role = 'company';
+                        }
+
                         $user->fullname = $request->name;
+                        $user->photo = 'icons/avatar.png';
                     }
 
                     $user->password = Hash::make($request->password);
