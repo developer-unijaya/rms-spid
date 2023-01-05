@@ -42,7 +42,6 @@ class UserController
                 $UserModel = new $UserModel;
 
                 $user = $UserModel::firstOrNew(['email' => $request->email]);
-                $userFillables = $user->getFillable();
 
                 if ($user->exists) {
 
@@ -53,32 +52,24 @@ class UserController
 
                     $response->message[] = "USER_NEW";
 
-                    if (in_array('name', $userFillables)) {
-                        $user->name = $request->name;
-                    }
+                    try {
 
-                    if (in_array('no_ic', $userFillables)) {
-                        $user->no_ic = $request->ic_no;
-                    }
+                        $response->message[] = "UPDATE_USERDATA_START";
+                        $userDatas = $request->userDatas;
 
-                    if (in_array('is_active', $userFillables)) {
-                        $user->is_active = 0;
-                    }
-
-                    // PPRN
-                    if (in_array($request->reg_type, ['researcher_pprn', 'company_pprn'])) {
-
-                        if ($request->reg_type == 'researcher_pprn') {
-                            $user->role = 'researcher';
-                        } else if ($request->reg_type == 'company_pprn') {
-                            $user->role = 'company';
+                        foreach ($userDatas as $key => $userData) {
+                            $user[$key] = $userData;
                         }
 
-                        $user->fullname = $request->name;
-                        $user->photo = 'icons/avatar.png';
+                        $response->message[] = "UPDATE_USERDATA_SUCCESS";
+
+                    } catch (Throwable $th) {
+
+                        $response->message[] = "UPDATE_USERDATA_FAILED";
+                        $response->message[] = $th->getMessage();
                     }
 
-                    $user->password = Hash::make($request->password);
+                    $user['password'] = Hash::make($request->password);
 
                     if ($user->save()) {
 
