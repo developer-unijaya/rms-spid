@@ -96,7 +96,7 @@ class SsoController
             }
         }
 
-        return response()->json($response);
+        return response()->json($response, $response->status);
     }
 
     public function ssoLogin(Request $request)

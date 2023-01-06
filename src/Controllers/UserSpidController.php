@@ -53,7 +53,7 @@ class UserSpidController
             $response->message[] = $th->getMessage();
         }
 
-        return response()->json($response);
+        return response()->json($response, $response->status);
     }
 
     public function create()
@@ -126,7 +126,7 @@ class UserSpidController
 
         }
 
-        return response()->json($response);
+        return response()->json($response, $response->status);
     }
 
     public function show(Request $request, $id)
@@ -149,7 +149,7 @@ class UserSpidController
             $response->message[] = "USERSPID_DOES_NOT_EXIST";
         }
 
-        return response()->json($response);
+        return response()->json($response, $response->status);
     }
 
     public function edit(Request $request, $id)
@@ -225,7 +225,7 @@ class UserSpidController
             $response->message[] = "USERSPID_DOES_NOT_EXIST";
         }
 
-        return response()->json($response);
+        return response()->json($response, $response->status);
     }
 
     public function destroy(Request $request, $id)
@@ -259,6 +259,6 @@ class UserSpidController
             $response->message[] = "USERSPID_DOES_NOT_EXIST";
         }
 
-        return response()->json($response);
+        return response()->json($response, $response->status);
     }
 }

@@ -5,6 +5,7 @@ namespace DeveloperUnijaya\RmsSpid\Controllers;
 use DeveloperUnijaya\RmsSpid\Models\SpidResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\RateLimiter;
 use Illuminate\Support\Facades\Validator;
 use Throwable;
 
@@ -15,12 +16,23 @@ class AuthController
         $response = new SpidResponse;
         $response->message[] = "Test From " . env('APP_NAME');
 
-        return response()->json($response);
+        return response()->json($response, $response->status);
     }
 
     public function login(Request $request)
     {
         $response = new SpidResponse;
+
+        if (RateLimiter::tooManyAttempts('spid_login:' . $request->ip(), $perMinute = 5)) {
+
+            $seconds = RateLimiter::availableIn('spid_login:' . $request->ip());
+            $response->status = 429;
+            $response->message[] = "MAX_ATTEMPT_PERMINUTE_REACH";
+            $response->message[] = "AVAILABLE_IN_" . $seconds . "_SECONDS";
+
+            return response()->json($response, 429);
+        }
+        RateLimiter::hit('spid_login:' . $request->ip());
 
         try {
 
@@ -45,6 +57,7 @@ class AuthController
                 if (Auth::attempt($credentials)) {
 
                     $response->message[] = "CREDENTIALS_MATCH";
+                    RateLimiter::clear('spid_login:' . $request->ip());
 
                     $UserModel = config('auth.providers.users.model');
                     $UserModel = new $UserModel;
@@ -94,7 +107,7 @@ class AuthController
             $response->message[] = $th->getMessage();
         }
 
-        return response()->json($response);
+        return response()->json($response, $response->status);
     }
 
     public function me(Request $request)
@@ -114,7 +127,7 @@ class AuthController
             $response->message[] = $th->getMessage();
         }
 
-        return response()->json($response);
+        return response()->json($response, $response->status);
     }
 
     public function logout(Request $request)
@@ -134,6 +147,6 @@ class AuthController
             $response->message[] = $th->getMessage();
         }
 
-        return response()->json($response);
+        return response()->json($response, $response->status);
     }
 }

@@ -38,6 +38,6 @@ class ConfigController
 
         }
 
-        return response()->json($response);
+        return response()->json($response, $response->status);
     }
 }
