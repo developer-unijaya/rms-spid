@@ -24,7 +24,7 @@ class AuthController
     {
         $response = new SpidResponse;
 
-        if (RateLimiter::tooManyAttempts('spid_login:' . $request->ip(), $perMinute = 5)) {
+        if (RateLimiter::tooManyAttempts('spid_login:' . $request->ip(), $perMinute = 3)) {
 
             $seconds = RateLimiter::availableIn('spid_login:' . $request->ip());
             $response->status = 429;
