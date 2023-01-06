@@ -15,6 +15,7 @@ class AuthController
     {
         $response = new SpidResponse;
         $response->message[] = "Test From " . env('APP_NAME');
+        $response->data = $request->all();
 
         return response()->json($response, $response->status);
     }
@@ -27,10 +28,10 @@ class AuthController
 
             $seconds = RateLimiter::availableIn('spid_login:' . $request->ip());
             $response->status = 429;
-            $response->message[] = "MAX_ATTEMPT_PERMINUTE_REACH";
+            $response->message[] = "MAX_ATTEMPT_PERMINUTE_REACHED";
             $response->message[] = "AVAILABLE_IN_" . $seconds . "_SECONDS";
 
-            return response()->json($response, 429);
+            return response()->json($response, $response->status);
         }
         RateLimiter::hit('spid_login:' . $request->ip());
 
