@@ -2,10 +2,7 @@
 
 namespace DeveloperUnijaya\RmsSpid\Models;
 
-use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Support\Str;
-use Throwable;
 
 class PprnProfile extends Model
 {
@@ -27,7 +24,6 @@ class PprnProfile extends Model
     ];
 
     protected $casts = [
-        
     ];
 
     public function user()

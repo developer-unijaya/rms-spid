@@ -2,6 +2,10 @@
 
 namespace DeveloperUnijaya\RmsSpid\Controllers;
 
+use DeveloperUnijaya\RmsSpid\Models\EpsCompany;
+use DeveloperUnijaya\RmsSpid\Models\EpsCompanyUser;
+use DeveloperUnijaya\RmsSpid\Models\PprnCompany;
+use DeveloperUnijaya\RmsSpid\Models\PprnProfile;
 use DeveloperUnijaya\RmsSpid\Models\SpidResponse;
 use DeveloperUnijaya\RmsSpid\Models\UserSpid;
 use Illuminate\Http\Request;
@@ -54,21 +58,9 @@ class UserController
 
                     $response->message[] = "USER_NEW";
 
-                    try {
-
-                        $response->message[] = "UPDATE_USERDATA_START";
-                        $userDatas = $request->userDatas;
-
-                        foreach ($userDatas as $key => $userData) {
-                            $user[$key] = $userData;
-                        }
-
-                        $response->message[] = "UPDATE_USERDATA_SUCCESS";
-
-                    } catch (Throwable $th) {
-
-                        $response->message[] = "UPDATE_USERDATA_FAILED";
-                        $response->message[] = $th->getMessage();
+                    $userDatas = $request->userDatas;
+                    foreach ($userDatas as $key => $userData) {
+                        $user[$key] = $userData;
                     }
 
                     $user['password'] = Hash::make($request->password);
@@ -76,6 +68,48 @@ class UserController
                     if ($user->save()) {
 
                         $response->message[] = "USER_SAVE_SUCCESS";
+
+                        // PPRN Profile & Company
+                        if (in_array($request->reg_type, ['int_pprn', 'researcher_pprn', 'company_pprn'])) {
+
+                            $profile = new PprnProfile;
+                            $profile->user_id = $user->id;
+                            $profile->save();
+
+                            if (in_array($request->reg_type, ['company_pprn'])) {
+
+                                $company = new PprnCompany;
+                                $company->pic_id = $user->id;
+
+                                $companyDatas = $request->companyDatas;
+                                foreach ($companyDatas as $key => $companyData) {
+                                    $company[$key] = $companyData;
+                                }
+
+                                $company->save();
+                            }
+                        }
+
+                        // EPS Company
+                        if (in_array($request->reg_type, ['company_eps'])) {
+
+                            $company = new EpsCompany;
+
+                            $companyDatas = $request->companyDatas;
+                            foreach ($companyDatas as $key => $companyData) {
+                                $company[$key] = $companyData;
+                            }
+
+                            if ($company->save()) {
+
+                                $companyUser = new EpsCompanyUser;
+
+                                $companyUser->consultancy_company_id = $company->id;
+                                $companyUser->users_id = $user->id;
+
+                                $companyUser->save();
+                            }
+                        }
 
                         $userSpid = UserSpid::firstOrNew(['user_id' => $user->id]);
                         $userSpid->src = 'from_spid_reg';
