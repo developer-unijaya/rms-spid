@@ -6,6 +6,7 @@ use DeveloperUnijaya\RmsSpid\Models\SpidResponse;
 use DeveloperUnijaya\RmsSpid\Models\UserSpid;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 use Throwable;
@@ -36,6 +37,7 @@ class UserController
 
             $response->message[] = "VALIDATION_OK";
 
+            DB::beginTransaction();
             try {
 
                 $UserModel = config('auth.providers.users.model');
@@ -83,18 +85,21 @@ class UserController
 
                         if ($userSpid->save()) {
 
+                            DB::commit();
                             $response->status = 200;
                             $response->message[] = "USERSPID_SAVE_SUCCESS";
                             $response->message[] = "SUCCESS";
                             $response->data = ['user' => $user, 'userSpid' => $userSpid];
                         } else {
 
+                            DB::rollBack();
                             $response->status = 401;
                             $response->message[] = "USERSPID_SAVE_FAILED";
                         }
 
                     } else {
 
+                        DB::rollBack();
                         $response->status = 401;
                         $response->message[] = "USER_SAVE_FAILED";
                     }
@@ -103,6 +108,7 @@ class UserController
 
             } catch (Throwable $th) {
 
+                DB::rollBack();
                 $response->status = 500;
                 $response->message[] = "ERROR";
                 $response->message[] = $th->getMessage();
