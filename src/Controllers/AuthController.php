@@ -17,7 +17,7 @@ class AuthController
         $response->message[] = "Test From " . env('APP_NAME');
         $response->data = $request->all();
 
-        return response()->json($response, $response->status);
+        return response()->json($response);
     }
 
     public function login(Request $request)
@@ -31,7 +31,7 @@ class AuthController
             $response->message[] = "MAX_ATTEMPT_PERMINUTE_REACHED";
             $response->message[] = "AVAILABLE_IN_" . $seconds . "_SECONDS";
 
-            return response()->json($response, $response->status);
+            return response()->json($response);
         }
         RateLimiter::hit('spid_login:' . $request->ip());
 
@@ -108,7 +108,7 @@ class AuthController
             $response->message[] = $th->getMessage();
         }
 
-        return response()->json($response, $response->status);
+        return response()->json($response);
     }
 
     public function me(Request $request)
@@ -128,7 +128,7 @@ class AuthController
             $response->message[] = $th->getMessage();
         }
 
-        return response()->json($response, $response->status);
+        return response()->json($response);
     }
 
     public function logout(Request $request)
@@ -148,6 +148,6 @@ class AuthController
             $response->message[] = $th->getMessage();
         }
 
-        return response()->json($response, $response->status);
+        return response()->json($response);
     }
 }

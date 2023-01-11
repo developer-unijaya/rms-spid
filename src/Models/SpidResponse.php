@@ -20,4 +20,4 @@ class SpidResponse
 // $response->status = "";
 // $response->message[] = "";
 // $response->data = "";
-// return response()->json($response, $response->status);
+// return response()->json($response);

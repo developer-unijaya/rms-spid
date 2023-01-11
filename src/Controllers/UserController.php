@@ -110,7 +110,7 @@ class UserController
 
         }
 
-        return response()->json($response, $response->status);
+        return response()->json($response);
     }
 
     public function profile(Request $request)
@@ -172,7 +172,7 @@ class UserController
 
         }
 
-        return response()->json($response, $response->status);
+        return response()->json($response);
     }
 
     public function updateSpidId(Request $request)
@@ -239,7 +239,7 @@ class UserController
 
         }
 
-        return response()->json($response, $response->status);
+        return response()->json($response);
     }
 
     public function check(Request $request)
@@ -316,7 +316,7 @@ class UserController
             }
         }
 
-        return response()->json($response, $response->status);
+        return response()->json($response);
     }
 
     public function redirect(Request $request)
@@ -370,6 +370,6 @@ class UserController
             }
         }
 
-        return response()->json($response, $response->status);
+        return response()->json($response);
     }
 }
